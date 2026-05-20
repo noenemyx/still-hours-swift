@@ -3,6 +3,7 @@
 // Round 7: Root NavigationStack + Tab shell
 // Updated: 2026-05-21 — Sprint 1.5 wires real LibraryListView
 // R9.2: DemoSeeder wired via .task on root TabView (#if DEBUG)
+// R10.3: Onboarding gate — shows OnboardingFlow on first launch
 // Created: 2026-05-21
 
 import SwiftUI
@@ -13,14 +14,19 @@ import InventoryCore
 
 /// Root content view embedded in the WindowGroup.
 ///
-/// Houses a two-tab `TabView` (Library + Settings). iOS 26 applies
-/// Liquid Glass to the tab bar automatically — no explicit modifier required.
+/// Gates first-launch onboarding via `@AppStorage("hasCompletedOnboarding")`.
+/// After onboarding completes, renders the two-tab `TabView` (Library + Settings).
+/// iOS 26 applies Liquid Glass to the tab bar automatically.
 @MainActor
 struct ContentView: View {
 
     // MARK: Environment
 
     @Environment(\.modelContext) private var modelContext
+
+    // MARK: AppStorage — onboarding gate
+
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
 
     // MARK: Local state
 
@@ -29,6 +35,17 @@ struct ContentView: View {
     // MARK: Body
 
     var body: some View {
+        if !hasCompletedOnboarding {
+            OnboardingFlow(onComplete: { hasCompletedOnboarding = true })
+        } else {
+            mainTabView
+        }
+    }
+
+    // MARK: - Main Tab View
+
+    @ViewBuilder
+    private var mainTabView: some View {
         TabView {
             Tab(
                 String(localized: "nav.library", defaultValue: "Library"),

@@ -225,6 +225,49 @@ Promise-adjacent feature work.
 
 ---
 
+## R10 Status (2026-05-21)
+
+### Build-configuration gating for ModelContainer
+
+The `ModelContainer` initialization in `App/Sources/App/StillHoursApp.swift`
+is now split by build configuration. **The entitlement file is unchanged** —
+the iCloud container declaration must remain for the Bundle ID profile.
+What changes is the _runtime_ CloudKit engagement:
+
+| Config | ModelConfiguration | CloudKit auth prompt | Data persistence |
+|--------|--------------------|----------------------|------------------|
+| DEBUG | `isStoredInMemoryOnly: true` | None | RAM only — cleared on each launch |
+| Release | `cloudKitDatabase: .none` | None | Local SQLite — no sync |
+| Release v1.1+ (planned) | `cloudKitDatabase: .private(...)` | Opt-in via Settings toggle | CloudKit Private DB |
+
+**DEBUG — in-memory only:**
+DemoSeeder seeds into RAM. The "Apple 계정 확인" system alert that blocked
+first paint on simulators without a signed-in iCloud account (Axis M) no
+longer appears. No persistent store is created; rebuilding the app restores
+the clean slate automatically.
+
+**Release v1.0 — `cloudKitDatabase: .none`:**
+Data is stored in the local SQLite persistent store managed by SwiftData.
+No CloudKit sync is initiated. No Apple account authentication is requested
+at launch. This aligns with Promise §1 (Data Sovereignty): users retain full
+local control before explicitly opting in to iCloud.
+
+**User-opt-in iCloud (v1.1+ deferred):**
+A Settings → "Sync via iCloud" toggle will replace `.none` with
+`.private("iCloud.com.ownlifelab.stillhours")` when the user actively
+enables sync. Implementation is tracked by the TODO comment in
+`StillHoursApp.swift`. At that point, the existing entitlement declaration
+takes effect with no entitlement file change required.
+
+**Promise §1 implications:**
+The `cloudKitDatabase: .none` default for Release means iCloud sync is
+OFF by default — data lives on-device only until the user explicitly opts
+in. This is stricter than the original design (which would have auto-synced
+at first launch) and fully satisfies the "data sovereignty preserved by
+default" requirement of Promise §1.
+
+---
+
 ## §10 References
 
 - Apple Developer Documentation, CloudKit section — CloudKit framework overview,

@@ -341,9 +341,21 @@ capture_quadrant() {
   terminate_app
   restart_springboard
 
-  # 4. Launch app
-  step "Launching ${BUNDLE_ID}..."
-  xcrun simctl launch booted "${BUNDLE_ID}"
+  # 4. Launch app with explicit locale override at process start.
+  # Axis K-bis: `defaults write` changes the global pref but the app process
+  # reads its preferred localizations from the bundle cache on startup.
+  # Passing -AppleLanguages / -AppleLocale as launch arguments guarantees the
+  # correct locale is applied to THIS process regardless of cached state.
+  step "Launching ${BUNDLE_ID} (locale: ${lang})..."
+  if [[ "$lang" == "ko" ]]; then
+    xcrun simctl launch booted "${BUNDLE_ID}" \
+      -AppleLanguages "(ko)" \
+      -AppleLocale ko_KR
+  else
+    xcrun simctl launch booted "${BUNDLE_ID}" \
+      -AppleLanguages "(en)" \
+      -AppleLocale en_US
+  fi
 
   # 5. Wait for first frame + DemoSeeder hydration
   step "Waiting 5s for first frame + DemoSeeder hydration..."

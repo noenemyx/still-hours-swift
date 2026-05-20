@@ -565,6 +565,220 @@ chains — easier to spot than `|| true` sprinkled everywhere.
 
 ---
 
+## Axis M — SwiftData CloudKit auto-sync triggers Apple-account auth at first launch
+
+**R10.2 (2026-05-21)**
+
+### Symptom
+
+A system "Apple 계정 확인" (Verify Apple Account) alert appears and blocks
+the first paint of the app when running on a simulator (or device) where
+iCloud is not signed in. The alert fires immediately on launch, before the
+root view finishes rendering — it interrupts `DemoSeeder.seedIfEmpty()` and
+prevents visual verification screenshots.
+
+### Root cause
+
+The default `.modelContainer(for: [Item.self, ...])` modifier, when combined
+with a CloudKit entitlement in `StillHours.entitlements`, causes SwiftData to
+initialise a `ModelContainer` with the CloudKit Private DB configuration
+automatically. During container initialization, SwiftData attempts to register
+a `CKDatabaseSubscription` and authenticate with iCloud. If no iCloud account
+is present, the system surfaces the account sign-in alert — blocking the main
+thread and preventing first render.
+
+This is not a bug in SwiftData: it behaves as documented. The issue is using
+the default configuration (which inherits the entitlement's CloudKit container)
+in a development context where iCloud isn't available.
+
+### Prevention
+
+1. **For DEBUG builds: use `ModelConfiguration(isStoredInMemoryOnly: true)`.**
+   This creates a pure in-RAM store — no disk write, no CloudKit registration,
+   no auth prompt. `DemoSeeder` operates identically on an in-memory context.
+
+2. **For Release builds: use `ModelConfiguration(cloudKitDatabase: .none)`**
+   until the user explicitly opts into iCloud sync. This creates a local SQLite
+   store; CloudKit is never contacted, so no auth prompt fires at launch.
+
+3. **Factory method pattern in `StillHoursApp`:**
+   ```swift
+   @MainActor
+   private static func makeContainer() -> ModelContainer {
+       #if DEBUG
+       let config = ModelConfiguration(isStoredInMemoryOnly: true)
+       #else
+       let config = ModelConfiguration(cloudKitDatabase: .none)
+       #endif
+       return try! ModelContainer(
+           for: Item.self, Memory.self,
+                InventoryCore.Collection.self,
+                InventoryCore.Attachment.self,
+           configurations: config
+       )
+   }
+   ```
+   Use `.modelContainer(Self.makeContainer())` in the `Scene` body.
+
+4. **Do NOT remove the CloudKit entitlement** to suppress the prompt.
+   The entitlement must stay for the Bundle ID profile to remain valid.
+   The fix is runtime configuration, not build settings.
+
+5. **Cross-reference:** Promise §1 (Data Sovereignty) — `cloudKitDatabase: .none`
+   as the Release default means iCloud is opt-in, not default. This is
+   _stricter_ than the original design and preserves user data sovereignty.
+   See `docs/CloudKit-Setup.md` §R10 Status for the full matrix.
+
+---
+
+## Axis K — iOS sim install does not register the app with SpringBoard until restart
+
+**Round 8 (2026-05-20, commit `11ab06b`)**
+
+### Symptom
+
+`xcrun simctl install booted /path/to/StillHours.app` succeeds (exit 0)
++ `xcrun simctl get_app_container booted com.ownlifelab.stillhours`
+returns a valid Bundle/Application/UUID path + `xcrun simctl listapps
+booted` shows the app — but `xcrun simctl launch booted
+com.ownlifelab.stillhours` fails:
+
+> error: Underlying error (domain=FBSOpenApplicationServiceErrorDomain,
+> code=1): The request was denied by service delegate (SBMainWorkspace)
+> for reason: NotFound ("Unknown application display identifier
+> com.ownlifelab.stillhours").
+
+### Root cause
+
+CoreSimulator's `simctl install` writes the app bundle into
+`CoreSimulator/Devices/<UDID>/data/Containers/Bundle/Application/` and
+updates an internal cache. But SpringBoard's in-memory app registry —
+the surface `simctl launch` queries — only refreshes on:
+(a) sim boot, or
+(b) explicit `launchctl kickstart -k system/com.apple.SpringBoard`.
+
+This is an iOS 26 / Xcode 26 era simulator behavior; we don't have
+evidence it existed in earlier Xcode versions.
+
+### Prevention
+
+After every fresh `simctl install`, BEFORE the first `simctl launch`,
+do:
+
+```bash
+xcrun simctl spawn booted launchctl kickstart -k system/com.apple.SpringBoard 2>&1 || true
+sleep 3
+xcrun simctl launch booted <bundle-id>
+```
+
+The `|| true` swallows the warning "Please switch to user/foreground
+service identifier" — that's just rdar://78126471 chatter; the kickstart
+itself succeeds.
+
+The `scripts/capture-screenshots.sh` encodes this pattern. Future sim
+automation should follow the same shape.
+
+For incremental developer-flow (re-running tests, not full install),
+the restart isn't needed — the app is already registered.
+
+See also: Axis L (locale launch args) — both axes are "simulator quirks
+that bite automated visual verification."
+
+---
+
+## Axis L — `defaults write AppleLocale` doesn't propagate to a running app's text rendering
+
+**Round 9 (2026-05-21, commit `eb9ee24`)**
+
+### Symptom
+
+R9.4 captured 4-quadrant screenshots (light/dark × ko/en). The locale
+switch was attempted via:
+
+```bash
+xcrun simctl spawn booted defaults write -g AppleLocale ko_KR
+xcrun simctl spawn booted defaults write -g AppleLanguages -array ko
+```
+
+System UI (status bar / alerts) localized to ko correctly. BUT the
+StillHours app — even after a SpringBoard restart + relaunch — still
+rendered all text in English. Both ko and en screenshots had identical
+app text rendering, differing only by ~700 bytes (status-bar pixel-level).
+
+### Root cause
+
+iOS apps cache the resolved locale at process start. `defaults write`
+updates the global preference but a running app doesn't re-read it.
+A FULL relaunch should pick up the new value — and on iOS this usually
+works for system apps — but for third-party app bundles compiled with
+Xcode 26's String Catalog (.xcstrings), the resolution path is:
+
+1. App starts, reads `Bundle.preferredLocalizations` (from system pref)
+2. Loads `<locale>.lproj/Localizable.strings` (compiled from xcstrings)
+3. Resolves `String(localized: "key")` against that table
+
+If step 2 fails to find a matching `<locale>.lproj` (because the bundle
+was built with only certain `CFBundleLocalizations` declared, or because
+the locale arg uses an alias like `ko_KR` but the bundle only ships
+`ko.lproj`), the resolution falls back to `Base` or the source language.
+
+### Prevention
+
+**The canonical way to set locale for sim testing is launch-time
+arguments**, NOT global defaults:
+
+```bash
+xcrun simctl launch booted com.ownlifelab.stillhours \
+  -AppleLanguages "(ko)" \
+  -AppleLocale ko_KR
+```
+
+These arguments override at process start. They're picked up before
+the bundle's Localizable lookup runs. This is how Apple's own
+documentation and Xcode test-plan locale switching work internally.
+
+`-AppleLanguages "(ko)"` — the parens-wrapped form is the array-literal
+CFArray syntax `simctl` understands.
+
+For `scripts/capture-screenshots.sh`, the locale step should be:
+
+```bash
+xcrun simctl terminate booted "$BUNDLE_ID" 2>/dev/null || true
+xcrun simctl launch booted "$BUNDLE_ID" \
+  -AppleLanguages "($LOCALE_TAG)" \
+  -AppleLocale "${LOCALE_TAG}_${REGION}"
+```
+
+(For the en case: `-AppleLanguages "(en)"` `-AppleLocale en_US`.)
+
+The R10.1 agent (concurrent) is responsible for updating
+`scripts/capture-screenshots.sh` to this pattern. This lessons-learned
+entry documents WHY.
+
+Side note: local dev with Xcode + iOS Simulator usually doesn't expose
+this because you change the sim's system language via the Settings app
+(which does a full relaunch of all running apps). For automated screenshot
+capture or CI flows, only the launch-time argument approach is reliable.
+
+See also: Axis K (SpringBoard restart) — both axes are "simulator quirks
+that bite automated visual verification."
+
+---
+
+## Adding new axes (process rule, revised 2026-05-21)
+
+When a new bug class is documented, future sessions:
+1. Read the relevant axis BEFORE designing similar code.
+2. If a bug class generalizes beyond Apple platforms, also surface
+   it to `~/.claude/lessons-learned-global.md`.
+3. If a bug class is automatable via lint, add to `scripts/check-*.sh`
+   AND wire into `scripts/test.sh`.
+4. Cross-link related axes — e.g. Axis K and Axis L are both
+   "simulator quirks that bite automated visual verification" and
+   should reference each other.
+
+---
+
 ## Operational reminders (not bugs — process)
 
 ### Sub-agent prompts must include exact file paths
