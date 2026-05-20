@@ -12,6 +12,14 @@ import InventoryCore
 @main
 struct StillHoursApp: App {
 
+    init() {
+        #if DEBUG
+        if CommandLine.arguments.contains("--reset-onboarding") {
+            UserDefaults.standard.removeObject(forKey: "hasCompletedOnboarding")
+        }
+        #endif
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

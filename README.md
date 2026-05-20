@@ -76,7 +76,7 @@ ASO Quit signal (6개월 시점):
 
 Tracer Bullet sequence (`Book full → Music full → Movie basic → Object basic`) starts after Pre-flight gate clears all items.
 
-**Status as of 2026-05-20** — through Pre-flight Round 4 / commit `f15da22`:
+**Status as of 2026-05-21** — through Tracer Bullet sprints 1.1-1.8 / commit `1ab295d`:
 
 ### Agent-doable (auto-completable) — all done ✓
 
@@ -96,6 +96,19 @@ Tracer Bullet sequence (`Book full → Music full → Movie basic → Object bas
 - [x] Onboarding 3-step design spec → `docs/Onboarding-3step-Design.md` (R3)
 - [x] xcodegen project.yml + iOS 26.0 deployment target → R3 `8344a9c`
 - [x] `xcodebuild iOS 26.4 simulator` clean build verified → R4 `f15da22`
+- [x] CaptureSheet + Manual mode + state machine (Sprint 1.1) → R6 `fb21a15`
+- [x] BookMetadataLookup actor + 9 serialized tests (Sprint 1.2) → R6 `fb21a15`
+- [x] BarcodeCaptureView + AVCaptureSession (Sprint 1.3) → R7 `8400374`
+- [x] VoiceMemoCaptureView + SFSpeechRecognizer (Sprint 1.4) → R7 `8400374`
+- [x] LibraryListView + ItemDetailView + MemoryTimelineView (Sprint 1.5) → R7 `8400374`
+- [x] AddMemoryView + 22 i18n keys (Sprint 1.6) → R8 `11ab06b`
+- [x] DemoSeeder + 8 curated demo items (Sprint 1.7) → R8 `11ab06b`
+- [x] UI smoke tests (Sprint 1.8) → R8 `11ab06b`
+- [x] SF Symbol audit + check-sfsymbols.sh → R8 `11ab06b`
+- [x] Brand tone fix (AccentColor wiring) + DemoSeeder wire + screenshot automation → R9 `eb9ee24`
+- [x] i18n locale resolution + iCloud auth gate + Onboarding 3-step → R10 `1ab295d`
+- [x] i18n audit report → `docs/i18n-audit-report.md` (R10) — 124+ keys × 3 locales (ko/en/ja)
+- [x] Lessons Learned 13 axes (A-M) → `docs/lessons-learned.md` (R5-R10)
 
 ### Deferred pending user input
 
@@ -104,8 +117,8 @@ Tracer Bullet sequence (`Book full → Music full → Movie basic → Object bas
 ### User-direct actions (no agent path)
 
 - [x] Trademark search (KIPRIS + USPTO Class 9 + EUIPO + App Store dupes) for "Still Hours" — 7-axis pre-check done (no critical collision; descriptive-risk 50/50 mitigated by Liquid Glass app-icon + UI distinctiveness). Final formal 변리사 opinion: **사용자 결정으로 진행하지 않음 (2026-05-21)**. Risk accepted: USPTO refusal possible at registration; pivot to common-law / state TM if needed.
-- [ ] Apple Design Resources iOS 26 Figma download + study — see docs/Pre-flight-User-Actions.md
-- [ ] SF Symbols 7 macOS app install — see docs/Pre-flight-User-Actions.md
+- [x] Apple Design Resources iOS 26 Figma — DONE (user confirmed 2026-05-21)
+- [x] SF Symbols 7 macOS app — DONE (user confirmed 2026-05-21)
 - [x] Bundle ID `com.ownlifelab.stillhours` — **등록 완료 2026-05-21** via ASC API. Resource ID `GFG86L5VY4`, iCloud/CloudKit capability 활성화. Team ID `89J24XNYL3` (Configs/Debug.xcconfig + Release.xcconfig에 주입됨).
 - [ ] CloudKit Container `iCloud.com.ownlifelab.stillhours` — Apple Developer Console에서 수동 생성 (ASC API는 container 생성을 expose 하지 않음)
 
@@ -125,7 +138,32 @@ xcodebuild -project StillHours.xcodeproj -scheme StillHours \
   -configuration Debug build         # Direct xcodebuild
 ```
 
-**Toolchain pinned** (verified 2026-05-20): Xcode 26.4 / Swift 6.3 / xcodegen 2.45.4 / iOS 26.4 simulator runtime.
+**Toolchain pinned** (verified 2026-05-21): Xcode 26.4 / Swift 6.3 / xcodegen 2.45.4 / iOS 26.4 simulator runtime.
+
+---
+
+## Current Status (as of `1ab295d`)
+
+**Tests / Lints**
+
+- 84 SPM tests / 8 suites: PASS
+- xcodebuild iOS 26.4 simulator: BUILD SUCCEEDED
+- 5 lints (Privacy / Data Sovereignty / No-Subscription / i18n / SF Symbols): all PASS
+- Localizable.xcstrings: 124+ keys × 3 locales (ko/en/ja)
+
+**Modules implemented**
+
+| Module | Status |
+|--------|--------|
+| Book — Tracer Bullet complete | ✓ Manual + Barcode + Voice capture; AddMemory; Library; Item Detail; Memory Timeline; DemoSeeder; Onboarding |
+| Music / Movie / Object | Ready — shared code path in place; content rollout starts R12+ |
+| IntimateShare (CKShare 1-to-1) | Deferred to v1.5 (post-launch) |
+
+**Source files**: 19 Swift view files + 5 services + 4 models + DemoSeeder + Onboarding
+
+**Infrastructure**: Bundle ID `com.ownlifelab.stillhours` registered (Team `89J24XNYL3`); xcconfig + entitlements + PrivacyInfo manifest in place
+
+**Next milestone**: R11 Cool Blue palette pivot — brief ready at `docs/Claude-Design-Brief-R11.md`, pending Claude Design deliverable
 
 ---
 

@@ -457,42 +457,49 @@ algorithm score 기반 정렬 _없음_. 사용자가 정한 _date range / tag / 
 - 외부 인터페이스: CRUD on Item · Memory · Collection. 검색·필터·정렬.
 - 캡슐화: SwiftData persistence, manifestation grouping, smart filter evaluation (_명시적 규칙만_), full-text search (no scoring), dedup.
 - TDD 적합도: ★★★ (순수 데이터 모델)
+- **Implementation status (2026-05-21)**: ✓ implemented — 4 SwiftData entities (Item / Memory / Collection / Attachment) + 5 service actors (Library / Export / Capture / Timeline / ServiceError) + 71 SPM unit tests PASS (R4 `f15da22`)
 
 ### Module 2 — **MetadataResolver** (외부 메타데이터 lookup)
 
 - 외부 인터페이스: `resolve(query, mediumHint) → ResolvedMetadata?`
 - 캡슐화: Open Library / Google Books / MusicBrainz / TMDB / Wikipedia fallback chain, 로컬 캐싱, _사용자 식별 비송신_ 강제, rate limiting.
 - TDD 적합도: ★★★ (mock URLSession)
+- **Implementation status (2026-05-21)**: ✓ partially implemented — BookMetadataLookup actor (Open Library) + 9 serialized tests PASS (Sprint 1.2, R6 `fb21a15`). Music / Movie / Object resolvers deferred to v0.5.
 
 ### Module 3 — **CaptureFlow** (3-second capture)
 
 - 외부 인터페이스: `startCapture() → CaptureSession`
 - 캡슐화: AVFoundation 바코드, VisionKit OCR, 위치 자동 (CoreLocation), 날짜 now, 음성 메모 (Speech framework on-device).
 - TDD 적합도: ★★ (integration)
+- **Implementation status (2026-05-21)**: ✓ implemented — CaptureSheet + Manual mode + state machine (Sprint 1.1) + BarcodeCaptureView + AVCaptureSession (Sprint 1.3) + VoiceMemoCaptureView + SFSpeechRecognizer (Sprint 1.4) + AddMemoryView (Sprint 1.6). All three capture modes live (R6-R8).
 
 ### Module 4 — **IntimateShare** (1-to-1 의도된 공유)
 
 - 외부 인터페이스: `share(collection, recipient, scope, expiry?) → ShareURL`, `revoke(shareID)`, `accept(URL)`
 - 캡슐화: CKShare 생성, 권한 boundary 강제, 사적 메모 필터링, 만료 자동 회수.
 - TDD 적합도: ★ integration
+- **Implementation status (2026-05-21)**: ✗ deferred to v1.5 (post-launch) — iCloud auth gate wired in R10 (`1ab295d`); CKShare implementation pending CloudKit Container provisioning by user.
 
 ### Module 5 — **SlowInventoryQuery** (algorithm-free)
 
 - 외부 인터페이스: `query(filter, sortBy)` — _filter / sort 모두 명시적 enum_, 자유 search ranking _없음_.
 - 캡슐화: 명시적 필터 조합, 사용자 지정 정렬 키 (title / date / medium / recent memory).
 - TDD 적합도: ★★★ (순수 query)
+- **Implementation status (2026-05-21)**: ✓ implemented — search + sort + filter in LibraryListView (Sprint 1.5, R7 `8400374`); backed by InventoryService explicit query API (R4).
 
 ### Module 6 — **TimeTravel**
 
 - 외부 인터페이스: `snapshot(at: Date)`, `addedIn(year/month/place)`, `anniversary(of: itemID)`
 - 캡슐화: Memory history 기반 시점 재구성, anniversary 알림 (opt-in only).
 - TDD 적합도: ★★★
+- **Implementation status (2026-05-21)**: ✓ partially implemented — MemoryTimelineView with 1pt rail + year groups (Sprint 1.5, R7 `8400374`). Full anniversary / snapshot API deferred to v0.5.
 
 ### Module 7 — **ImportExport** (data sovereignty)
 
 - 외부 인터페이스: `import(source) → ImportResult`, `export(format) → ExportResult`
 - 캡슐화: Goodreads/Letterboxd/Discogs CSV, Apple Music (MPMediaQuery), Kindle (수동), JSON/CSV/PDF export, dedup, schema migration.
 - TDD 적합도: ★★★
+- **Implementation status (2026-05-21)**: ✓ partially implemented — ExportService actor in InventoryCore (R4 `f15da22`); Export UI in Settings (R7 `8400374`). Full CSV import (Goodreads/Letterboxd/Discogs) deferred to v0.5.
 
 ---
 

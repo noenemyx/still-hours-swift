@@ -8,8 +8,10 @@
 #           3. Promise lint: check-no-subscription
 #           4. i18n lint: check-i18n (Axis A/B/J/M)
 #           5. SF Symbols audit: check-sfsymbols (WARN-only discovery)
-#           6. Swift Package Manager tests (swift test)
-#           7. Xcode build (xcodebuild)
+#           6. Module shadow lint: check-module-shadow (Axis A lessons-learned)
+#           7. Quote escape lint: check-quote-escape (Axis F lessons-learned)
+#           8. Swift Package Manager tests (swift test)
+#           9. Xcode build (xcodebuild)
 #
 # Pattern : Matches OYL scripts/ convention — one script to run everything.
 #           CI/CD, pre-release, and developer "is this shippable?" checks
@@ -177,12 +179,20 @@ if [[ "$BUILD_ONLY" == false ]]; then
 
   run_step "sfsymbols"   "SF Symbols Audit (WARN-only)" \
     bash "${SCRIPT_DIR}/check-sfsymbols.sh" "$SOURCE_ROOT"
+
+  run_step "module_shadow" "Module Name Shadow (Axis A)" \
+    bash "${SCRIPT_DIR}/check-module-shadow.sh" "$SOURCE_ROOT"
+
+  run_step "quote_escape" "Format String Quote Escape (Axis F)" \
+    bash "${SCRIPT_DIR}/check-quote-escape.sh" "$SOURCE_ROOT"
 else
   skip_step "privacy"
   skip_step "sovereignty"
   skip_step "no_sub"
   skip_step "i18n"
   skip_step "sfsymbols"
+  skip_step "module_shadow"
+  skip_step "quote_escape"
 fi
 
 # ── SPM tests ────────────────────────────────────────────────────────────────
@@ -261,13 +271,15 @@ print_row() {
   printf "  %-40s ${color}%-8s${NC} %s\n" "$label" "$result" "$elapsed"
 }
 
-print_row "privacy"     "Privacy Lint"
-print_row "sovereignty" "Data Sovereignty Lint"
-print_row "no_sub"      "No-Subscription Lint"
-print_row "i18n"        "i18n Lint (Axis A/B/J/M)"
-print_row "sfsymbols"   "SF Symbols Audit"
-print_row "spm_test"    "SPM Tests (swift test)"
-print_row "xcode_build" "Xcode Build"
+print_row "privacy"      "Privacy Lint"
+print_row "sovereignty"  "Data Sovereignty Lint"
+print_row "no_sub"       "No-Subscription Lint"
+print_row "i18n"         "i18n Lint (Axis A/B/J/M)"
+print_row "sfsymbols"    "SF Symbols Audit"
+print_row "module_shadow" "Module Shadow (Axis A)"
+print_row "quote_escape" "Quote Escape (Axis F)"
+print_row "spm_test"     "SPM Tests (swift test)"
+print_row "xcode_build"  "Xcode Build"
 
 echo ""
 echo -e "  Total time: ${SUITE_ELAPSED}s"

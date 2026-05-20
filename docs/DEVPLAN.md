@@ -332,18 +332,22 @@ OYL `Packages/OYLCore/` 의 design tokens / Locale helper / 검증된 lint scrip
 
 ### 4.2 Timeline 추정
 
-| Phase | Calendar 기간 | Effort | 출구 조건 |
-|-------|------------|--------|--------|
-| **Pre-flight** | 2-3 weeks | 40~60h | naming, repo, design language proto, lint scripts |
-| **v0.1 MVP** | 5-7 weeks | 100~140h | 5 core flow, 2 medium, lint 통과, TestFlight 비공개 |
-| **v0.5 Private beta** | 3-4 weeks | 60~100h | CloudKit Sync, Metadata, 4 medium, 5-10명 베타 |
-| **v0.9 Closed beta** | 3-4 weeks | 60~100h | IntimateShare, 8 locale, 30-50명 베타 |
-| **v1.0 App Store** | 2-3 weeks | 40~60h | ASC submit, 스크린샷, 메타데이터 |
-| **v1.0 post-launch wait** | 4-8 weeks | 모니터링 | 첫 1000 다운로드 + 100 user feedback |
-| **v1.x Stabilize** | 2-3 months | 100~150h | top 10 fix, 위젯, 가격 transition |
-| **v2.0 Mac + Music** | 2-3 months | 150~200h | Mac native + Music depth |
+| Phase | Calendar 기간 | Effort | 출구 조건 | Status (2026-05-21) |
+|-------|------------|--------|--------|---------------------|
+| **Pre-flight** | 2-3 weeks | 40~60h | naming, repo, design language proto, lint scripts | ✓ DONE (R1-R5, `d0bd2f5`) |
+| **Tracer Bullet sprints 1.1-1.8** | _actual: ~5 days_ | _faster than planned_ | Book full-stack running, 84 tests PASS | ✓ DONE (R6-R10, `1ab295d`) |
+| **R11 Cool Blue palette** | current | design | Claude Design deliverable | Pending (brief ready) |
+| **R12+ Music / Movie / Object content rollout** | next | content | 3 remaining media types using shared code path | Not started |
+| **v0.5 Private beta** | 3-4 weeks | 60~100h | CloudKit Sync, Metadata, 4 medium, 5-10명 베타 | Not started |
+| **v0.9 Closed beta** | 3-4 weeks | 60~100h | IntimateShare, 8 locale, 30-50명 베타 | Not started |
+| **v1.0 App Store** | 2-3 weeks | 40~60h | ASC submit, 스크린샷, 메타데이터 | Not started |
+| **v1.0 post-launch wait** | 4-8 weeks | 모니터링 | 첫 1000 다운로드 + 100 user feedback | Not started |
+| **v1.x Stabilize** | 2-3 months | 100~150h | top 10 fix, 위젯, 가격 transition | Not started |
+| **v2.0 Mac + Music** | 2-3 months | 150~200h | Mac native + Music depth | Not started |
 
-**총 v0.1 → v1.0 launch**: 약 **15~21 calendar weeks ≈ 4~5 months**.
+**Positive surprise**: Pre-flight + Tracer Bullet 1.1-1.8 completed in roughly 5 days of dev time, well ahead of the 3-week pre-flight + 5-7-week MVP estimate. The single-round-per-day cadence held. Do not extrapolate to later phases — v0.5 CloudKit sync and IntimateShare carry higher integration risk.
+
+**총 v0.1 → v1.0 launch**: 약 **15~21 calendar weeks ≈ 4~5 months** (estimate unchanged; buffer consumed by solid tracer bullet foundation).
 
 **총 시작 → v2.0**: 약 **10~13 months**.
 
@@ -360,27 +364,52 @@ OYL `Packages/OYLCore/` 의 design tokens / Locale helper / 검증된 lint scrip
 
 ## 5. Per-milestone 작업 분해
 
-### 5.1 Pre-flight (week 1-3)
+### 5.1 Pre-flight (week 1-3) — ✓ DONE
 
-| Task | Effort | Dependency |
-|------|--------|----------|
-| Naming 확정 | 2h | 사용자 결정 |
-| Apple Developer 신규 bundle ID 생성 | 1h | naming |
-| 신규 private GitHub repo 생성 | 1h | naming |
-| Repo skeleton (XcodeGen + Package.swift + scripts/) | 6h | repo |
-| _Design language_ exploration — 색·폰트·spacing 1차 시안 (Tot / Day One / Are.na _참고_, OYL 차용 X) | 12h | repo |
-| Design tokens 1차 작성 (독립) | 6h | design |
-| Promise 5조항 lint 작성 | 6h | repo |
-| i18n 10-axis lint 작성 (독립) | 6h | repo |
-| SwiftData predicate lint 작성 (독립) | 3h | repo |
-| Pre-commit hook installer 작성 | 2h | scripts |
-| `docs/lessons-learned.md` skeleton | 1h | repo |
-| Manifesto 1차 (한국어 draft) | 4h | brand |
-| 첫 commit + Promise lint 첫 검증 | 2h | all |
+| Task | Effort | Dependency | Status |
+|------|--------|----------|--------|
+| Naming 확정 | 2h | 사용자 결정 | ✓ "Still Hours" confirmed `efff02c` |
+| Apple Developer 신규 bundle ID 생성 | 1h | naming | ✓ `com.ownlifelab.stillhours` `271e356` |
+| 신규 private GitHub repo 생성 | 1h | naming | ✓ `noenemyx/still-hours-swift` |
+| Repo skeleton (XcodeGen + Package.swift + scripts/) | 6h | repo | ✓ R3 `8344a9c` |
+| _Design language_ exploration — 색·폰트·spacing 1차 시안 | 12h | repo | ✓ R1-R2 `4ee9652` `04919f9` |
+| Design tokens 1차 작성 (독립) | 6h | design | ✓ Foundation + Semantic + Component R1-R2 |
+| Promise 5조항 lint 작성 | 6h | repo | ✓ 3 scripts PASS R3/R4 |
+| i18n 10-axis lint 작성 (독립) | 6h | repo | ✓ `d0bd2f5` |
+| SwiftData predicate lint 작성 (독립) | 3h | repo | ✓ `d0bd2f5` |
+| Pre-commit hook installer 작성 | 2h | scripts | ✓ `d0bd2f5` |
+| `docs/lessons-learned.md` skeleton | 1h | repo | ✓ 13 axes (A-M) through R10 |
+| Manifesto 1차 (한국어 draft) | 4h | brand | ✓ Settings surface copy `d0bd2f5` |
+| 첫 commit + Promise lint 첫 검증 | 2h | all | ✓ `8344a9c` |
 
-**Exit gate**: `bash scripts/test.sh` empty project 0 exit, Promise 5 + i18n 10 axis 모두 active.
+**Exit gate**: ✓ CLEARED — `bash scripts/test.sh` 0 exit, 5 lints PASS, 84 tests PASS, BUILD SUCCEEDED.
 
-### 5.2 v0.1 MVP (week 4-10)
+### 5.2 v0.1 MVP — Tracer Bullet sprints 1.1-1.8 — ✓ DONE (R6-R10)
+
+_Tracer Bullet strategy: Book medium first, full-stack, then extend to Music/Movie/Object using shared code path. This replaced the original week-by-week decomposition below._
+
+| Sprint | Task | Commit | Status |
+|--------|------|--------|--------|
+| 1.1 | CaptureSheet + Manual mode + state machine | R6 `fb21a15` | ✓ DONE |
+| 1.2 | BookMetadataLookup actor + 9 serialized tests | R6 `fb21a15` | ✓ DONE |
+| 1.3 | BarcodeCaptureView + AVCaptureSession | R7 `8400374` | ✓ DONE |
+| 1.4 | VoiceMemoCaptureView + SFSpeechRecognizer | R7 `8400374` | ✓ DONE |
+| 1.5 | LibraryListView + ItemDetailView + MemoryTimelineView | R7 `8400374` | ✓ DONE |
+| 1.6 | AddMemoryView + 22 i18n keys | R8 `11ab06b` | ✓ DONE |
+| 1.7 | DemoSeeder + 8 curated demo items | R8 `11ab06b` | ✓ DONE |
+| 1.8 | UI smoke tests + SF Symbol audit | R8 `11ab06b` | ✓ DONE |
+| — | Brand tone fix + AccentColor wiring + screenshot automation | R9 `eb9ee24` | ✓ DONE |
+| — | i18n locale resolution + iCloud auth gate + Onboarding 3-step | R10 `1ab295d` | ✓ DONE |
+
+**Additional R7 work**: ContentView + Settings/Export/About scaffolding
+
+**Exit gate (Tracer Bullet)**: ✓ CLEARED — 84 SPM tests PASS / 5 lints PASS / BUILD SUCCEEDED / Onboarding 3-step live / i18n 124+ keys × ko/en/ja
+
+**Next sprint**: R11 Cool Blue palette (Claude Design deliverable pending) → R12+ Music/Movie/Object content rollout
+
+---
+
+_Original week-by-week decomposition below preserved for reference — actual execution followed Tracer Bullet path above._
 
 **Week 4-5 — Foundation**
 

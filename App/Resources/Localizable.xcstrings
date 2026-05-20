@@ -1,1125 +1,3445 @@
 {
-  "sourceLanguage" : "ko",
-  "version" : "1.0",
-  "strings" : {
-    "app.name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Still Hours" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Still Hours" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Still Hours" } }
-      }
-    },
-    "nav.library" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "라이브러리" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Library" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ライブラリ" } }
-      }
-    },
-    "nav.search" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "검색" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "検索" } }
-      }
-    },
-    "nav.settings" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "설정" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "設定" } }
-      }
-    },
-    "nav.back" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "뒤로" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Back" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "戻る" } }
-      }
-    },
-    "nav.close" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "닫기" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Close" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "閉じる" } }
-      }
-    },
-    "nav.cancel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "취소" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "キャンセル" } }
-      }
-    },
-    "nav.done" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "완료" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Done" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "完了" } }
-      }
-    },
-    "nav.save" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "저장" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存" } }
-      }
-    },
-    "nav.edit" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "편집" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Edit" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "編集" } }
-      }
-    },
-    "nav.delete" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "삭제" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "削除" } }
-      }
-    },
-    "capture.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "자산 등록" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Capture" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "登録" } }
-      }
-    },
-    "capture.mode.barcode" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "바코드" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Barcode" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "バーコード" } }
-      }
-    },
-    "capture.mode.voice" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "음성 메모" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Voice memo" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "音声メモ" } }
-      }
-    },
-    "capture.mode.manual" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "직접 입력" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Manual" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "手動入力" } }
-      }
-    },
-    "capture.barcode.lookupFailed" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "정보를 가져오지 못했습니다" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Lookup failed" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "情報を取得できませんでした" } }
-      }
-    },
-    "capture.barcode.notFound" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "찾을 수 없는 ISBN입니다" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "ISBN not found" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "見つからないISBNです" } }
-      }
-    },
-    "capture.barcode.openSettings" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "설정 열기" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open Settings" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "設定を開く" } }
-      }
-    },
-    "capture.barcode.permissionDenied" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "카메라 사용 권한을 허용해 주세요" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Camera permission required" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "カメラの使用を許可してください" } }
-      }
-    },
-    "capture.barcode.prompt" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "ISBN을 프레임 안에 맞춰 주세요" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Center the ISBN inside the frame" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ISBNをフレームに合わせてください" } }
-      }
-    },
-    "capture.barcode.switchToManual" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "직접 입력으로 전환" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Switch to manual" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "手動入力に切り替え" } }
-      }
-    },
-    "capture.manual.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "제목" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Title" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "タイトル" } }
-      }
-    },
-    "capture.manual.medium" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "매체" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Medium" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "メディア" } }
-      }
-    },
-    "capture.manual.creator" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "제작자" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Creator" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "作成者" } }
-      }
-    },
-    "capture.manual.cover" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "커버 이미지" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cover image" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "カバー画像" } }
-      }
-    },
-    "capture.error.titleRequired" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "제목을 입력해 주세요" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Please enter a title" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "タイトルを入力してください" } }
-      }
-    },
-    "capture.modeUnavailable.barcode" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "바코드 모드는 다음 업데이트에서 제공됩니다" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Barcode mode coming in a later update" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "バーコードモードは今後のアップデートで提供されます" } }
-      }
-    },
-    "capture.modeUnavailable.voice" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "음성 메모 모드는 다음 업데이트에서 제공됩니다" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Voice memo mode coming in a later update" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "音声メモモードは今後のアップデートで提供されます" } }
-      }
-    },
-    "medium.book" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "책" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Book" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "本" } }
-      }
-    },
-    "medium.music" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "음악" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Music" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "音楽" } }
-      }
-    },
-    "medium.movie" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "영화" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Movie" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "映画" } }
-      }
-    },
-    "medium.object" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "오브제" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Object" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "オブジェ" } }
-      }
-    },
-    "settings.about.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Still Hours는" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Still Hours is" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Still Hoursとは" } }
-      }
-    },
-    "settings.about.lead" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "자산을 입구로, 기억을 본문으로" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Items as the entry. Memories as the body" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "資産を入り口に、記憶を本文に" } }
-      }
-    },
-    "settings.export.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "데이터 내보내기" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Export data" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "データのエクスポート" } }
-      }
-    },
-    "settings.export.json" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "JSON으로 내보내기" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Export as JSON" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "JSONとしてエクスポート" } }
-      }
-    },
-    "settings.export.csv" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "CSV로 내보내기" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Export as CSV" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "CSVとしてエクスポート" } }
-      }
-    },
-    "capture.voice.holdToRecord" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "음성 메모 녹음을 위해 길게 누르세요" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hold to record voice memo" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "音声メモを録音するには長押し" } }
-      }
-    },
-    "capture.voice.recording" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "녹음 중…" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recording…" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "録音中…" } }
-      }
-    },
-    "capture.voice.locale.ko" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "한국어" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "한국어" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "한국어" } }
-      }
-    },
-    "capture.voice.locale.en" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "English" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "English" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "English" } }
-      }
-    },
-    "capture.voice.locale.ja" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "日本語" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "日本語" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日本語" } }
-      }
-    },
-    "capture.voice.privacyBanner" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "음성은 기기 내에서만 처리됩니다" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Voice processed on-device only" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "音声はデバイス内のみで処理されます" } }
-      }
-    },
-    "capture.voice.permissionMic" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "마이크 권한이 필요합니다" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Microphone permission required" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "マイクの許可が必要です" } }
-      }
-    },
-    "capture.voice.permissionSpeech" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "음성 인식 권한이 필요합니다" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Speech recognition permission required" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "音声認識の許可が必要です" } }
-      }
-    },
-    "library.empty" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "라이브러리가 비어 있습니다" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your library is empty" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ライブラリは空です" } }
-      }
-    },
-    "library.empty.cta" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "첫 자산을 등록해 보세요" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Capture your first item" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "最初の資産を登録してください" } }
-      }
-    },
-    "library.search" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "라이브러리 검색" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search library" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ライブラリを検索" } }
-      }
-    },
-    "library.sort.recent" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "최신순" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recent first" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "新しい順" } }
-      }
-    },
-    "library.sort.oldest" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "오래된 순" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Oldest first" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "古い順" } }
-      }
-    },
-    "library.sort.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "제목순" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Title" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "タイトル" } }
-      }
-    },
-    "item.detail.metadata" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "정보" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Details" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "詳細" } }
-      }
-    },
-    "item.detail.year" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "출간연도" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Year" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "出版年" } }
-      }
-    },
-    "item.detail.publisher" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "출판사" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Publisher" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "出版社" } }
-      }
-    },
-    "item.detail.pages" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "페이지" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pages" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ページ" } }
-      }
-    },
-    "item.detail.addMemory" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "기억 추가" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add Memory" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "記憶を追加" } }
-      }
-    },
-    "item.detail.edit" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "편집" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Edit" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "編集" } }
-      }
-    },
-    "item.detail.delete" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "삭제" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "削除" } }
-      }
-    },
-    "timeline.empty" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "첫 기억을 추가해 보세요" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add your first memory" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "最初の記憶を追加してください" } }
-      }
-    },
-    "timeline.year" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "%@년" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "%@" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%@年" } }
-      }
-    },
-    "settings.section.about" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "정보" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "About" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "情報" } }
-      }
-    },
-    "settings.section.data" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "데이터" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Data" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "データ" } }
-      }
-    },
-    "settings.help" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "도움말" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Help" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ヘルプ" } }
-      }
-    },
-    "settings.version" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "버전" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Version" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "バージョン" } }
-      }
-    },
-    "settings.dataPrivacy" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "데이터 프라이버시" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Data Privacy" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "データプライバシー" } }
-      }
-    },
-    "settings.export.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "내보낸 데이터에는 모든 항목과 기억이 포함됩니다." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your export includes all items and memories." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "エクスポートにはすべての項目と記憶が含まれます。" } }
-      }
-    },
-    "settings.export.promiseFooter" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Still Hours는 사용자가 언제든 자신의 데이터를 가져갈 수 있도록 보장합니다." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Still Hours always lets you take your data with you." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Still Hoursは常にデータを持ち出せます。" } }
-      }
-    },
-    "privacy.section.onDevice.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "데이터는 사용자 기기에만" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your data stays on your device" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "データはお使いのデバイスに" } }
-      }
-    },
-    "privacy.section.cloudkit.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "CloudKit Private DB만 사용" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "CloudKit Private database only" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "CloudKit Private DBのみ" } }
-      }
-    },
-    "privacy.section.noAds.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "추적·광고·데이터 판매 없음" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No tracking, no ads, no data sale" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "トラッキング・広告・データ販売なし" } }
-      }
-    },
-    "library.placeholder" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "라이브러리 — Sprint 1.5에서 구현됨\nLibrary — implemented in Sprint 1.5" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "라이브러리 — Sprint 1.5에서 구현됨\nLibrary — implemented in Sprint 1.5" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ライブラリ — Sprint 1.5で実装予定" } }
-      }
-    },
-    "export.error.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "내보내기 실패" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Export failed" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "エクスポート失敗" } }
-      }
-    },
-    "export.retry" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "다시 시도" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Try again" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "再試行" } }
-      }
-    },
-    "export.inProgress" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "내보내는 중…" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Exporting…" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "エクスポート中…" } }
-      }
-    },
-    "about.collapse" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "두 번 탭하여 접기" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Double-tap to collapse" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ダブルタップして折りたたむ" } }
-      }
-    },
-    "about.expand" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "두 번 탭하여 펼치기" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Double-tap to expand" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ダブルタップして展開する" } }
-      }
-    },
-    "about.section.identity" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Still Hours는" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Still Hours is" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Still Hoursとは" } }
-      }
-    },
-    "about.section.identity.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "알고리즘 없음 · 공개 피드 없음 · 광고 없음.\n\n조용한 수집 도구입니다. 당신이 가진 것의 이야기를 기록합니다." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No algorithm · No public feed · No advertising.\n\nA quiet collection tool. Records the story of what you have." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "アルゴリズムなし · 公開フィードなし · 広告なし。\n\n静かなコレクションツール。あなたが持つものの物語を記録します。" } }
-      }
-    },
-    "about.section.dataSovereignty" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "데이터 주권" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Data Sovereignty" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "データ主権" } }
-      }
-    },
-    "about.section.dataSovereignty.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "데이터는 당신의 iCloud에만 존재합니다. JSON 또는 CSV로 언제든 내보낼 수 있으며, 앱을 삭제하면 데이터도 삭제됩니다." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your data lives in your iCloud only. Export as JSON or CSV at any time. Delete the app and the data goes with it." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "データはあなたのiCloudのみに存在します。いつでもJSONまたはCSVでエクスポートできます。アプリを削除するとデータも削除されます。" } }
-      }
-    },
-    "about.section.madeBy" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "만든 사람" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Made by" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "作成者" } }
-      }
-    },
-    "about.section.madeBy.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "sunghun.ahn이 혼자 만든 도구입니다. 10년을 쓸 수 있도록 만들었습니다." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "A solo tool by sunghun.ahn. Built to last ten years." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "sunghun.ahnが一人で作ったツールです。10年使えるように設計しました。" } }
-      }
-    },
-    "privacy.manifest.footer" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "PrivacyInfo.xcprivacy manifest를 통해 Apple App Store에 위 약속이 코드로 선언되어 있습니다." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "These commitments are declared in code via the PrivacyInfo.xcprivacy manifest, visible on the Apple App Store." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "これらの約束はPrivacyInfo.xcprivacyマニフェストでコードとして宣言されており、Apple App Storeで確認できます。" } }
-      }
-    },
-    "privacy.section.onDevice.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "모든 데이터는 사용자의 기기와 개인 iCloud 계정에만 저장됩니다. Still Hours 서버는 존재하지 않습니다." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "All data is stored only on your device and your personal iCloud account. There is no Still Hours server." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "すべてのデータはあなたのデバイスと個人のiCloudアカウントにのみ保存されます。Still Hoursのサーバーは存在しません。" } }
-      }
-    },
-    "privacy.section.cloudkit.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "동기화는 Apple CloudKit Private Database를 통해서만 이루어집니다. 개발자는 사용자의 데이터에 접근할 수 없습니다." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sync happens only through Apple CloudKit Private Database. The developer cannot access your data." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "同期はApple CloudKit Private Databaseのみを通じて行われます。開発者はあなたのデータにアクセスできません。" } }
-      }
-    },
-    "privacy.section.noAds.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "분석 SDK 없음, 광고 네트워크 없음, 제3자 데이터 판매 없음. PrivacyInfo.xcprivacy에 이 약속이 코드로 선언되어 있습니다." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No analytics SDK, no ad network, no third-party data sale. This commitment is declared in code in PrivacyInfo.xcprivacy." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "分析SDKなし、広告ネットワークなし、第三者へのデータ販売なし。この約束はPrivacyInfo.xcprivacyでコードとして宣言されています。" } }
-      }
-    },
-    "memory.add.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "기억 추가" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add Memory" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "記憶を追加" } }
-      }
-    },
-    "memory.add.section.kind" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "기억의 종류" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Memory kind" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "記憶の種類" } }
-      }
-    },
-    "memory.add.section.note" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "메모" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Note" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "メモ" } }
-      }
-    },
-    "memory.add.section.date" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "날짜" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Date" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日付" } }
-      }
-    },
-    "memory.add.section.photo" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "사진" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Photo" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "写真" } }
-      }
-    },
-    "memory.add.note.placeholder" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "어떤 기억인가요?" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "What memory is this?" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "どんな記憶ですか?" } }
-      }
-    },
-    "memory.add.save" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "저장" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存" } }
-      }
-    },
-    "memory.add.save.accessibility" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "기억 저장" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save memory" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "記憶を保存" } }
-      }
-    },
-    "memory.add.cancel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "취소" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "キャンセル" } }
-      }
-    },
-    "memory.add.photo.add" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "사진 추가" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add photo" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "写真を追加" } }
-      }
-    },
-    "memory.add.photo.remove" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "사진 제거" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Remove photo" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "写真を削除" } }
-      }
-    },
-    "memory.add.error.saveFailed" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "저장에 실패했습니다" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save failed" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存に失敗しました" } }
-      }
-    },
-    "memory.add.error.retry" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "다시 시도" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Try again" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "再試行" } }
-      }
-    },
-    "memory.add.chip.selected" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "선택됨" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Selected" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "選択済み" } }
-      }
-    },
-    "memory.add.chip.unselected" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "선택 안 됨" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Not selected" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "未選択" } }
-      }
-    },
-    "memory.kind.acquired" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "획득" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Acquired" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "入手" } }
-      }
-    },
-    "memory.kind.read" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "읽음" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Read" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "読んだ" } }
-      }
-    },
-    "memory.kind.listened" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "들음" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Listened" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "聴いた" } }
-      }
-    },
-    "memory.kind.watched" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "시청함" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Watched" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "観た" } }
-      }
-    },
-    "memory.kind.lent" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "빌려줌" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Lent" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "貸した" } }
-      }
-    },
-    "memory.kind.received" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "돌려받음" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Received" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "受け取った" } }
-      }
-    },
-    "memory.kind.gifted" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "선물함" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Gifted" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "贈った" } }
-      }
-    },
-    "memory.kind.annotated" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "메모함" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Annotated" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "メモした" } }
-      }
-    },
-    "capture.close" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "닫기" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Close" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "閉じる" } }
-      }
-    },
-    "capture.field.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "제목" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Title" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "タイトル" } }
-      }
-    },
-    "capture.field.title.prompt" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "필수" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Required" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "必須" } }
-      }
-    },
-    "capture.field.medium" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "매체" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Medium" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "メディア" } }
-      }
-    },
-    "capture.field.creator" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "제작자 (선택)" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Creator (optional)" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "作成者（任意）" } }
-      }
-    },
-    "capture.field.cover" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "커버 이미지 (선택)" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cover Image (optional)" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "カバー画像（任意）" } }
-      }
-    },
-    "capture.preview.memory" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "첫 기억" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "First Memory" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "最初の記憶" } }
-      }
-    },
-    "capture.preview.edit" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "수정" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Edit" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "編集" } }
-      }
-    },
-    "capture.preview.save" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "저장" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存" } }
-      }
-    },
-    "capture.retry" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "다시 시도" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Retry" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "再試行" } }
-      }
-    },
-    "capture.save" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "저장" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存" } }
-      }
-    },
-    "capture.status.done" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "저장 완료" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Saved" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存完了" } }
-      }
-    },
-    "capture.status.failed" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "저장 실패" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save failed" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存失敗" } }
-      }
-    },
-    "capture.status.saving" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "저장 중…" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Saving…" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存中…" } }
-      }
-    },
-    "capture.voice.processing" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "음성 처리 중…" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Processing…" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "処理中…" } }
-      }
-    },
-    "onboarding.skip" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "건너뛰기" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Skip" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "スキップ" } }
-      }
-    },
-    "onboarding.next" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "다음" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Next" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "次へ" } }
-      }
-    },
-    "onboarding.getStarted" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "시작하기" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Get Started" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "始める" } }
-      }
-    },
-    "onboarding.1.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "자산은 기록이 아닙니다. 입구입니다." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Items aren't records. They're entrances." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "持つことは記録ではない。入口だ。" } }
-      }
-    },
-    "onboarding.1.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "가지게 된 이야기가 자산 안에 삽니다." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "The story of getting it lives inside." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "手に入れた物語が、その中に宿る。" } }
-      }
-    },
-    "onboarding.1.memory.example" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "도쿄 츠타야 · 2024-08-15 · 어머니와 함께" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tokyo Tsutaya · 2024-08-15 · With my mother" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "東京蔦屋 · 2024-08-15 · 母と一緒に" } }
-      }
-    },
-    "onboarding.2.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "책, 음악, 영화, 물건 — 하나의 책장." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Books, music, films, objects — kept under one shelf." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "本、音楽、映画、もの — ひとつの本棚に。" } }
-      }
-    },
-    "onboarding.2.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "책 · 음반 · 영화 · 오브제 — 같은 데이터 모델, 같은 캡처 흐름" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Books · Music · Movies · Objects — one model, one capture flow" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "本 · 音楽 · 映画 · オブジェ — 同じモデル、同じ操作" } }
-      }
-    },
-    "onboarding.2.media.line" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "책 · 음반 · 영화 · 오브제" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Books · Music · Movies · Objects" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "本 · 音楽 · 映画 · オブジェ" } }
-      }
-    },
-    "onboarding.2.medium.book" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "책" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Book" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "本" } }
-      }
-    },
-    "onboarding.2.medium.music" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "음악" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Music" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "音楽" } }
-      }
-    },
-    "onboarding.2.medium.movie" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "영화" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Movie" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "映画" } }
-      }
-    },
-    "onboarding.2.medium.object" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "물건" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Object" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "もの" } }
-      }
-    },
-    "onboarding.3.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "공개 프로필 없음. 한 사람에게만." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No public profile. One person at a time." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "公開プロフィールなし。ひとりだけに。" } }
-      }
-    },
-    "onboarding.3.body" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "알고리즘이 아닌 당신이 선택한 한 사람." } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "You choose who sees it. Not an algorithm." } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "アルゴリズムではなく、あなたが選ぶ。" } }
-      }
-    },
-    "onboarding.3.noPublicProfile" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "공개 프로필 없음 · 한 명에게만" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No public profile · One to one" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "公開プロフィールなし · 1対1のみ" } }
+  "sourceLanguage": "ko",
+  "version": "1.0",
+  "strings": {
+    "about.collapse": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "두 번 탭하여 접기"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Double-tap to collapse"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ダブルタップして折りたたむ"
+          }
+        }
+      }
+    },
+    "about.expand": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "두 번 탭하여 펼치기"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Double-tap to expand"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ダブルタップして展開する"
+          }
+        }
+      }
+    },
+    "about.section.dataSovereignty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "데이터 주권"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data Sovereignty"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データ主権"
+          }
+        }
+      }
+    },
+    "about.section.dataSovereignty.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "데이터는 당신의 iCloud에만 존재합니다. JSON 또는 CSV로 언제든 내보낼 수 있으며, 앱을 삭제하면 데이터도 삭제됩니다."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your data lives in your iCloud only. Export as JSON or CSV at any time. Delete the app and the data goes with it."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データはあなたのiCloudのみに存在します。いつでもJSONまたはCSVでエクスポートできます。アプリを削除するとデータも削除されます。"
+          }
+        }
+      }
+    },
+    "about.section.identity": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Still Hours는"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Still Hours is"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Still Hoursとは"
+          }
+        }
+      }
+    },
+    "about.section.identity.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "알고리즘 없음 · 공개 피드 없음 · 광고 없음.\n\n조용한 수집 도구입니다. 당신이 가진 것의 이야기를 기록합니다."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No algorithm · No public feed · No advertising.\n\nA quiet collection tool. Records the story of what you have."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アルゴリズムなし · 公開フィードなし · 広告なし。\n\n静かなコレクションツール。あなたが持つものの物語を記録します。"
+          }
+        }
+      }
+    },
+    "about.section.madeBy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "만든 사람"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Made by"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "作成者"
+          }
+        }
+      }
+    },
+    "about.section.madeBy.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sunghun.ahn이 혼자 만든 도구입니다. 10년을 쓸 수 있도록 만들었습니다."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A solo tool by sunghun.ahn. Built to last ten years."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sunghun.ahnが一人で作ったツールです。10年使えるように設計しました。"
+          }
+        }
+      }
+    },
+    "accessibility.onboarding.1.card": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Book cover: Norwegian Wood. Your items become the entry to memories."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブックカバー：ノルウェイの森。アイテムが記憶への入口になります。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "책 표지: 노르웨이의 숲. 아이템이 기억의 입구가 됩니다."
+          }
+        }
+      }
+    },
+    "accessibility.onboarding.1.memory": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Memory entry: Tokyo Tsutaya, August 2024, with my mother"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記憶エントリー：東京 蔦屋書店、2024年8月、母と一緒に"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기억 항목: 도쿄 츠타야, 2024년 8월, 엄마와 함께"
+          }
+        }
+      }
+    },
+    "accessibility.onboarding.3.sheet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share to: friend Minjin. No public profile. No social media sharing."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "共有先：友人ミンジン。公開プロフィールなし。SNSシェアなし。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "공유 대상: 친구 민진. 공개 프로필 없음. SNS 공유 없음."
+          }
+        }
+      }
+    },
+    "app.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Still Hours"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Still Hours"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Still Hours"
+          }
+        }
+      }
+    },
+    "capture.barcode.lookupFailed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "정보를 가져오지 못했습니다"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lookup failed"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "情報を取得できませんでした"
+          }
+        }
+      }
+    },
+    "capture.barcode.notFound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "찾을 수 없는 ISBN입니다"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ISBN not found"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "見つからないISBNです"
+          }
+        }
+      }
+    },
+    "capture.barcode.openSettings": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "설정 열기"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Settings"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定を開く"
+          }
+        }
+      }
+    },
+    "capture.barcode.permissionDenied": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "카메라 사용 권한을 허용해 주세요"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camera permission required"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カメラの使用を許可してください"
+          }
+        }
+      }
+    },
+    "capture.barcode.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ISBN을 프레임 안에 맞춰 주세요"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Center the ISBN inside the frame"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ISBNをフレームに合わせてください"
+          }
+        }
+      }
+    },
+    "capture.barcode.switchToManual": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "직접 입력으로 전환"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switch to manual"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手動入力に切り替え"
+          }
+        }
+      }
+    },
+    "capture.close": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "닫기"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "閉じる"
+          }
+        }
+      }
+    },
+    "capture.error.open_settings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Settings"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定を開く"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "설정 열기"
+          }
+        }
+      }
+    },
+    "capture.error.titleRequired": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "제목을 입력해 주세요"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please enter a title"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タイトルを入力してください"
+          }
+        }
+      }
+    },
+    "capture.field.cover": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "커버 이미지 (선택)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cover Image (optional)"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カバー画像（任意）"
+          }
+        }
+      }
+    },
+    "capture.field.creator": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "제작자 (선택)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creator (optional)"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "作成者（任意）"
+          }
+        }
+      }
+    },
+    "capture.field.creator.prompt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Author / Artist / Director…"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "著者 / アーティスト / 監督…"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "저자 / 아티스트 / 감독…"
+          }
+        }
+      }
+    },
+    "capture.field.medium": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "매체"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medium"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メディア"
+          }
+        }
+      }
+    },
+    "capture.field.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "제목"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タイトル"
+          }
+        }
+      }
+    },
+    "capture.field.title.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "필수"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Required"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "必須"
+          }
+        }
+      }
+    },
+    "capture.manual.cover": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "커버 이미지"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cover image"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カバー画像"
+          }
+        }
+      }
+    },
+    "capture.manual.creator": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "제작자"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creator"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "作成者"
+          }
+        }
+      }
+    },
+    "capture.manual.medium": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "매체"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medium"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メディア"
+          }
+        }
+      }
+    },
+    "capture.manual.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "제목"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タイトル"
+          }
+        }
+      }
+    },
+    "capture.mode.barcode": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "바코드"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barcode"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "バーコード"
+          }
+        }
+      }
+    },
+    "capture.mode.manual": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "직접 입력"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manual"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手動入力"
+          }
+        }
+      }
+    },
+    "capture.mode.voice": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "음성 메모"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice memo"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音声メモ"
+          }
+        }
+      }
+    },
+    "capture.modeUnavailable.barcode": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "바코드 모드는 다음 업데이트에서 제공됩니다"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barcode mode coming in a later update"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "バーコードモードは今後のアップデートで提供されます"
+          }
+        }
+      }
+    },
+    "capture.modeUnavailable.voice": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "음성 메모 모드는 다음 업데이트에서 제공됩니다"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice memo mode coming in a later update"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音声メモモードは今後のアップデートで提供されます"
+          }
+        }
+      }
+    },
+    "capture.preview.acquired_note": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acquired — just now"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "入手 — たった今"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "획득 — 방금"
+          }
+        }
+      }
+    },
+    "capture.preview.edit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "수정"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "編集"
+          }
+        }
+      }
+    },
+    "capture.preview.memory": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "첫 기억"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First Memory"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最初の記憶"
+          }
+        }
+      }
+    },
+    "capture.preview.ready": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready to save"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存の準備完了"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "저장 준비 완료"
+          }
+        }
+      }
+    },
+    "capture.preview.save": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "저장"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
+          }
+        }
+      }
+    },
+    "capture.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "다시 시도"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retry"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再試行"
+          }
+        }
+      }
+    },
+    "capture.save": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "저장"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
+          }
+        }
+      }
+    },
+    "capture.status.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "저장 완료"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存完了"
+          }
+        }
+      }
+    },
+    "capture.status.failed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "저장 실패"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save failed"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存失敗"
+          }
+        }
+      }
+    },
+    "capture.status.saving": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "저장 중…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saving…"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存中…"
+          }
+        }
+      }
+    },
+    "capture.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "자산 등록"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "登録"
+          }
+        }
+      }
+    },
+    "capture.validation.title_required": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title is required."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タイトルを入力してください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "제목을 입력해 주세요."
+          }
+        }
+      }
+    },
+    "capture.voice.holdToRecord": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "음성 메모 녹음을 위해 길게 누르세요"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold to record voice memo"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音声メモを録音するには長押し"
+          }
+        }
+      }
+    },
+    "capture.voice.locale.en": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "English"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "English"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "English"
+          }
+        }
+      }
+    },
+    "capture.voice.locale.ja": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日本語"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日本語"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日本語"
+          }
+        }
+      }
+    },
+    "capture.voice.locale.ko": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "한국어"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "한국어"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "한국어"
+          }
+        }
+      }
+    },
+    "capture.voice.permissionDenied.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microphone or speech recognition permission was denied."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "マイクまたは音声認識の権限が拒否されました。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "마이크 또는 음성 인식 권한이 거부되었습니다."
+          }
+        }
+      }
+    },
+    "capture.voice.permissionMic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "마이크 권한이 필요합니다"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microphone permission required"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "マイクの許可が必要です"
+          }
+        }
+      }
+    },
+    "capture.voice.permissionSpeech": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "음성 인식 권한이 필요합니다"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speech recognition permission required"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音声認識の許可が必要です"
+          }
+        }
+      }
+    },
+    "capture.voice.privacyBanner": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "음성은 기기 내에서만 처리됩니다"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice processed on-device only"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音声はデバイス内のみで処理されます"
+          }
+        }
+      }
+    },
+    "capture.voice.processing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "음성 처리 중…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Processing…"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "処理中…"
+          }
+        }
+      }
+    },
+    "capture.voice.recording": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "녹음 중…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording…"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "録音中…"
+          }
+        }
+      }
+    },
+    "capture.voice.transcript.label": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recognised text"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "認識されたテキスト"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "인식된 텍스트"
+          }
+        }
+      }
+    },
+    "export.error.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "내보내기 실패"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export failed"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "エクスポート失敗"
+          }
+        }
+      }
+    },
+    "export.inProgress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "내보내는 중…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exporting…"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "エクスポート中…"
+          }
+        }
+      }
+    },
+    "export.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "다시 시도"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再試行"
+          }
+        }
+      }
+    },
+    "item.detail.addMemory": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기억 추가"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Memory"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記憶を追加"
+          }
+        }
+      }
+    },
+    "item.detail.delete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "삭제"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除"
+          }
+        }
+      }
+    },
+    "item.detail.edit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "편집"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "編集"
+          }
+        }
+      }
+    },
+    "item.detail.metadata": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "정보"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Details"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "詳細"
+          }
+        }
+      }
+    },
+    "item.detail.pages": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "페이지"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pages"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ページ"
+          }
+        }
+      }
+    },
+    "item.detail.publisher": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "출판사"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Publisher"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "出版社"
+          }
+        }
+      }
+    },
+    "item.detail.year": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "출간연도"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Year"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "出版年"
+          }
+        }
+      }
+    },
+    "library.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "라이브러리가 비어 있습니다"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your library is empty"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ライブラリは空です"
+          }
+        }
+      }
+    },
+    "library.empty.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "첫 자산을 등록해 보세요"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture your first item"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最初の資産を登録してください"
+          }
+        }
+      }
+    },
+    "library.placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "라이브러리 — Sprint 1.5에서 구현됨\nLibrary — implemented in Sprint 1.5"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "라이브러리 — Sprint 1.5에서 구현됨\nLibrary — implemented in Sprint 1.5"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ライブラリ — Sprint 1.5で実装予定"
+          }
+        }
+      }
+    },
+    "library.search": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "라이브러리 검색"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search library"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ライブラリを検索"
+          }
+        }
+      }
+    },
+    "library.sort.oldest": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오래된 순"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oldest first"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "古い順"
+          }
+        }
+      }
+    },
+    "library.sort.recent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "최신순"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recent first"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新しい順"
+          }
+        }
+      }
+    },
+    "library.sort.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "제목순"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タイトル"
+          }
+        }
+      }
+    },
+    "medium.book": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "책"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Book"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本"
+          }
+        }
+      }
+    },
+    "medium.movie": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "영화"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movie"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "映画"
+          }
+        }
+      }
+    },
+    "medium.music": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "음악"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Music"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音楽"
+          }
+        }
+      }
+    },
+    "medium.object": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오브제"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Object"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オブジェ"
+          }
+        }
+      }
+    },
+    "memory.add.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "취소"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キャンセル"
+          }
+        }
+      }
+    },
+    "memory.add.chip.selected": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "선택됨"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選択済み"
+          }
+        }
+      }
+    },
+    "memory.add.chip.unselected": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "선택 안 됨"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not selected"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未選択"
+          }
+        }
+      }
+    },
+    "memory.add.error.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "다시 시도"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再試行"
+          }
+        }
+      }
+    },
+    "memory.add.error.saveFailed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "저장에 실패했습니다"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save failed"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存に失敗しました"
+          }
+        }
+      }
+    },
+    "memory.add.note.placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "어떤 기억인가요?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What memory is this?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "どんな記憶ですか?"
+          }
+        }
+      }
+    },
+    "memory.add.photo.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "사진 추가"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add photo"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "写真を追加"
+          }
+        }
+      }
+    },
+    "memory.add.photo.remove": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "사진 제거"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove photo"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "写真を削除"
+          }
+        }
+      }
+    },
+    "memory.add.save": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "저장"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
+          }
+        }
+      }
+    },
+    "memory.add.save.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기억 저장"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save memory"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記憶を保存"
+          }
+        }
+      }
+    },
+    "memory.add.section.date": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "날짜"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Date"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日付"
+          }
+        }
+      }
+    },
+    "memory.add.section.kind": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기억의 종류"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Memory kind"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記憶の種類"
+          }
+        }
+      }
+    },
+    "memory.add.section.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "메모"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メモ"
+          }
+        }
+      }
+    },
+    "memory.add.section.photo": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "사진"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photo"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "写真"
+          }
+        }
+      }
+    },
+    "memory.add.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기억 추가"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Memory"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記憶を追加"
+          }
+        }
+      }
+    },
+    "memory.kind.acquired": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "획득"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acquired"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "入手"
+          }
+        }
+      }
+    },
+    "memory.kind.annotated": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "메모함"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annotated"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メモした"
+          }
+        }
+      }
+    },
+    "memory.kind.gifted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "선물함"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gifted"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "贈った"
+          }
+        }
+      }
+    },
+    "memory.kind.lent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "빌려줌"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lent"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "貸した"
+          }
+        }
+      }
+    },
+    "memory.kind.listened": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "들음"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listened"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "聴いた"
+          }
+        }
+      }
+    },
+    "memory.kind.read": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "읽음"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "読んだ"
+          }
+        }
+      }
+    },
+    "memory.kind.received": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "돌려받음"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Received"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "受け取った"
+          }
+        }
+      }
+    },
+    "memory.kind.watched": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "시청함"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watched"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "観た"
+          }
+        }
+      }
+    },
+    "nav.back": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "뒤로"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "戻る"
+          }
+        }
+      }
+    },
+    "nav.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "취소"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キャンセル"
+          }
+        }
+      }
+    },
+    "nav.close": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "닫기"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "閉じる"
+          }
+        }
+      }
+    },
+    "nav.delete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "삭제"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除"
+          }
+        }
+      }
+    },
+    "nav.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "완료"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完了"
+          }
+        }
+      }
+    },
+    "nav.edit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "편집"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "編集"
+          }
+        }
+      }
+    },
+    "nav.library": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "라이브러리"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Library"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ライブラリ"
+          }
+        }
+      }
+    },
+    "nav.save": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "저장"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
+          }
+        }
+      }
+    },
+    "nav.search": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "검색"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "検索"
+          }
+        }
+      }
+    },
+    "nav.settings": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "설정"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定"
+          }
+        }
+      }
+    },
+    "onboarding.1.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가지게 된 이야기가 자산 안에 삽니다."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The story of getting it lives inside."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手に入れた物語が、その中に宿る。"
+          }
+        }
+      }
+    },
+    "onboarding.1.memory.example": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "도쿄 츠타야 · 2024-08-15 · 어머니와 함께"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tokyo Tsutaya · 2024-08-15 · With my mother"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "東京蔦屋 · 2024-08-15 · 母と一緒に"
+          }
+        }
+      }
+    },
+    "onboarding.1.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "자산은 기록이 아닙니다. 입구입니다."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Items aren't records. They're entrances."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "持つことは記録ではない。入口だ。"
+          }
+        }
+      }
+    },
+    "onboarding.2.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "책 · 음반 · 영화 · 오브제 — 같은 데이터 모델, 같은 캡처 흐름"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Books · Music · Movies · Objects — one model, one capture flow"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本 · 音楽 · 映画 · オブジェ — 同じモデル、同じ操作"
+          }
+        }
+      }
+    },
+    "onboarding.2.media.line": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "책 · 음반 · 영화 · 오브제"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Books · Music · Movies · Objects"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本 · 音楽 · 映画 · オブジェ"
+          }
+        }
+      }
+    },
+    "onboarding.2.medium.book": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "책"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Book"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本"
+          }
+        }
+      }
+    },
+    "onboarding.2.medium.movie": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "영화"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movie"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "映画"
+          }
+        }
+      }
+    },
+    "onboarding.2.medium.music": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "음악"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Music"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音楽"
+          }
+        }
+      }
+    },
+    "onboarding.2.medium.object": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "물건"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Object"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "もの"
+          }
+        }
+      }
+    },
+    "onboarding.2.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "책, 음악, 영화, 물건 — 하나의 책장."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Books, music, films, objects — kept under one shelf."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本、音楽、映画、もの — ひとつの本棚に。"
+          }
+        }
+      }
+    },
+    "onboarding.3.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "알고리즘이 아닌 당신이 선택한 한 사람."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You choose who sees it. Not an algorithm."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アルゴリズムではなく、あなたが選ぶ。"
+          }
+        }
+      }
+    },
+    "onboarding.3.noPublicProfile": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "공개 프로필 없음 · 한 명에게만"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No public profile · One to one"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "公開プロフィールなし · 1対1のみ"
+          }
+        }
+      }
+    },
+    "onboarding.3.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "공개 프로필 없음. 한 사람에게만."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No public profile. One person at a time."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "公開プロフィールなし。ひとりだけに。"
+          }
+        }
+      }
+    },
+    "onboarding.getStarted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "시작하기"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get Started"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "始める"
+          }
+        }
+      }
+    },
+    "onboarding.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "다음"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "次へ"
+          }
+        }
+      }
+    },
+    "onboarding.skip": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "건너뛰기"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "スキップ"
+          }
+        }
+      }
+    },
+    "privacy.manifest.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PrivacyInfo.xcprivacy manifest를 통해 Apple App Store에 위 약속이 코드로 선언되어 있습니다."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "These commitments are declared in code via the PrivacyInfo.xcprivacy manifest, visible on the Apple App Store."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "これらの約束はPrivacyInfo.xcprivacyマニフェストでコードとして宣言されており、Apple App Storeで確認できます。"
+          }
+        }
+      }
+    },
+    "privacy.section.cloudkit.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "동기화는 Apple CloudKit Private Database를 통해서만 이루어집니다. 개발자는 사용자의 데이터에 접근할 수 없습니다."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync happens only through Apple CloudKit Private Database. The developer cannot access your data."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同期はApple CloudKit Private Databaseのみを通じて行われます。開発者はあなたのデータにアクセスできません。"
+          }
+        }
+      }
+    },
+    "privacy.section.cloudkit.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CloudKit Private DB만 사용"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CloudKit Private database only"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CloudKit Private DBのみ"
+          }
+        }
+      }
+    },
+    "privacy.section.noAds.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "분석 SDK 없음, 광고 네트워크 없음, 제3자 데이터 판매 없음. PrivacyInfo.xcprivacy에 이 약속이 코드로 선언되어 있습니다."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No analytics SDK, no ad network, no third-party data sale. This commitment is declared in code in PrivacyInfo.xcprivacy."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分析SDKなし、広告ネットワークなし、第三者へのデータ販売なし。この約束はPrivacyInfo.xcprivacyでコードとして宣言されています。"
+          }
+        }
+      }
+    },
+    "privacy.section.noAds.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "추적·광고·데이터 판매 없음"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No tracking, no ads, no data sale"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "トラッキング・広告・データ販売なし"
+          }
+        }
+      }
+    },
+    "privacy.section.onDevice.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "모든 데이터는 사용자의 기기와 개인 iCloud 계정에만 저장됩니다. Still Hours 서버는 존재하지 않습니다."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All data is stored only on your device and your personal iCloud account. There is no Still Hours server."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべてのデータはあなたのデバイスと個人のiCloudアカウントにのみ保存されます。Still Hoursのサーバーは存在しません。"
+          }
+        }
+      }
+    },
+    "privacy.section.onDevice.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "데이터는 사용자 기기에만"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your data stays on your device"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データはお使いのデバイスに"
+          }
+        }
+      }
+    },
+    "settings.about.lead": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "자산을 입구로, 기억을 본문으로"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Items as the entry. Memories as the body"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "資産を入り口に、記憶を本文に"
+          }
+        }
+      }
+    },
+    "settings.about.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Still Hours는"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Still Hours is"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Still Hoursとは"
+          }
+        }
+      }
+    },
+    "settings.dataPrivacy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "데이터 프라이버시"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data Privacy"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データプライバシー"
+          }
+        }
+      }
+    },
+    "settings.export.csv": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSV로 내보내기"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export as CSV"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSVとしてエクスポート"
+          }
+        }
+      }
+    },
+    "settings.export.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "내보낸 데이터에는 모든 항목과 기억이 포함됩니다."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your export includes all items and memories."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "エクスポートにはすべての項目と記憶が含まれます。"
+          }
+        }
+      }
+    },
+    "settings.export.json": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JSON으로 내보내기"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export as JSON"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JSONとしてエクスポート"
+          }
+        }
+      }
+    },
+    "settings.export.promiseFooter": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Still Hours는 사용자가 언제든 자신의 데이터를 가져갈 수 있도록 보장합니다."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Still Hours always lets you take your data with you."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Still Hoursは常にデータを持ち出せます。"
+          }
+        }
+      }
+    },
+    "settings.export.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "데이터 내보내기"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export data"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データのエクスポート"
+          }
+        }
+      }
+    },
+    "settings.help": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "도움말"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Help"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ヘルプ"
+          }
+        }
+      }
+    },
+    "settings.section.about": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "정보"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "情報"
+          }
+        }
+      }
+    },
+    "settings.section.data": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "데이터"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データ"
+          }
+        }
+      }
+    },
+    "settings.version": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "버전"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "バージョン"
+          }
+        }
+      }
+    },
+    "timeline.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "첫 기억을 추가해 보세요"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add your first memory"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最初の記憶を追加してください"
+          }
+        }
+      }
+    },
+    "timeline.year": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@년"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@年"
+          }
+        }
       }
     }
   }

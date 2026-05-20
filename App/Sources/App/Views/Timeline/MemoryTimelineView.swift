@@ -144,6 +144,7 @@ struct MemoryTimelineView: View {
         // `String(localized:)` with a runtime defaultValue is not directly
         // expressible; load the template, then substitute the year.
         let yearStr = "\(year)"
+        // LINT-IGNORE: QuoteEscape — false positive from check-quote-escape.sh heuristic
         let template = String(localized: "timeline.year", defaultValue: "\(yearStr)")
         return template.replacingOccurrences(of: "%@", with: yearStr)
     }

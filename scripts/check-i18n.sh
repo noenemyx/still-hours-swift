@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# check-i18n.sh — Localization Lint (Axes A, B, J, M)
+# check-i18n.sh — Localization Lint (Axes A, B, J, M, N)
 #
 # Purpose : Verify the String Catalog (Localizable.xcstrings) and Swift source
 #           for i18n correctness across Wave 1 locales (ko / en / ja).
@@ -14,6 +14,10 @@
 #       fr users. Lesson-learned: use a locArray() / switch pattern instead.
 #       Reference: ~/.claude/lessons-learned-global.md §"OYL axis J" (commit ead846b)
 #   M — ASO metadata coverage (Wave 1 §2/§3/§4 locale sections present)
+#   N — Key sync: every String(localized:) key in source exists in xcstrings — FAIL
+#       WARN on keys in catalog but not in source (orphaned keys).
+#       Trigger: R11A.1 audit found 10 keys used in source missing from catalog,
+#       causing defaultValue fallback (English text shown in all locales).
 #
 # Wave 1 locales : ko (sourceLanguage) · en · ja
 # Wave 2 deferred: de · fr · es · pt-BR · zh-Hant (v1.2)
@@ -21,8 +25,8 @@
 # Usage   : ./scripts/check-i18n.sh [source-root]
 #           source-root defaults to the parent of the directory containing this script.
 #
-# Exit    : 0 = all critical axes (A, J, M) pass, 1 = one or more fail.
-#           Axis B is WARN-only and does not affect exit code.
+# Exit    : 0 = all critical axes (A, J, M, N) pass, 1 = one or more fail.
+#           Axes B and N-orphan are WARN-only and do not affect exit code.
 # =============================================================================
 set -euo pipefail
 
@@ -45,7 +49,7 @@ PLIST="${SOURCE_ROOT}/App/Resources/Info.plist"
 EXPECTED_LOCALES="en ja ko"   # sorted for comparison
 
 # Per-axis results (PASS / FAIL / WARN)
-RESULT_A="PASS"; RESULT_B="PASS"; RESULT_J="PASS"; RESULT_M="PASS"
+RESULT_A="PASS"; RESULT_B="PASS"; RESULT_J="PASS"; RESULT_M="PASS"; RESULT_N="PASS"
 OVERALL=0
 
 mark_fail() { eval "RESULT_${1}=FAIL"; OVERALL=1; }
@@ -133,13 +137,14 @@ fi
 # ── Step 4 — Axis A: key naming convention ─────────────────────────────────
 header "Step 4 — Axis A: Key naming (lowercase-led dotted segments)"
 
-# Convention: each segment starts with lowercase; camelCase allowed within segment.
-# Examples: nav.close, capture.error.titleRequired, capture.modeUnavailable.barcode
+# Convention: each segment starts with lowercase (camelCase/digits/underscores allowed within),
+# OR is a pure-digit segment (e.g. onboarding.1.body uses '1' as a step index segment).
+# Examples: nav.close, capture.error.titleRequired, capture.error.open_settings, onboarding.1.body
 AXIS_A_VIOLATIONS=$(XCSTRINGS_PATH="$XCSTRINGS" python3 -c "
 import json, re, os
 path = os.environ['XCSTRINGS_PATH']
-# Each dot-separated segment: starts with lowercase letter, rest can be alpha
-segment = r'[a-z][a-zA-Z]*'
+# Each dot-separated segment: lowercase-led (letters/digits/underscores allowed after) or pure digits
+segment = r'(?:[a-z][a-zA-Z0-9_]*|[0-9]+)'
 pattern = re.compile(r'^' + segment + r'(\.' + segment + r')*$')
 with open(path, 'r', encoding='utf-8') as f:
     data = json.load(f)
@@ -264,6 +269,88 @@ else
   fi
 fi
 
+# ── Step 8 — Axis N: key sync (source ↔ catalog) ───────────────────────────
+header "Step 8 — Axis N: Key sync — source String(localized:) vs xcstrings catalog"
+#
+# Every key used in String(localized: "key") in Swift source must exist in
+# Localizable.xcstrings. Missing keys cause silent defaultValue fallback,
+# showing English text in all locales.
+# Orphaned keys (in catalog but not in source) are WARN-only — they may be
+# referenced via LocalizedStringKey interpolation or future views.
+# Reference: R11A.1 i18n audit (2026-05-21) — 10 keys found missing.
+
+if [[ ! -d "$SWIFT_SOURCES" ]]; then
+  warn "App/Sources not found — skipping Axis N scan."
+  mark_warn "N"
+elif [[ ! -f "$XCSTRINGS" ]]; then
+  warn "Localizable.xcstrings not found — skipping Axis N scan."
+  mark_warn "N"
+else
+  AXIS_N_RESULT=$(XCSTRINGS_PATH="$XCSTRINGS" SWIFT_SOURCES_PATH="$SWIFT_SOURCES" python3 -c "
+import json, re, os, glob
+
+sources_dir = os.environ['SWIFT_SOURCES_PATH']
+xcstrings_path = os.environ['XCSTRINGS_PATH']
+
+patterns = [
+    re.compile(r'String\(\s*localized:\s*\"([^\"]+)\"'),
+    re.compile(r'Text\(\"([a-z][a-z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*)*)\"\)'),
+    re.compile(r'LocalizedStringKey\(\"([^\"]+)\"\)'),
+    re.compile(r'\.navigationTitle\(\"([a-z][a-z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*)*)\"\)'),
+]
+
+source_keys = set()
+for path in glob.glob(os.path.join(sources_dir, '**/*.swift'), recursive=True):
+    content = open(path).read()
+    for pat in patterns:
+        for m in pat.finditer(content):
+            key = m.group(1)
+            if len(key) < 100 and '/' not in key and '\n' not in key:
+                source_keys.add(key)
+
+with open(xcstrings_path, 'r', encoding='utf-8') as f:
+    data = json.load(f)
+catalog_keys = set(data.get('strings', {}).keys())
+
+missing = sorted(source_keys - catalog_keys)
+orphaned = sorted(catalog_keys - source_keys)
+
+print('SOURCE_COUNT=' + str(len(source_keys)))
+print('CATALOG_COUNT=' + str(len(catalog_keys)))
+print('MISSING_COUNT=' + str(len(missing)))
+print('ORPHANED_COUNT=' + str(len(orphaned)))
+for k in missing:
+    print('MISSING:' + k)
+for k in orphaned:
+    print('ORPHANED:' + k)
+")
+
+  N_SOURCE=$(echo "$AXIS_N_RESULT" | grep "^SOURCE_COUNT=" | cut -d= -f2)
+  N_CATALOG=$(echo "$AXIS_N_RESULT" | grep "^CATALOG_COUNT=" | cut -d= -f2)
+  N_MISSING=$(echo "$AXIS_N_RESULT" | grep "^MISSING_COUNT=" | cut -d= -f2)
+  N_ORPHANED=$(echo "$AXIS_N_RESULT" | grep "^ORPHANED_COUNT=" | cut -d= -f2)
+
+  set +o pipefail
+  MISSING_KEYS=$(echo "$AXIS_N_RESULT" | grep "^MISSING:" | sed 's/^MISSING:/  /' || true)
+  ORPHANED_KEYS=$(echo "$AXIS_N_RESULT" | grep "^ORPHANED:" | sed 's/^ORPHANED:/  /' || true)
+  set -o pipefail
+
+  if [[ "${N_MISSING:-0}" -gt 0 ]]; then
+    fail "Axis N — ${N_MISSING} source key(s) MISSING from xcstrings (will silently fall back to defaultValue):"
+    echo "$MISSING_KEYS"
+    echo ""
+    echo "       Fix: add each missing key to Localizable.xcstrings with ko/en/ja translations."
+    mark_fail "N"
+  else
+    info "Axis N: all ${N_SOURCE} source keys present in catalog (${N_CATALOG} catalog keys)."
+  fi
+
+  if [[ "${N_ORPHANED:-0}" -gt 0 ]]; then
+    warn "Axis N — ${N_ORPHANED} catalog key(s) not found in source (orphaned — kept, no action needed):"
+    echo "$ORPHANED_KEYS"
+  fi
+fi
+
 # ── Summary table ───────────────────────────────────────────────────────────
 echo ""
 echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -287,6 +374,7 @@ print_axis_row "Axis A — Key naming convention"         "$RESULT_A"
 print_axis_row "Axis B — No hardcoded strings (WARN)"   "$RESULT_B"
 print_axis_row "Axis J — Binary locale anti-pattern"    "$RESULT_J"
 print_axis_row "Axis M — ASO Wave 1 locale sections"    "$RESULT_M"
+print_axis_row "Axis N — Key sync: source ↔ catalog"    "$RESULT_N"
 
 echo ""
 

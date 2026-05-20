@@ -22,10 +22,9 @@ final class CaptureFlowUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
         app = XCUIApplication()
-        // TODO: When main app checks this flag, use it to disable animations
-        // and skip onboarding. Currently asserted without app-side support.
-        app.launchArguments.append("--ui-testing")
-        app.launch()
+        // R11A.2: --reset-onboarding clears hasCompletedOnboarding so onboarding
+        // does not block these tests. StillHoursApp.init() handles this flag.
+        UITestHelpers.launchAppForTesting(app, resetOnboarding: true)
     }
 
     override func tearDownWithError() throws {

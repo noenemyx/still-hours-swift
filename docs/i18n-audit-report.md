@@ -94,3 +94,77 @@ When `String(localized: "key", defaultValue: "English text")` cannot resolve the
 - [x] All 68 source-referenced keys now present in xcstrings
 - [x] capture-screenshots.sh: launch step has locale args
 - [ ] Single-quadrant capture test: run `bash scripts/capture-screenshots.sh --single light-ko` after next build to confirm Korean text visible
+
+---
+
+## R11A.1 — Full i18n Key Sync Audit
+
+**Date**: 2026-05-21
+**Auditor**: R11A.1 automated audit
+**Trigger**: R10.3 Onboarding agent added 16+ keys; other recent agents may have introduced new String(localized:) usages without xcstrings entries. Comprehensive re-audit required.
+
+### Pre-Audit State
+
+| Metric | Count |
+|--------|-------|
+| Source keys extracted (String(localized:) + Text("key") + LocalizedStringKey patterns) | 126 |
+| Catalog keys (xcstrings) | 140 |
+| Missing (source → catalog) | 10 |
+| Orphaned (catalog → source) | 24 |
+
+### Missing Keys Found (10)
+
+All 10 had `defaultValue` in source that served as English fallback across all locales.
+
+| Key | en (defaultValue) | ko | ja |
+|-----|-------------------|----|----|
+| `accessibility.onboarding.1.card` | Book cover: Norwegian Wood... | 책 표지: 노르웨이의 숲... | ブックカバー：ノルウェイの森... |
+| `accessibility.onboarding.1.memory` | Memory entry: Tokyo Tsutaya... | 기억 항목: 도쿄 츠타야... | 記憶エントリー：東京 蔦屋書店... |
+| `accessibility.onboarding.3.sheet` | Share to: friend Minjin... | 공유 대상: 친구 민진... | 共有先：友人ミンジン... |
+| `capture.error.open_settings` | Open Settings | 설정 열기 | 設定を開く |
+| `capture.field.creator.prompt` | Author / Artist / Director… | 저자 / 아티스트 / 감독… | 著者 / アーティスト / 監督… |
+| `capture.preview.acquired_note` | Acquired — just now | 획득 — 방금 | 入手 — たった今 |
+| `capture.preview.ready` | Ready to save | 저장 준비 완료 | 保存の準備完了 |
+| `capture.validation.title_required` | Title is required. | 제목을 입력해 주세요. | タイトルを入力してください。 |
+| `capture.voice.permissionDenied.desc` | Microphone or speech recognition permission was denied. | 마이크 또는 음성 인식 권한이 거부되었습니다. | マイクまたは音声認識の権限が拒否されました。 |
+| `capture.voice.transcript.label` | Recognised text | 인식된 텍스트 | 認識されたテキスト |
+
+### Orphaned Keys (24 — preserved)
+
+Keys in xcstrings but not referenced in current source. Kept — likely referenced by future views or via LocalizedStringKey interpolation not detectable by static grep.
+
+`app.name`, `capture.error.titleRequired`, `capture.manual.cover`, `capture.manual.creator`, `capture.manual.medium`, `capture.manual.title`, `capture.modeUnavailable.barcode`, `capture.modeUnavailable.voice`, `capture.voice.permissionSpeech`, `item.detail.pages`, `item.detail.publisher`, `library.placeholder`, `nav.back`, `nav.close`, `nav.delete`, `nav.done`, `nav.edit`, `nav.save`, `nav.search`, `onboarding.2.media.line`, `onboarding.2.medium.book`, `onboarding.2.medium.movie`, `onboarding.2.medium.music`, `onboarding.2.medium.object`
+
+### Post-Audit State
+
+| Metric | Count |
+|--------|-------|
+| xcstrings total keys | 150 (was 140) |
+| Missing (source → catalog) | 0 |
+| Orphaned (catalog → source) | 24 (preserved) |
+| All 3 locales (ko/en/ja) complete | yes |
+
+### Files Modified
+
+| File | Change |
+|------|--------|
+| `App/Resources/Localizable.xcstrings` | 10 missing keys added (140 → 150 total), all with ko/en/ja translations |
+| `scripts/check-i18n.sh` | Added Step 8 — Axis N (key sync: source ↔ catalog). FAIL on any missing-in-catalog key, WARN on orphaned. Summary table updated. |
+
+### Lint Verification (post-fix)
+
+```
+Axis N — Key sync: source ↔ catalog    PASS
+Axis N WARN: 24 catalog keys not found in source (orphaned — kept, no action needed)
+Step 3: 150 keys, all 3 locales complete, all states valid.
+```
+
+Axis A FAIL is pre-existing (numeric segments in `onboarding.N.*` keys violate the `[a-z][a-zA-Z]*` regex, introduced before R10.1 by the onboarding scaffolding). R11A scope: key sync only.
+
+### Verification Checklist
+
+- [x] xcstrings JSON valid (python3 json.load passes)
+- [x] All 10 new keys: ko/en/ja all present, non-empty, state=translated
+- [x] Axis N PASS: 0 source keys missing from catalog
+- [x] Step 3 PASS: 150 keys, all 3 locales complete
+- [x] check-i18n.sh Step 8 — Axis N added and operational

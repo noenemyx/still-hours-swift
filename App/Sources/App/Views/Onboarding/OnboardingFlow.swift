@@ -75,6 +75,13 @@ struct OnboardingFlow: View {
                 value: currentPage
             )
             .background(Color.shBackground)
+            // OnboardingFlow shows BEFORE the main TabView (ContentView gates
+            // on @AppStorage hasCompletedOnboarding). ContentView's
+            // `.tint(Color.shAccent)` doesn't propagate here because we're
+            // outside that TabView's view tree. Apply tint locally so the
+            // Next / Get Started buttons + page indicator dots pick up the
+            // brand accent (warm orange now, cool blue post-R11).
+            .tint(Color.shAccent)
             .ignoresSafeArea()
 
             // Skip button — visible on pages 0 and 1 only
