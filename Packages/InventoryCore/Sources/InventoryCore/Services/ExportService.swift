@@ -15,10 +15,16 @@ import SwiftData
 /// (Promise lint #2 — Data Sovereignty). All returned `Data` values are
 /// Sendable and safe to pass across actor boundaries.
 ///
-/// Swift 6 note: `ModelContext` is stored and used exclusively within
-/// this actor's isolation domain — no cross-actor mutation occurs.
+/// Swift 6 note: Switched from `actor` to `@MainActor final class` so the
+/// service can accept a `ModelContext` from a SwiftUI view environment
+/// without the "sending self.modelContext risks data races" diagnostic.
+/// `ModelContext` is itself main-actor bound under SwiftData's SwiftUI
+/// integration; pretending otherwise via a separate actor isolation
+/// fights the framework. Public methods remain `async throws` for forward
+/// compatibility with off-main background variants.
 @available(iOS 26, macOS 26, *)
-public actor ExportService {
+@MainActor
+public final class ExportService {
 
     // MARK: Stored Properties
 

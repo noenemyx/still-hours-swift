@@ -86,7 +86,12 @@ public final class CaptureStateMachine: ObservableObject {
 
     // MARK: Published state
 
-    @Published public private(set) var state: CaptureState = .idle
+    // `internal(set)` (not `private(set)`) so same-module extensions —
+    // notably `CaptureStateMachine+Barcode.swift` and a forthcoming
+    // `CaptureStateMachine+Voice.swift` — can drive transitions from
+    // their recognized-payload callbacks without a separate trampoline.
+    // External readers (views) still get read-only access.
+    @Published public internal(set) var state: CaptureState = .idle
 
     // MARK: Dependencies
 

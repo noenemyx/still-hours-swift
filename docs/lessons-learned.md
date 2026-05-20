@@ -372,6 +372,148 @@ but break the test at runtime.
 
 ---
 
+## Axis I — `actor X` + `ModelContext` is the wrong shape under SwiftData + SwiftUI
+
+**Round 7 (2026-05-21, commit `<r7>`)**
+
+### Symptom
+
+Services declared `public actor LibraryService` (or ExportService /
+TimelineService) that take a `ModelContext` in their initializer.
+SwiftUI views call `LibraryService(context: modelContext)` where
+`modelContext` comes from `@Environment(\.modelContext)`. Swift 6
+strict concurrency flags every such call:
+
+> error: sending 'self.modelContext' risks causing data races
+
+The diagnostic is correct: `ModelContext` is bound to the main actor
+when injected via `@Environment` (SwiftUI's SwiftData integration),
+but the `actor` declaration introduces a fresh isolation domain — the
+context would have to "send" across, which Swift 6 forbids because
+ModelContext isn't `Sendable`.
+
+### Root cause
+
+The `actor` keyword is the wrong shape for "I need serialized access
+to a ModelContext." SwiftData's ModelContext is *already* serialized
+by Apple's framework (it's bound to the actor of the container it
+came from — main, in the typical SwiftUI flow). Wrapping it in
+another actor isn't more concurrency-safe; it's just *different*
+concurrency-safe, in a way SwiftUI's bindings can't satisfy.
+
+### Prevention
+
+1. **For services that operate on a `ModelContext` injected from
+   SwiftUI views: use `@MainActor final class`, not `actor`.**
+   ```swift
+   @MainActor
+   public final class LibraryService {
+       private let context: ModelContext
+       public init(context: ModelContext) { self.context = context }
+       public func listItems(...) async throws -> [Item] { ... }
+   }
+   ```
+   The `async throws` surface is preserved; only the isolation
+   declaration changes.
+
+2. **If the service truly needs to run off-main** (heavy export,
+   sync engine), pass `ModelContainer` (which IS Sendable) into a
+   real `actor`, and have it construct its own background
+   `ModelContext` inside. This matches Apple's documented background
+   import pattern.
+
+3. **Don't be tempted by `nonisolated(unsafe) ModelContext`** — that
+   silences the diagnostic without making the code correct. Concurrent
+   reads/writes from multiple actors to the same context still race.
+
+4. **API ergonomics**: views still `await` service methods. The user
+   never notices the change. The cost is purely lexical — `actor` →
+   `@MainActor final class` in the declaration.
+
+---
+
+## Axis J — Apple legacy classes (AVCaptureSession, SFSpeechRecognitionTask) need `@unchecked Sendable`
+
+**Round 7 (2026-05-21, commit `<r7>`)**
+
+### Symptom
+
+SwiftUI views wrap `AVCaptureSession` via `UIViewControllerRepresentable`
+with a Coordinator pattern. The Coordinator stores `let session:
+AVCaptureSession` and `private var hasRecognized = false`. Swift 6
+strict concurrency rejects:
+
+> error: stored property 'session' of 'Sendable'-conforming class
+> 'BarcodeSessionCoordinator' has non-Sendable type 'AVCaptureSession'
+> error: stored property 'hasRecognized' of 'Sendable'-conforming
+> class 'BarcodeSessionCoordinator' is mutable
+
+Similarly for `SFSpeechRecognitionTask` captured in an async actor
+method: "capture of 'task' with non-Sendable type
+'SFSpeechRecognitionTask' in a '@Sendable' closure."
+
+### Root cause
+
+Apple framework classes from the AVFoundation, Speech, and CoreLocation
+eras predate Swift 6 strict concurrency. They are not yet annotated as
+`Sendable` (or non-Sendable explicitly) and the compiler must
+conservatively assume the worst. The framework documentation does
+specify thread-safety contracts — AVCaptureSession is safe to access
+from a serial queue; SFSpeechRecognitionTask is owned by its
+recognizer — but Swift 6 has no machine-readable way to learn this.
+
+### Prevention
+
+1. **For Coordinator-shaped wrappers** (`UIViewControllerRepresentable
+   .Coordinator`, `AVCaptureMetadataOutputObjectsDelegate`, etc.):
+   declare the class `@unchecked Sendable` with a comment explaining
+   the safety justification:
+   ```swift
+   // `@unchecked Sendable` is required because AVCaptureSession +
+   // mutable `hasRecognized` flag don't satisfy strict concurrency
+   // automatically. Safety: AVFoundation callbacks always fire on
+   // the configured `sessionQueue`; the host VC and Coordinator are
+   // only constructed/destroyed from the main actor; the cross-thread
+   // surface is read-only access to the session.
+   final class BarcodeSessionCoordinator: NSObject,
+       AVCaptureMetadataOutputObjectsDelegate, @unchecked Sendable {
+       ...
+   }
+   ```
+
+2. **For async actor methods returning AsyncStream wrapping a
+   non-Sendable framework type**: don't capture the type in a local
+   variable that survives the `@Sendable` closure boundary. Assign
+   directly to the actor's stored property:
+   ```swift
+   // BAD: captures `task` across the closure boundary
+   let task = sfRecognizer.recognitionTask(with: request) { ... }
+   self.recognitionTask = task
+   return stream
+
+   // GOOD: assigns inside actor isolation, no captured local
+   self.recognitionTask = sfRecognizer.recognitionTask(with: request) { ... }
+   return stream
+   ```
+
+3. **Closure declarations passed to representables**: explicitly mark
+   `@Sendable`:
+   ```swift
+   struct CameraPreviewRepresentable: UIViewControllerRepresentable {
+       let onRecognized: @Sendable (String) -> Void   // not `(String) -> Void`
+   }
+   ```
+   The caller's closure body should marshal back to main with
+   `Task { @MainActor in ... }` before touching SwiftUI state.
+
+4. **Future-proofing**: Apple will likely annotate these framework
+   types over the next several Swift releases. When that happens,
+   `@unchecked Sendable` should be revisited and removed where the
+   framework now supplies the conformance natively. Until then, this
+   is the documented escape hatch and using it is *not* a hack.
+
+---
+
 ## Axis E — `set -o pipefail` + `grep -v` chains silently abort
 
 **Pre-flight Round 4 (2026-05-20, commit `f15da22`)**

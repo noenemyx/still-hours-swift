@@ -15,10 +15,15 @@ import SwiftData
 /// All returned arrays are sorted chronologically — the most-recent
 /// entry appears first (reverse chronological), matching a journal UI.
 ///
-/// Swift 6 note: `ModelContext` is captured at init and accessed only
-/// within this actor's isolation domain.
+/// Swift 6 note: Switched from `actor` to `@MainActor final class` for
+/// the same reason as `LibraryService` / `ExportService` — SwiftData's
+/// `ModelContext` is main-actor bound when injected via
+/// `@Environment(\.modelContext)`; pretending otherwise via a separate
+/// actor produces "sending self.modelContext risks data races" at
+/// every callsite.
 @available(iOS 26, macOS 26, *)
-public actor TimelineService {
+@MainActor
+public final class TimelineService {
 
     // MARK: Stored Properties
 

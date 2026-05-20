@@ -37,11 +37,14 @@ public struct ItemFilter: Sendable {
 /// `ModelContext` is injected at initialisation and never crosses
 /// the actor boundary — callers hold only Sendable plain values.
 ///
-/// Swift 6 note: `ModelContext` is not `Sendable`; it is captured
-/// as a stored property and accessed only from within the actor
-/// isolation domain, which is the correct pattern per SE-0399.
+/// Swift 6 note: Switched from `actor` to `@MainActor final class` —
+/// SwiftData's `ModelContext` is bound to the main actor when injected
+/// via `@Environment(\.modelContext)`. Routing it through a separate
+/// actor produces "sending self.modelContext risks data races" at every
+/// callsite. Same rationale as `ExportService` / `TimelineService`.
 @available(iOS 26, macOS 26, *)
-public actor LibraryService {
+@MainActor
+public final class LibraryService {
 
     // MARK: Stored Properties
 

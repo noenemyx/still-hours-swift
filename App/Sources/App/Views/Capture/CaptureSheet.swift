@@ -126,30 +126,35 @@ struct CaptureSheet: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 
         case .scanning(let mode):
-            stubView(for: mode)
+            scanningView(for: mode)
 
         default:
             Color.clear
         }
     }
 
-    // MARK: Stub views for unimplemented modes
+    // MARK: Active capture views (Sprint 1.3 + 1.4)
 
     @ViewBuilder
-    private func stubView(for mode: CaptureMode) -> some View {
-        VStack(spacing: 12) {
-            Image(systemName: mode == .barcode ? "barcode.viewfinder" : "mic.fill")
-                .font(.system(size: 48))
-                .foregroundStyle(.secondary)
-            Text(
-                mode == .barcode
-                    ? String(localized: "capture.coming.1_3", defaultValue: "Coming in Sprint 1.3")
-                    : String(localized: "capture.coming.1_4", defaultValue: "Coming in Sprint 1.4")
-            )
-            .font(.headline)
-            .foregroundStyle(.secondary)
+    private func scanningView(for mode: CaptureMode) -> some View {
+        switch mode {
+        case .barcode:
+            BarcodeCaptureCoordinator(stateMachine: machine)
+                .transition(reduceMotion ? .identity : .opacity)
+        case .voice:
+            VoiceCaptureCoordinator(stateMachine: machine) {
+                // Switch-to-manual fallback from inside voice mode.
+                machine.start(mode: .manual)
+            }
+            .transition(reduceMotion ? .identity : .opacity)
+        case .manual:
+            // Manual mode shouldn't land in `.scanning(.manual)` — the
+            // state machine fast-paths to `.confirming(.empty)` on start.
+            // Render the manual form anyway as a safety net.
+            ManualCaptureView(payload: CapturePayload()) { confirmed in
+                payload = confirmed
+            }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     // MARK: Mode switcher (trailing toolbar)

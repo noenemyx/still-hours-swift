@@ -1,3 +1,8 @@
+// StillHoursApp.swift — App
+// Copyright 2026 sunghun.ahn — Still Hours
+// Round 7: Replaced placeholder RootView with ContentView
+// Created: 2026-05-21
+
 import SwiftUI
 import SwiftData
 import InventoryCore
@@ -6,7 +11,7 @@ import InventoryCore
 struct StillHoursApp: App {
     var body: some Scene {
         WindowGroup {
-            RootView()
+            ContentView()
         }
         .modelContainer(
             for: [
@@ -16,14 +21,5 @@ struct StillHoursApp: App {
                 InventoryCore.Attachment.self,
             ]
         )
-    }
-}
-
-struct RootView: View {
-    var body: some View {
-        Text("Still Hours")
-            .font(StillHoursTypeface.display(for: Locale.current))
-            .foregroundStyle(Color.shTextPrimary)
-            .padding()
     }
 }
