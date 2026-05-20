@@ -1,14 +1,21 @@
 import SwiftUI
 import SwiftData
+import InventoryCore
 
-@available(iOS 26, *)
 @main
 struct StillHoursApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
         }
-        .modelContainer(for: [Item.self, Memory.self, Collection.self, Attachment.self])
+        .modelContainer(
+            for: [
+                Item.self,
+                Memory.self,
+                InventoryCore.Collection.self,
+                InventoryCore.Attachment.self,
+            ]
+        )
     }
 }
 

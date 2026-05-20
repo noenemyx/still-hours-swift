@@ -40,7 +40,7 @@ public struct SmartFilterRule: Codable, Sendable {
 /// Collections support many-to-many membership with explicit ordering via
 /// ``itemOrder``. A `smartFilter` turns the collection into a live query;
 /// when set, ``items`` is populated at display time rather than stored.
-@available(iOS 26, *)
+@available(iOS 26, macOS 26, *)
 @Model
 public final class Collection: @unchecked Sendable {
 
@@ -119,7 +119,7 @@ public final class Collection: @unchecked Sendable {
 
 // MARK: - Encodable (Data Sovereignty export — Promise lint #2)
 
-@available(iOS 26, *)
+@available(iOS 26, macOS 26, *)
 extension Collection: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, title, collectionDescription, itemOrder, coverItemID,

@@ -41,7 +41,7 @@ public enum ItemState: String, Codable, CaseIterable, Sendable {
 ///
 /// `Item` is the central entity in Still Hours. Every ``Memory``,
 /// ``Collection`` membership, and ``Attachment`` hangs off an `Item`.
-@available(iOS 26, *)
+@available(iOS 26, macOS 26, *)
 @Model
 public final class Item: @unchecked Sendable {
 
@@ -138,7 +138,7 @@ public final class Item: @unchecked Sendable {
 
 // MARK: - Encodable (Data Sovereignty export — Promise lint #2)
 
-@available(iOS 26, *)
+@available(iOS 26, macOS 26, *)
 extension Item: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, title, creator, year, medium, state, tags, createdAt, updatedAt

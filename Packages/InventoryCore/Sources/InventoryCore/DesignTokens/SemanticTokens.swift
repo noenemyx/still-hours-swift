@@ -321,12 +321,17 @@ private extension Color {
     /// and `dark` in dark mode.
     ///
     /// Used internally by ``SemanticTokens`` to bridge Foundation primitives
-    /// into adaptive semantic tokens.
+    /// into adaptive semantic tokens. iOS / iPadOS only — see the matching
+    /// helper in Color+StillHours.swift for the macOS host fallback rationale.
     init(light: Color, dark: Color) {
+        #if canImport(UIKit)
         self.init(uiColor: UIColor { traits in
             traits.userInterfaceStyle == .dark
                 ? UIColor(dark)
                 : UIColor(light)
         })
+        #else
+        self = light
+        #endif
     }
 }

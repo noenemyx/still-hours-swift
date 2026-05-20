@@ -18,7 +18,7 @@ import SwiftData
 ///     configurations: ModelConfiguration()
 /// )
 /// ```
-@available(iOS 26, *)
+@available(iOS 26, macOS 26, *)
 public enum StillHoursMigrationPlan: SchemaMigrationPlan {
 
     /// All schema versions in chronological order.

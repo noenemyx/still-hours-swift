@@ -171,11 +171,22 @@ fi
 # Check that each @Model name appears in a VersionedSchema context
 header "Step 3b — Verifying each @Model appears in VersionedSchema"
 
+# Multi-line tolerant: scan files containing VersionedSchema, then check if
+# the model name appears anywhere within that file. Idiomatic Swift formats
+# the `models: [ ... ]` list across multiple lines, so a same-line regex
+# (the previous approach) gave false negatives.
+schema_files=$(grep -rln "VersionedSchema" "$SOURCE_ROOT" --include="*.swift" \
+                 | grep -v "\.build/" | grep -v "DerivedData/" || true)
+
 for name in "${MODEL_NAMES[@]}"; do
-  schema_ref=$(grep -rn "${name}.self" "$SOURCE_ROOT" --include="*.swift" \
-                 | grep -iE "(VersionedSchema|models:)" \
-                 | grep -v "\.build/" | head -1 || true)
-  if [[ -n "$schema_ref" ]]; then
+  found=false
+  for f in $schema_files; do
+    if grep -q "${name}\.self" "$f"; then
+      found=true
+      break
+    fi
+  done
+  if [[ "$found" == true ]]; then
     info "$name: Registered in VersionedSchema."
   else
     warn "$name: Not found in any VersionedSchema models list."
@@ -187,13 +198,23 @@ done
 # ── Step 4: Check CSV export path ────────────────────────────────────────────
 header "Step 4 — Checking CSV export paths"
 
+# Disable `pipefail` for the next few lines: `grep -v` exits 1 when every
+# input line matches the filter (i.e. nothing survives), which is a perfectly
+# valid "zero matches" outcome here. Without this, an all-filtered pipeline
+# silently aborts the rest of the lint script.
+set +o pipefail
 csv_method_count=$(grep -rn "func\s\+\(exportCSV\|toCSV\|csvRow\|csvString\|asCSV\)" \
-                     "$SOURCE_ROOT" --include="*.swift" \
-                     | grep -v "\.build/" | grep -v "DerivedData/" | wc -l | tr -d ' ')
+                     "$SOURCE_ROOT" --include="*.swift" 2>/dev/null \
+                     | grep -v "\.build/" \
+                     | grep -v "DerivedData/" \
+                     | wc -l | tr -d ' ')
 
 csv_type_count=$(grep -rn "class\s\+\w*CSV\|struct\s\+\w*CSV\|CSVExport\|CSVWriter" \
-                   "$SOURCE_ROOT" --include="*.swift" \
-                   | grep -v "\.build/" | grep -v "DerivedData/" | wc -l | tr -d ' ')
+                   "$SOURCE_ROOT" --include="*.swift" 2>/dev/null \
+                   | grep -v "\.build/" \
+                   | grep -v "DerivedData/" \
+                   | wc -l | tr -d ' ')
+set -o pipefail
 
 echo "  CSV export methods found : $csv_method_count"
 echo "  CSV export types found   : $csv_type_count"

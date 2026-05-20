@@ -12,7 +12,7 @@ import SwiftData
 /// Future schema versions (Manifestation, Loan, Contact, Place, Share —
 /// PRD v0.5) will be defined as `SchemaV2`, `SchemaV3`, etc. and wired
 /// into ``StillHoursMigrationPlan``.
-@available(iOS 26, *)
+@available(iOS 26, macOS 26, *)
 public enum SchemaV1: VersionedSchema {
 
     /// Schema version 1.0.0 — Still Hours v0.1 baseline.
@@ -28,5 +28,13 @@ public enum SchemaV1: VersionedSchema {
             Collection.self,
             Attachment.self,
         ]
+    }
+
+    /// Convenience: a `Schema` instance pre-populated with `models` and
+    /// stamped with `versionIdentifier`. Used by ``ModelContainer``
+    /// construction and by test fixtures so each call site doesn't have to
+    /// rebuild the schema literal.
+    public static var schema: Schema {
+        Schema(models, version: versionIdentifier)
     }
 }

@@ -27,7 +27,7 @@ public enum AttachmentKind: String, Codable, CaseIterable, Sendable {
 /// and optional metadata. The actual file bytes live in the app's
 /// container (or a future CloudKit asset). The owning record is
 /// responsible for cleaning up the file when the attachment is deleted.
-@available(iOS 26, *)
+@available(iOS 26, macOS 26, *)
 @Model
 public final class Attachment: @unchecked Sendable {
 
@@ -85,7 +85,7 @@ public final class Attachment: @unchecked Sendable {
 
 // MARK: - Encodable (Data Sovereignty export — Promise lint #2)
 
-@available(iOS 26, *)
+@available(iOS 26, macOS 26, *)
 extension Attachment: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, kind, path, thumbnailPath, caption, createdAt

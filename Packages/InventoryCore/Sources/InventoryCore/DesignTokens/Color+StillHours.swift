@@ -127,8 +127,12 @@ private extension Color {
 
     /// Creates a `Color` that resolves to different values in light and dark mode.
     ///
-    /// Uses `UIColor.init(dynamicProvider:)` for UIKit compatibility.
+    /// iOS / iPadOS: uses `UIColor.init(dynamicProvider:)` for live trait
+    /// resolution. macOS host (SPM compile-check only — there is no shipped
+    /// macOS target): falls back to the light variant, since the ship target
+    /// is iOS-only and UIColor is unavailable.
     init(light: Color, dark: Color) {
+        #if canImport(UIKit)
         self.init(
             UIColor { traitCollection in
                 traitCollection.userInterfaceStyle == .dark
@@ -136,12 +140,23 @@ private extension Color {
                     : UIColor(light)
             }
         )
+        #else
+        self = light
+        #endif
     }
 }
 
 // MARK: - UIColor Bridge
+//
+// iOS / iPadOS only — `UIColor` is unavailable on macOS host builds.
+// Wrapping in `#if canImport(UIKit)` lets `swift build` succeed on the
+// developer's Mac host (for the SPM test target compile-check) while
+// keeping these aliases callable from device + simulator builds.
 
-@available(iOS 17, macOS 14, *)
+#if canImport(UIKit)
+import UIKit
+
+@available(iOS 17, *)
 public extension UIColor {
 
     // MARK: Surface
@@ -208,3 +223,5 @@ public extension UIColor {
         UIColor(FoundationTokens.Color.onAccent)
     }
 }
+
+#endif // canImport(UIKit)

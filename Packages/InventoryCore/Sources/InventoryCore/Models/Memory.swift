@@ -51,7 +51,7 @@ public struct HistoryEntry: Codable, Sendable {
 /// Memories are the narrative layer of Still Hours — they capture
 /// *when* and *how* the user engaged with an item, along with an
 /// optional freeform note, photos, and voice notes.
-@available(iOS 26, *)
+@available(iOS 26, macOS 26, *)
 @Model
 public final class Memory: @unchecked Sendable {
 
@@ -125,7 +125,7 @@ public final class Memory: @unchecked Sendable {
 
 // MARK: - Encodable (Data Sovereignty export — Promise lint #2)
 
-@available(iOS 26, *)
+@available(iOS 26, macOS 26, *)
 extension Memory: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, kind, date, note, photoCount, voiceNotePath, noteHistory, createdAt
