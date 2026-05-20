@@ -1222,19 +1222,19 @@ Bundle ID: `com.ownlifelab.curium` (사용자 결정 사항)
 
 | Wave | Trigger | ASO 행위 |
 |------|---------|---------|
-| Wave 1 | v1.0 launch | ko/en/ja 동시 출시. 8장 screenshot × 3 locale = 24장 (수동 Keynote + 시뮬레이터 capture). Preview Video 30초 en 1개. Search Ads $300-500/월 시작. |
+| Wave 1 | v1.0 launch | ko/en/ja 동시 출시. 8장 screenshot × 3 locale = 24장 (수동 Keynote + 시뮬레이터 capture). Preview Video 30초 en 1개. Editorial outreach + Organic ASO 시작. |
 | Wave 2 | ko/en/ja 합산 monthly 200+ OR 비현지화 territory 10+ install/월 | zh-Hans/de 출시. 24장 자동화 전환 (xcodebuild UI Test + simctl screenshot). |
 | Wave 3 | Wave 2 3개월 안정 | fr/es/pt 출시. 자동화 파이프라인 완전 운영. |
 
 fastlane 미사용. xcodebuild + simctl 만 활용.
 
-### 16.3 Search Ads Budget + Setup
+### 16.3 Discovery 채널 (User Decision 2026-05-20: No advertisement — Apple Search Ads 영구 X)
 
-- Wave 1: 월 $300-500 (탐색 단계 3개월)
-- CPA bar: $25 이하 / $40 초과 = 즉시 일시 정지
-- Curium (element/periodic table/chemistry/96/radioactive) = negative keyword 설정
-- Brand defense: "curium app" 키워드 bidding 별도
-- CPP 3개 (Lina/Joon/Book-only) → Search Ads 캠페인 별도 연결
+Apple Search Ads 포함 모든 외부 광고 채널 _영구 X_ (Promise §5.3 확장).
+- Organic ASO — Keyword / Subtitle / Description / Promotional Text / CPP 3개
+- Editorial outreach — App of the Day / Indie Spotlight / 한·일 press
+- Word-of-mouth — 자발 추천 = 북극성 지표
+- CPP 3개 (Lina/Joon/Book-only) → Organic ASO 타겟 메타데이터 최적화에 활용
 
 ### 16.4 ASO 자동화 (Wave 2 이후)
 
@@ -1266,7 +1266,7 @@ Notion 또는 Numbers template. 매월 1일 업데이트.
 | Organic impressions | +5% WoW | -10% WoW 2주 연속 |
 | Product Page View CVR | 3% 이상 (paid 기준) | <2% |
 | Top keyword ranking | top-50 | top-100 이탈 |
-| Search Ads CPA | <$25 | >$40 |
+| Organic impressions WoW | +5% | -10% 2주 연속 |
 | Rating | 4.3+ | <4.0 3개월 지속 |
 
 ### 16.7 Quit Signal 6개월 정량 기준
@@ -1295,12 +1295,10 @@ Notion 또는 Numbers template. 매월 1일 업데이트.
 | Promise 조항 | ASO 행위 | 판정 |
 |-------------|---------|------|
 | No advertising | 앱 내 광고 | 금지 (lint 강제) |
-| No advertising | Apple Search Ads | 허용 (외부 유통 채널) |
+| No advertising | Apple Search Ads | **영구 금지** (User Decision 2026-05-20, Promise §5.3) |
 | No AI judgment | Apple ML ranking | 허용 (외부 인프라) |
 | No subscription | Description 카피 | "one-time purchase" 명시 의무 |
 | Data Sovereignty | Privacy label | "Data Not Collected" 유지 의무 |
 
-Promise lint 항목에 "No Search Ads internal promotion" 추가 검토 (v0.9 단계).
-
-_End of Development Plan v2.2._
+_End of Development Plan v2.3._
 

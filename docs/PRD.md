@@ -7,6 +7,18 @@
 
 ---
 
+## 0.0 Governance Principle (1원칙)
+
+**모든 _Critical_ 결정은 사용자 (sunghun.ahn) 의 명시적 확인 후 진행한다.**
+
+자문단 (advisory) 은 _권고_ 역할만. _자동 채택_, _권한 위임_ 영구 금지.
+
+세부: 별도 `docs/GOVERNANCE.md` 참조 (Tier 1 critical 9 카테고리 / Tier 2 자동 진행 8 카테고리 / Decision flow 4-step / Dismissal 해석 / Trigger words / 위반 학습 history).
+
+본 PRD 의 모든 _§ 결정_ 은 본 원칙 안에서 작성됨.
+
+---
+
 ## 0. One-liner
 
 **_자산을 입구로, 기억을 본문으로._**
@@ -161,7 +173,7 @@
 
 1. **No algorithm** — 정렬·추천·자동 분류 _영구 X_. 사용자가 정한 순서만.
 2. **No feed** — public feed / 무한 스크롤 / 활동 피드 _영구 X_.
-3. **No advertising · No data sale** — 외부 트래커·픽셀·analytics broker _영구 X_.
+3. **No advertising · No data sale** — 외부 트래커·픽셀·analytics broker _영구 X_. Apple Search Ads 등 외부 광고 채널 활용도 _영구 X_. 발견은 organic ASO + Editorial outreach + word-of-mouth 만.
 4. **No AI judgment** — 자동 추천·요약·평가 _영구 X_. AI는 _메타데이터 보조_ (OCR / 이미지 인식) _만_.
 5. **No subscription** — 일회성 paid app. 기존 구매자 _영구 무료_ 업그레이드.
 
@@ -1086,7 +1098,7 @@ Curium 어원 + 정체성:
 | ko | 책 기록, 음악 라이브러리, 영화 수집 | 컬렉션, 기억, 아카이브 | 큐레이터 앱, 느린 컬렉션, 기억 보관 |
 | ja | コレクション管理, 蒐集, スローキュレーション | アーカイブ, 記憶, ライブラリ | 個人アーカイブ, 記憶ノート, 収集管理 |
 
-Curium (화학원소 96/radioactive/periodic table/chemistry) 검색은 negative keyword 분리. brand defense bidding 별도.
+Curium (화학원소 96/radioactive/periodic table/chemistry) 검색 간섭 방지를 위한 organic keyword 선택 시 해당 용어 회피.
 
 #### Promotional Text (170자, 심사 없이 update 가능)
 
@@ -1110,7 +1122,7 @@ Curium (화학원소 96/radioactive/periodic table/chemistry) 검색은 negative
 | B — Joon (출장자) | 도시 탐방 사용자 | Tsutaya 도쿄 장면 + Capture 3초 flow |
 | C — Book-only | Goodreads 이탈자 | Book medium 특화 + Promise 비교 |
 
-Search Ads + CPP 연결 → 타겟별 전환율 최적화.
+CPP 3개 (Lina/Joon/Book-only) → Organic ASO 타겟별 메타데이터 최적화. Search Ads X.
 
 ### 20.5 Screenshot 8장 순서
 
@@ -1139,18 +1151,20 @@ Wave 1: ko/en/ja × 8 = 24장 수동. Wave 2/3: xcodebuild test + simctl screens
 
 제작 도구: Rotato + QuickTime + iMovie (Wave 1, 6-8h).
 
-### 20.7 Search Ads Budget
+### 20.7 Discovery 채널 (User Decision 2026-05-20: No advertisement — Apple Search Ads 포함 영구 X)
 
-- Wave 1 탐색 3개월: 월 $300-500
-- CPA bar: $25 이하 유지 / $40 초과 = 즉시 중단 경고
-- ko/en/ja 동시 집행. Wave 2 trigger: 3개 언어 합산 monthly downloads 200+ OR 비현지화 territory 10+ install/월.
+Apple Search Ads 포함 _모든 외부 광고 채널 영구 X_. 발견 채널 3가지만:
+
+1. **Organic ASO** — Keyword / Subtitle / Description / Promotional Text / CPP 3개
+2. **Editorial outreach** — App of the Day / Indie Spotlight / 한·일 press (콘텐츠 추천, ads 아님)
+3. **Word-of-mouth** — 자발 추천 = 북극성 지표. Year 1-2 자발50% / Organic ASO50% → Year 5+ 자발80% / Organic ASO20%
 
 ### 20.8 ASO × Promise 충돌 해결 매트릭스
 
 | Promise 조항 | ASO 행위 | 판정 |
 |-------------|---------|------|
 | No advertising | 앱 내부 광고 | 금지 |
-| No advertising | Apple Search Ads ($500/월 상한) | 허용 (외부 유통 채널) |
+| No advertising | Apple Search Ads | **영구 금지** (Promise §5.3 확장, 2026-05-20) |
 | No AI judgment | Apple ML ranking | 허용 (외부 인프라, 앱 내 AI 아님) |
 | Description | 4000자 중 800-1200 사용 | 허용 (절제) |
 | Sober tone | PR outreach | 허용 (sober 톤 유지 시) |
@@ -1174,5 +1188,7 @@ ASO ritual (매월 1일 1시간) 과 advisory ritual 은 _분리_ 운영.
 | Listy | consumption tracking | framing 분리 |
 | 레포브(ko) | ₩19,000 | 가격 비교 모니터링 권고 |
 
-_End of PRD v2.2._
+_User Decision 2026-05-20: No advertisement (Apple Search Ads 포함). Ads는 절대 옵션 아님._
+
+_End of PRD v2.4._
 

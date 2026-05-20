@@ -850,6 +850,7 @@ DEVPLAN v2.0 §15.2 와 정합. 본 Design.MD _구체화_:
 | Date | Section | Change | Reason |
 |------|---------|--------|--------|
 | 2026-05-20 | v1.0 initial | _All sections_ created | Pre-flight 시작 직전, 사용자 instruction (Sunsama + Things + benchmark + Claude Design 협업) 반영 |
+| 2026-05-20 | §16 정정 | No ads (Apple Search Ads 포함) 명시 | 사용자 결정 |
 
 → 추후 모든 design 결정 본 history 에 추가.
 
@@ -961,4 +962,4 @@ VoiceOver label 미구현 시 ADA 심사 제출 금지.
 
 Sketch / Figma는 _의존성으로 추가하지 않음_. design token 변경 시 Keynote 슬라이드만 업데이트.
 
-_End of Design.md v2.2._
+_End of Design.md v2.3._

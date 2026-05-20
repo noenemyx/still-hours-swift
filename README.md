@@ -37,7 +37,7 @@ Curium is a collection management app where each item (book, album, film, object
 
 1. No algorithm — sort by explicit user choice only
 2. No feed — no public stream
-3. No advertising / no data sale
+3. No advertising / no data sale — including no Apple Search Ads, no external ad channels
 4. No AI judgment — AI assist only for OCR/image recognition
 5. **No subscription IAP** — code-enforced via lint (the one Promise made non-negotiable in code)
 
@@ -50,6 +50,7 @@ Plus Data Sovereignty: CloudKit Private DB only, plaintext JSON/CSV/PDF export a
 | File | Lines | Description |
 |------|-------|-------------|
 | `PRD.md` | ~1200 | Product Requirements — niche, persona, JTBD, hero moments, user stories, data model, modules, pricing, open questions, v2.1 naming history, v2.2 ASO Optimization |
+| `GOVERNANCE.md` | ~90 | Decision authority — advisory vs user role + Critical Tier 1/2 + Decision flow + violation history |
 | `DEVPLAN.md` | ~1300 | Development Plan — tech stack, architecture, MVP definition (Tracer Bullet), milestones, risk register, release strategy, burnout protection, ASO Implementation |
 | `BENCHMARK.md` | ~440 | Market benchmark — 22 apps × 9 categories, 5 product hypotheses, niche definition |
 | `ADVISORY.md` | ~230 | 6-panel advisory synthesis (Marketing / Strategy / UX / UI / Design / Engineer) |
@@ -85,7 +86,6 @@ Tracer Bullet sequence (`Book full → Music full → Movie basic → Object bas
 - [ ] WCAG AA contrast verification chart
 - [ ] Settings → "Curium is" surface copy (ko/en draft)
 - [ ] App Store metadata 8-locale 1차 draft (Wave 1 ko/en/ja 우선)
-- [ ] Search Ads budget setup ($300-500/월 상한, brand defense + negative keywords)
 - [ ] Promise lint scripts (Privacy + Data Sovereignty + No subscription IAP — 3 lint baseline)
 
 ---
