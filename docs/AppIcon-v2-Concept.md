@@ -156,6 +156,4 @@ space is legible at 1024pt.
 
 ## §6 Status
 
-Concept finalized 2026-05-21. PNG render pending. User to commission
-or self-execute via Figma with downloaded Apple Design Resources iOS
-26 UI Kit.
+Concept finalized 2026-05-21. PNG rendered 2026-05-21 R12.2 — programmatic SVG-based approximation. Final polished render via Figma deferred to post-launch v1.1+ icon refinement sprint.

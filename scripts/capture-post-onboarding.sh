@@ -1,18 +1,25 @@
 #!/usr/bin/env bash
 # =============================================================================
-# capture-screenshots.sh — 4-Quadrant Visual Verification Matrix
+# capture-post-onboarding.sh — Post-Onboarding 4-Quadrant Visual Verification
 #
-# Purpose : Automate the full visual-verification cycle for Still Hours:
-#           build → install → set appearance/locale → launch → screenshot,
-#           repeated for all 4 quadrants: light-en, light-ko, dark-en, dark-ko.
+# Purpose : Capture the post-onboarding app state (LibraryListView + DemoSeeder
+#           items) in the full 4-quadrant matrix: light/dark × ko/en.
+#
+#           WHY this script exists separately from capture-screenshots.sh:
+#           ContentView gates the main TabView behind an @AppStorage flag
+#           ("hasCompletedOnboarding"). capture-screenshots.sh captures the
+#           ONBOARDING screens (screen 1/2/3). This script sets the flag to
+#           true BEFORE launch so the app starts directly in LibraryListView,
+#           letting us verify that the post-R11 Cool Blue palette propagated
+#           into the entire app — not just the onboarding flow.
 #
 # Quadrants:
-#   light-en  — light mode, English locale
 #   light-ko  — light mode, Korean locale
-#   dark-en   — dark mode, English locale
+#   light-en  — light mode, English locale
 #   dark-ko   — dark mode, Korean locale
+#   dark-en   — dark mode, English locale
 #
-# Usage   : ./scripts/capture-screenshots.sh [options]
+# Usage   : ./scripts/capture-post-onboarding.sh [options]
 #
 # Options :
 #   --device NAME      Simulator device name (default: "iPhone 17 Pro")
@@ -20,15 +27,12 @@
 #   --app-path PATH    Path to .app bundle (default: /tmp/StillHours-MS-DD/Build/Products/Debug-iphonesimulator/StillHours.app)
 #   --output-dir DIR   Directory for screenshots (default: /tmp)
 #   --skip-build       Install + screenshot only; assume .app already exists
-#   --skip-onboarding  Set hasCompletedOnboarding=true before each launch so the
-#                      app starts in LibraryListView instead of OnboardingFlow.
-#                      Useful for verifying that palette / UI changes propagated
-#                      into the post-onboarding views. See also:
-#                      capture-post-onboarding.sh (R12.1 dedicated variant).
 #   --single MODE      Capture only one quadrant: light-en|light-ko|dark-en|dark-ko
 #   -h|--help          Show this help and exit
 #
-# SpringBoard restart pattern (Axis K — lessons-learned candidate):
+# Output filenames: /tmp/stillhours-R12-{light|dark}-{en|ko}-library.png
+#
+# SpringBoard restart pattern (Axis K):
 #   After changing locale/appearance via `xcrun simctl spawn booted defaults write`,
 #   SpringBoard must be restarted for the change to take effect. The correct
 #   command is `xcrun simctl spawn booted launchctl kickstart -k
@@ -41,6 +45,12 @@
 #   Any grep -v chain that may produce 0 output lines is wrapped in
 #   `set +o pipefail` ... `set -o pipefail` per lessons-learned Axis E.
 #
+# Axis L — locale launch args:
+#   `-AppleLanguages "(ko)"` / `-AppleLocale ko_KR` are passed as launch
+#   arguments at process start to guarantee the correct locale regardless of
+#   cached bundle state.
+#
+# Created : 2026-05-21 (R12.1)
 # Exit    : 0 = all quadrants captured successfully, 1 = any failure
 # =============================================================================
 set -euo pipefail
@@ -63,7 +73,6 @@ BUNDLE_ID="com.ownlifelab.stillhours"
 APP_PATH="/tmp/StillHours-MS-DD/Build/Products/Debug-iphonesimulator/StillHours.app"
 OUTPUT_DIR="/tmp"
 SKIP_BUILD=false
-SKIP_ONBOARDING=false
 SINGLE_MODE=""
 
 # ── Arg parsing ─────────────────────────────────────────────────────────────
@@ -79,8 +88,6 @@ while [[ $# -gt 0 ]]; do
       OUTPUT_DIR="$2"; shift 2 ;;
     --skip-build)
       SKIP_BUILD=true; shift ;;
-    --skip-onboarding)
-      SKIP_ONBOARDING=true; shift ;;
     --single)
       SINGLE_MODE="$2"
       case "$SINGLE_MODE" in
@@ -91,7 +98,6 @@ while [[ $# -gt 0 ]]; do
       esac
       shift 2 ;;
     -h|--help)
-      # Print the comment header block (lines 2 through the first blank non-comment)
       awk 'NR>1 && /^[^#]/{exit} NR>1{sub(/^# ?/,""); print}' "$0"
       exit 0 ;;
     *)
@@ -108,7 +114,6 @@ PROJECT_YML="${SOURCE_ROOT}/project.yml"
 # ── Step 1 — Boot / verify simulator ─────────────────────────────────────────
 header "Step 1 — Simulator: ${DEVICE_NAME}"
 
-# Find the UDID for the target device
 set +o pipefail
 SIM_UDID=$(xcrun simctl list devices available --json 2>/dev/null \
   | python3 -c "
@@ -132,7 +137,6 @@ fi
 
 info "Device UDID: ${SIM_UDID}"
 
-# Check if already booted
 set +o pipefail
 SIM_STATE=$(xcrun simctl list devices --json 2>/dev/null \
   | python3 -c "
@@ -152,7 +156,6 @@ if [[ "$SIM_STATE" == "Booted" ]]; then
 else
   step "Booting simulator..."
   xcrun simctl boot "${SIM_UDID}"
-  # Wait for the sim to be ready
   local_wait=0
   while [[ $local_wait -lt 30 ]]; do
     set +o pipefail
@@ -177,14 +180,12 @@ print('Unknown')
   info "Simulator booted."
 fi
 
-# Open Simulator.app so screenshots are visually verifiable
 open -a Simulator 2>/dev/null || warn "Could not open Simulator.app (continuing)."
 
 # ── Step 2 — Build (unless --skip-build) ────────────────────────────────────
 if [[ "$SKIP_BUILD" == false ]]; then
   header "Step 2 — Build"
 
-  # Verify project.yml exists
   if [[ ! -f "$PROJECT_YML" ]]; then
     fail "project.yml not found at: ${PROJECT_YML}"
     exit 1
@@ -194,7 +195,6 @@ if [[ "$SKIP_BUILD" == false ]]; then
   xcodegen generate --spec "${PROJECT_YML}" --project "${SOURCE_ROOT}" 2>&1 \
     || { fail "xcodegen generate failed."; exit 1; }
 
-  # Detect .xcodeproj / .xcworkspace
   XCODE_PROJECT_ARG=""
   set +o pipefail
   WS=$(find "${SOURCE_ROOT}" -maxdepth 2 -name "*.xcworkspace" \
@@ -218,7 +218,6 @@ if [[ "$SKIP_BUILD" == false ]]; then
     fi
   fi
 
-  # Detect scheme
   set +o pipefail
   XCODE_SCHEME=$(xcodebuild ${XCODE_PROJECT_ARG} -list 2>/dev/null \
     | awk '/Schemes:/,0' \
@@ -270,27 +269,22 @@ step "Installing ${APP_PATH} to booted simulator..."
 xcrun simctl install booted "${APP_PATH}"
 info "App installed."
 
+# ── Helper: set hasCompletedOnboarding = true ─────────────────────────────────
+set_onboarding_complete() {
+  # Write the UserDefaults flag that ContentView's @AppStorage("hasCompletedOnboarding")
+  # reads on launch. Setting this before each launch bypasses the OnboardingFlow
+  # and drops us directly into the LibraryListView + TabView.
+  step "Setting hasCompletedOnboarding = true (bypass onboarding gate)..."
+  xcrun simctl spawn booted defaults write "${BUNDLE_ID}" hasCompletedOnboarding -bool true
+  info "Onboarding gate bypassed."
+}
+
 # ── Helper: restart SpringBoard (Axis K pattern) ─────────────────────────────
 restart_springboard() {
-  # Axis K — SpringBoard restart required after locale/appearance changes via
-  # `simctl spawn booted defaults write`. Using `launchctl kickstart -k` is
-  # the correct mechanism. `simctl reboot` is too slow; `simctl shutdown` +
-  # `simctl boot` loses app installation state. A 4-second wait is required
-  # for SpringBoard to finish loading before launching the app.
   step "Restarting SpringBoard..."
   xcrun simctl spawn booted launchctl kickstart -k system/com.apple.SpringBoard 2>/dev/null || true
   sleep 4
   info "SpringBoard ready."
-}
-
-# ── Helper: set hasCompletedOnboarding = true ────────────────────────────────
-set_onboarding_complete() {
-  # Bypass the ContentView @AppStorage("hasCompletedOnboarding") gate so the
-  # app launches directly into LibraryListView. Called only when --skip-onboarding
-  # is active. See capture-post-onboarding.sh (R12.1) for the dedicated variant.
-  step "Setting hasCompletedOnboarding = true (bypass onboarding gate)..."
-  xcrun simctl spawn booted defaults write "${BUNDLE_ID}" hasCompletedOnboarding -bool true
-  info "Onboarding gate bypassed."
 }
 
 # ── Helper: set appearance ────────────────────────────────────────────────────
@@ -298,11 +292,9 @@ set_appearance() {
   local mode="$1"   # "light" or "dark"
   step "Setting appearance: ${mode}"
 
-  # Primary method: simctl ui (Xcode 26+ / recent Xcode 15+)
   if xcrun simctl ui booted appearance "${mode}" 2>/dev/null; then
     info "Appearance set to ${mode} via simctl ui."
   else
-    # Fallback: launch argument via defaults (older Xcode)
     warn "simctl ui appearance not supported — using defaults write fallback."
     if [[ "$mode" == "dark" ]]; then
       xcrun simctl spawn booted defaults write -g AppleInterfaceStyle Dark 2>/dev/null || true
@@ -330,7 +322,7 @@ set_locale() {
      && xcrun simctl spawn booted defaults write -g AppleLanguages -array "${apple_languages}" 2>/dev/null; then
     info "Locale set: ${apple_locale}."
   else
-    warn "Locale setting failed or partially applied — continuing (locale defaults may not be fully respected by this build)."
+    warn "Locale setting failed or partially applied — continuing."
   fi
 }
 
@@ -345,7 +337,7 @@ capture_quadrant() {
   local appearance="$1"   # light | dark
   local lang="$2"         # en | ko
   local label="${appearance}-${lang}"
-  local out_file="${OUTPUT_DIR}/stillhours-R9-${label}.png"
+  local out_file="${OUTPUT_DIR}/stillhours-R12-${label}-library.png"
 
   header "Quadrant: ${label}"
 
@@ -359,16 +351,12 @@ capture_quadrant() {
   terminate_app
   restart_springboard
 
-  # 3b. Optionally bypass onboarding gate (--skip-onboarding)
-  if [[ "$SKIP_ONBOARDING" == true ]]; then
-    set_onboarding_complete
-  fi
+  # 4. Set hasCompletedOnboarding AFTER SpringBoard restart but BEFORE launch.
+  #    The flag must be written while the simulator is settled so the app
+  #    process reads the correct value on cold start.
+  set_onboarding_complete
 
-  # 4. Launch app with explicit locale override at process start.
-  # Axis K-bis: `defaults write` changes the global pref but the app process
-  # reads its preferred localizations from the bundle cache on startup.
-  # Passing -AppleLanguages / -AppleLocale as launch arguments guarantees the
-  # correct locale is applied to THIS process regardless of cached state.
+  # 5. Launch app with explicit locale override at process start (Axis L pattern).
   step "Launching ${BUNDLE_ID} (locale: ${lang})..."
   if [[ "$lang" == "ko" ]]; then
     xcrun simctl launch booted "${BUNDLE_ID}" \
@@ -380,11 +368,11 @@ capture_quadrant() {
       -AppleLocale en_US
   fi
 
-  # 5. Wait for first frame + DemoSeeder hydration
+  # 6. Wait for first frame + DemoSeeder hydration
   step "Waiting 5s for first frame + DemoSeeder hydration..."
   sleep 5
 
-  # 6. Screenshot
+  # 7. Screenshot
   step "Capturing screenshot -> ${out_file}"
   xcrun simctl io booted screenshot "${out_file}"
 
@@ -397,16 +385,14 @@ capture_quadrant() {
 }
 
 # ── Step 4 — Capture quadrants ────────────────────────────────────────────────
-header "Step 4 — Capture"
+header "Step 4 — Capture (post-onboarding: LibraryListView)"
 
-# Define all 4 quadrants as parallel arrays (bash 3.2 compatible)
 QUAD_APPEARANCES=("light" "light" "dark" "dark")
-QUAD_LANGS=("en"    "ko"   "en"   "ko")
+QUAD_LANGS=("ko"    "en"   "ko"   "en")
 
 if [[ -n "$SINGLE_MODE" ]]; then
-  # Parse single mode
-  SINGLE_APPEARANCE="${SINGLE_MODE%%-*}"   # "light" or "dark"
-  SINGLE_LANG="${SINGLE_MODE##*-}"         # "en" or "ko"
+  SINGLE_APPEARANCE="${SINGLE_MODE%%-*}"
+  SINGLE_LANG="${SINGLE_MODE##*-}"
   info "Single mode: ${SINGLE_MODE}"
   capture_quadrant "${SINGLE_APPEARANCE}" "${SINGLE_LANG}"
 else
@@ -419,21 +405,21 @@ fi
 header "Step 5 — Summary"
 hr
 echo ""
-echo "  Captured screenshots:"
+echo "  R12.1 — Post-Onboarding Screenshots (LibraryListView):"
 echo ""
 
 print_screenshot_row() {
   local appearance="$1"
   local lang="$2"
   local label="${appearance}-${lang}"
-  local path="${OUTPUT_DIR}/stillhours-R9-${label}.png"
+  local path="${OUTPUT_DIR}/stillhours-R12-${label}-library.png"
 
   if [[ -f "$path" ]]; then
     set +o pipefail
     SIZE_BYTES=$(stat -f%z "$path" 2>/dev/null || stat -c%s "$path" 2>/dev/null || echo "0")
     set -o pipefail
     SIZE_KB=$(( SIZE_BYTES / 1024 ))
-    printf "    %-52s (%s KB)\n" "$path" "$SIZE_KB"
+    printf "    %-60s (%s KB)\n" "$path" "$SIZE_KB"
   fi
 }
 
@@ -451,14 +437,12 @@ fi
 echo ""
 
 if [[ -z "$SINGLE_MODE" ]]; then
-  echo "  Open in Preview: open ${OUTPUT_DIR}/stillhours-R9-*.png"
+  echo "  Open in Preview: open ${OUTPUT_DIR}/stillhours-R12-*-library.png"
 else
-  SINGLE_APPEARANCE="${SINGLE_MODE%%-*}"
-  SINGLE_LANG="${SINGLE_MODE##*-}"
-  echo "  Open in Preview: open ${OUTPUT_DIR}/stillhours-R9-${SINGLE_MODE}.png"
+  echo "  Open in Preview: open ${OUTPUT_DIR}/stillhours-R12-${SINGLE_MODE}-library.png"
 fi
 
 echo ""
 hr
-info "Visual verification complete."
+info "Visual verification complete. (R12.1 — Cool Blue post-onboarding)"
 hr

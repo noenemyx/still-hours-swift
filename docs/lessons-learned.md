@@ -860,6 +860,127 @@ that bite automated visual verification."
 
 ---
 
+## Axis O — Token cascade has parallel-agent build dependency
+
+**Round 11 (2026-05-21, commit `33e69fc`)**
+
+### Symptom
+
+Cool Blue palette pivot launched 4 R11 agents in parallel:
+- R11.1 = FoundationTokens.swift (creates `Color.shAccentSubtle`,
+  `Color.shTextTertiary`).
+- R11.2 = SemanticTokens.swift (CONSUMES R11.1's new aliases).
+- R11.3 = Design.MD + docs (no Swift).
+- R11.4 = LiquidGlassModifier.swift (CONSUMES R11.1's `shAccentSubtle`).
+
+R11.2 and R11.4 began before R11.1 finished writing. Their compile
+attempts during their own verification step hit "no member
+'shAccentSubtle'" errors. Each agent saw the error, decided "this
+will resolve when R11.1 lands," continued, and reported success at
+their own level. Main session re-verified once all 4 had landed —
+build was clean.
+
+### Root cause
+
+Parallel sub-agent launches assume independent file scope. Token
+cascades are NOT independent — Foundation supplies, Semantic +
+Component + Views consume. The compiler error message
+("no member 'shAccentSubtle'") makes the failure look like a code
+bug rather than a sequencing artifact.
+
+### Prevention
+
+1. **For token cascade pivots, run Foundation first (sequential),
+   then Semantic + Component + Views in parallel** (the next layer
+   down). This is a 2-phase launch, not single-message.
+
+2. **If single-message parallel is required for speed**: explicitly
+   pass the new API surface (e.g. `shAccentSubtle`) as a code stub
+   into ALL downstream agent prompts. The agent's prompt can include
+   the symbol's expected signature so the agent doesn't need to wait
+   for the Foundation file to materialize — they trust the contract.
+
+3. **Recovery pattern**: when downstream agents fail with "no member"
+   on a symbol the upstream agent is creating, the main session
+   should: (a) wait for upstream completion notification, (b) re-run
+   downstream agent's verification step inline rather than re-launching
+   the agent. This is what worked in R11.
+
+4. **Lint addition (future)**: a `scripts/check-token-cascade.sh`
+   could verify Foundation tokens are not referenced before being
+   defined — but the compiler already does this, so the lint adds
+   little. The real fix is the sequencing rule above.
+
+---
+
+## Axis P — Semantic token API shape changes need a callsite sweep
+
+**Round 11 (2026-05-21, commit `33e69fc`)**
+
+### Symptom
+
+R11.2 restructured `SemanticTokens` from flat `SemanticTokens.accent.default
+/ .muted` API into nested enums (`SemanticTokens.cta.primary.fill`,
+`SemanticTokens.tab.active.tint`, etc.). The agent updated SemanticTokens.swift
+but did NOT update view callers. Result: 3 compile errors in
+CapturePreviewView.swift:
+```
+error: type 'SemanticTokens' has no member 'accent'
+```
+
+Each line was using the old flat API. Main session sed-fix'd them to
+`Color.shAccent` / `Color.shAccentMuted` directly (bypassing the new
+nested semantic surface entirely).
+
+### Root cause
+
+When a SHAPE change happens to a public API (not a value change),
+all callers using the OLD shape break. The agent's mental model
+was "I own SemanticTokens, view files are outside my scope" — but
+the API contract change ripples beyond the agent's edit boundary.
+
+This is the SAME pattern as:
+- Renaming a class method while leaving callers unchanged
+- Changing a function's parameter order
+- Splitting a flat enum into a nested namespace
+
+### Prevention
+
+1. **Agent prompts for API shape changes must explicitly include a
+   callsite sweep**: "After restructuring the API, grep all callers
+   in App/Sources/ and update them. Estimated N callers — verify
+   you've updated all."
+
+2. **Alternative — provide a backward-compat shim**: keep the old
+   flat surface as a thin alias of the new one for one round:
+   ```swift
+   public extension SemanticTokens {
+       /// DEPRECATED — use `SemanticTokens.cta.primary.fill` instead.
+       /// Will be removed in R12.
+       @available(*, deprecated, message: "Use cta.primary.fill")
+       enum accent {
+           public static var `default`: Color { Color.shAccent }
+           public static var muted: Color { Color.shAccentMuted }
+       }
+   }
+   ```
+   This lets the agent ship the new shape without breaking callers
+   immediately; the shim is removed in the next round after callsites
+   migrate.
+
+3. **Lint pattern (future)**: a per-agent contract check —
+   "if the agent modifies a `public` API surface in SemanticTokens,
+   the diff must include matching updates in App/Sources/ OR an
+   explicit deprecation shim." Not yet automated; surfaces as a
+   review-time check.
+
+4. **Heuristic**: when an agent's scope includes a token / design-
+   system file (anything under `DesignTokens/`), the agent prompt
+   MUST include "and update all view callers" as an explicit
+   responsibility. Treat it as the cost of touching a public surface.
+
+---
+
 ## Adding new axes (process rule, revised 2026-05-21)
 
 When a new bug class is documented, future sessions:

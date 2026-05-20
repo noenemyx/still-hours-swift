@@ -2,6 +2,7 @@
 // Copyright 2026 sunghun.ahn — Still Hours
 // Sprint 1.5 — LibraryListView + ItemDetailView + MemoryTimelineView
 // Created: 2026-05-21
+// R12.3 verified for Cool Blue token cascade (2026-05-21).
 //
 // THE brand visual signature view. Vertical timeline with left accent line,
 // grouped by year then month, reverse-chronological.
@@ -108,9 +109,10 @@ struct MemoryTimelineView: View {
             yearHeader(year: year)
 
             ZStack(alignment: .topLeading) {
-                // Accent line — 1pt burnt sienna, per spec §B.2
+                // Accent rail — 1pt, SemanticTokens.timeline.rail (accent × 0.18 alpha).
+                // Design-R11 §3 token 21: faint Cool Blue spine, not paint stroke.
                 Rectangle()
-                    .fill(Color.shAccent)
+                    .fill(SemanticTokens.timeline.rail)
                     .frame(width: ComponentTokens.MemoryRow.accentLineWidth)
                     .padding(.leading, ComponentTokens.MemoryRow.accentLineIndent)
 

@@ -1,0 +1,66 @@
+<!-- AppIcon v2 "Glass over a window" — R12.2 2026-05-21 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <!-- Background gradient: #f4f7fb top to #dbe7fa bottom -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f4f7fb"/>
+      <stop offset="100%" stop-color="#dbe7fa"/>
+    </linearGradient>
+
+    <!-- Soft contact shadow filter: 20pt blur, 4pt Y-offset, 8% black -->
+    <filter id="discShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#000000" flood-opacity="0.08"/>
+    </filter>
+
+    <!-- Clip path for the disc (used to clip the "S" text within disc bounds) -->
+    <clipPath id="discClip">
+      <circle cx="512" cy="472" r="310"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background: cool gradient sky -->
+  <rect width="1024" height="1024" fill="url(#bgGrad)"/>
+
+  <!-- Disc group: 6° clockwise tilt around disc center (512, 472) -->
+  <g transform="rotate(6, 512, 472)">
+
+    <!-- Contact shadow (rendered behind disc) -->
+    <circle cx="512" cy="472" r="310" fill="#000000" opacity="0.08" filter="url(#discShadow)"/>
+
+    <!-- Translucent disc: #1d6fe5 at 22% opacity -->
+    <circle cx="512" cy="472" r="310" fill="#1d6fe5" fill-opacity="0.22"/>
+
+    <!-- Disc outer ring: subtle edge at 35% opacity -->
+    <circle cx="512" cy="472" r="310" fill="none" stroke="#1d6fe5" stroke-width="1" stroke-opacity="0.35"/>
+
+    <!-- Negative-space "S": Georgia italic bold, 280pt, background color (cuts through disc visually) -->
+    <!-- Using fill matching midpoint of bg gradient for convincing negative-space effect -->
+    <text
+      x="512"
+      y="533"
+      font-family="'New York', 'Georgia', 'Times New Roman', serif"
+      font-style="italic"
+      font-weight="700"
+      font-size="320"
+      text-anchor="middle"
+      dominant-baseline="auto"
+      fill="#edf2f9"
+      fill-opacity="1"
+    >S</text>
+
+    <!-- Specular highlight arc: top-left quadrant, ~40° sweep, 2pt stroke, accent.default at 80% -->
+    <!-- Arc from 215° to 255° (upper-left of disc) -->
+    <!-- Start: (512 + 310·cos(215°), 472 + 310·sin(215°)) = (258.1, 294.2) -->
+    <!-- End:   (512 + 310·cos(255°), 472 + 310·sin(255°)) = (431.8, 172.6) -->
+    <path
+      d="M 258.1 294.2 A 310 310 0 0 1 431.8 172.6"
+      fill="none"
+      stroke="#1d6fe5"
+      stroke-width="2"
+      stroke-opacity="0.8"
+      stroke-linecap="round"
+    />
+
+  </g>
+
+</svg>

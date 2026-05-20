@@ -2,6 +2,7 @@
 // Copyright 2026 sunghun.ahn — Still Hours
 // Sprint 1.5 — LibraryListView + ItemDetailView + MemoryTimelineView
 // Created: 2026-05-21
+// R12.3 verified for Cool Blue token cascade (2026-05-21).
 //
 // Single memory row. Design.md §5.2 MemoryRow spec.
 // MemoryTimeline-Design.md §B.4, §C, §D.
@@ -51,7 +52,7 @@ struct MemoryRowView: View {
     private var kindIcon: some View {
         Image(systemName: memory.kind.symbolName)
             .font(.system(size: min(iconSize, 24)))
-            .foregroundStyle(Color.shAccent)
+            .foregroundStyle(SemanticTokens.memory.kind.tint)
             .frame(width: min(iconSize, 24), height: min(iconSize, 24))
             .accessibilityHidden(true)
     }
@@ -80,7 +81,7 @@ struct MemoryRowView: View {
 
     private var photoThumb: some View {
         let size = ComponentTokens.MemoryRow.photoThumbSize / 2  // 48pt as spec §B.6 says 48pt for single
-        return Color.shAccentMuted
+        return SemanticTokens.card.elevated
             .frame(width: size, height: size)
             .clipShape(RoundedRectangle(cornerRadius: FoundationTokens.Radius.sm))
             .accessibilityLabel("Photo attachment, \(memory.photoCount) photo\(memory.photoCount == 1 ? "" : "s")")
