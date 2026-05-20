@@ -2,6 +2,7 @@
 // Copyright 2026 sunghun.ahn — Still Hours
 // Sprint 1.4 — VoiceMemoCaptureView + SFSpeechRecognizer (ko/en/ja)
 // Created: 2026-05-21
+// R11.4: Liquid Glass uniformly tinted via .shGlass() — Design-R11 §8.
 //
 // Localization keys used in this file:
 //   "capture.voice.holdToRecord"   — VoiceOver label + status idle
@@ -142,7 +143,7 @@ struct VoiceMemoCaptureView: View {
             }
         }
         .frame(width: 88, height: 88)
-        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 22))
+        .shGlass(in: RoundedRectangle(cornerRadius: 22))
         .scaleEffect(isRecording ? 1.05 : 1.0)
         .animation(reduceMotion ? nil : .spring(duration: 0.2), value: isRecording)
         .gesture(

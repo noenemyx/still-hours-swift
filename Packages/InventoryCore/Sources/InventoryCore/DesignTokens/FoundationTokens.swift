@@ -1,13 +1,16 @@
 // FoundationTokens.swift
 // Still Hours — Design System Foundation Tokens v1.0
 //
+// R11 Cool Blue palette (2026-05-21). Replaces R8-R10 warm terra direction.
+// Source of truth: docs/Design-R11-ColdBlue.md §2.
+//
 // Single source of truth for all primitive design values.
 // Maps directly to Design.md §3 (Foundation Tokens).
 //
-// Usage: reference via `FoundationTokens.Color.Light.background` etc.
+// Usage: reference via `FoundationTokens.Color.lightBackground` etc.
 // Semantic aliases live in `Color+StillHours.swift`.
 //
-// - Note: Design.md §3.1–§3.6 (2026-05-20 final).
+// - Note: Design.md §3.1–§3.6 (2026-05-21, R11 Cool Blue update).
 
 import SwiftUI
 
@@ -25,107 +28,186 @@ public enum FoundationTokens {
 
     // MARK: Color
 
-    /// Raw color palette. Design.md §3.1 (v1.0 Final).
+    /// Raw color palette. R11 Cool Blue. Design-R11-ColdBlue.md §2 (2026-05-21).
     ///
     /// Prefer semantic aliases (`Color.shBackground` etc.) in view code.
     /// Use these raw values only when building the semantic layer.
+    ///
+    /// 11 foundation tokens × 2 modes. `onAccent` is universal (same in both modes).
     public enum Color {
 
-        // MARK: Light Mode — 6 tokens
+        // MARK: Light Mode — 11 tokens (incl. universal onAccent)
 
-        /// Warm parchment background. `#F5F0E8`.
+        /// Cool off-white app root background. `#f4f7fb`.
         ///
-        /// Still Hours identity color. Avoids cold white; evokes library paper.
-        /// Use as root screen background. Design.md §3.1 Light Mode.
-        public static let lightBackground = SwiftUI.Color(hex: 0xF5F0E8)
+        /// Subtly cool; not pure white. Gives white cards one tonal step of separation.
+        /// Design-R11 §2.1. WCAG: `text.primary` on this background = AAA 17.43:1.
+        public static let lightBackground = SwiftUI.Color(
+            red: 0.957, green: 0.969, blue: 0.984
+        )
 
-        /// Near-white card surface with warmth. `#FAFAF5`.
+        /// Pure white card / sheet / list-row surface. `#ffffff`.
         ///
-        /// Cards, sheets, popovers — floated above `lightBackground`.
-        /// Design.md §3.1 Light Mode.
-        public static let lightSurface = SwiftUI.Color(hex: 0xFAFAF5)
+        /// Floated above `lightBackground`; the cool bg makes pure white read as surface.
+        /// Design-R11 §2.1. WCAG: `text.primary` on surface = AAA 18.72:1.
+        public static let lightSurface = SwiftUI.Color(
+            red: 1.000, green: 1.000, blue: 1.000
+        )
 
-        /// Near-black primary text with warmth. `#1A1812`.
+        /// Faint cool tint elevated surface. `#eef3fa`.
         ///
-        /// Avoids pure black; evokes diluted ink.
-        /// Design.md §3.1 Light Mode.
-        public static let lightTextPrimary = SwiftUI.Color(hex: 0x1A1812)
+        /// Hover / pressed / popover-over-card. Hue lift instead of shadow.
+        /// Design-R11 §2.1. WCAG: `text.primary` on elevated = AAA 16.41:1.
+        public static let lightSurfaceElevated = SwiftUI.Color(
+            red: 0.933, green: 0.953, blue: 0.980
+        )
 
-        /// Muted warm gray secondary text. `#665D4F`.
+        /// Near-black with cool cast primary text. `#0b1220`.
         ///
-        /// Subtitles, captions, metadata. Design.md §3.1 Light Mode.
-        ///
-        /// WCAG 2.1: 5.71:1 on `lightBackground`, 6.18:1 on `lightSurface` — AA normal.
-        /// (Adjusted from `#7A7060` at 4.29:1/4.65:1, which was AA Large only on background.)
-        public static let lightTextSecondary = SwiftUI.Color(hex: 0x665D4F)
+        /// Headings, body copy, primary glyphs. Avoids pure black buzz on OLED.
+        /// Design-R11 §2.1. WCAG: on background = AAA 17.43:1; on surface = AAA 18.72:1.
+        public static let lightTextPrimary = SwiftUI.Color(
+            red: 0.043, green: 0.071, blue: 0.125
+        )
 
-        /// Burnt sienna accent. `#B85C38`.
+        /// Cool blue-gray secondary text. `#5b6b80`.
         ///
-        /// Library leather binding color, Curio cabinet tone.
-        /// Interactive elements only: buttons, links, toggle-ON states.
-        /// Design.md §3.1 Light Mode.
-        public static let lightAccentDefault = SwiftUI.Color(hex: 0xB85C38)
+        /// Captions, metadata, year labels. AA-clean on both background and surface.primary.
+        /// Design-R11 §2.1. WCAG: on background = AA 5.07:1; on surface = AA 5.45:1.
+        public static let lightTextSecondary = SwiftUI.Color(
+            red: 0.357, green: 0.420, blue: 0.502
+        )
 
-        /// Warm sand muted accent. `#D4A574`.
+        /// Third-tier text — cool gray. `#8a98ad`. (R11 token #11, Q-D Option B.)
         ///
-        /// Image fallback, skeleton states, non-interactive accent highlights.
-        /// Design.md §3.1 Light Mode.
-        ///
-        /// - Warning: **TEXT USE PERMANENTLY FORBIDDEN (WCAG fail).**
-        ///   Contrast on `lightBackground` = 1.96:1, on `lightSurface` = 2.13:1 — both Fail.
-        ///   Permitted uses only: skeleton fills, disabled-state borders, image placeholder backgrounds,
-        ///   non-text icon fills. For text, use `lightTextSecondary` (`#665D4F`).
-        public static let lightAccentMuted = SwiftUI.Color(hex: 0xD4A574)
+        /// ItemDetailView subtitle, MemoryTimelineView year-not-current, SettingsView footer.
+        /// Deterministic contrast — avoids per-view opacity bikeshed from R10.
+        /// Design-R11 §9 Option B. WCAG: on background = AA; avoid pairing with surface.elevated.
+        public static let lightTextTertiary = SwiftUI.Color(
+            red: 0.541, green: 0.596, blue: 0.678
+        )
 
-        // MARK: Dark Mode — 4 primary + 2 inferred tokens
+        /// Cool blue primary interactive accent. `#1d6fe5`.
+        ///
+        /// CTAs, tab.active, timeline.year.active. Slight cyan lean of Apple systemBlue.
+        /// Design-R11 §2.1. WCAG: on background = AA 4.59:1; on surface = AA 4.93:1.
+        public static let lightAccentDefault = SwiftUI.Color(
+            red: 0.114, green: 0.435, blue: 0.898
+        )
 
-        /// Text color for use on top of accent-colored surfaces (e.g. filled CTA buttons). `#1A1812`.
+        /// Selected-row wash / secondary-CTA fill. `#dbe7fa`.
         ///
-        /// Use this token — **not** `lightTextPrimary` or `darkTextPrimary` — whenever text sits
-        /// directly on `lightAccentDefault` or `darkAccentDefault`.
-        ///
-        /// WCAG 2.1 contrast ratios:
-        /// - On `lightAccentDefault` (`#B85C38`): 3.91:1 (AA Large — use 18pt+ or 14pt+ bold only)
-        /// - On `darkAccentDefault` (`#D4734A`): **5.37:1 AA ★**
-        ///
-        /// Design.md §3.1 `color.onAccent` / §4.3 `accent.onAccent`.
-        public static let onAccent = SwiftUI.Color(hex: 0x1A1812)
+        /// Selected list row, secondary CTA background, accent-on-accent plate.
+        /// Design-R11 §2.1. WCAG: `text.primary` on accent.muted = AAA 16.65:1.
+        public static let lightAccentMuted = SwiftUI.Color(
+            red: 0.859, green: 0.906, blue: 0.980
+        )
 
-        // MARK: Dark Mode — 4 primary + 2 inferred tokens
-
-        /// Warm dark background. `#141210`.
+        /// Near-background accent tint. `#eff4fc`.
         ///
-        /// Avoids pure black; maintains warmth in dark context.
-        /// Design.md §3.1 Dark Mode.
-        public static let darkBackground = SwiftUI.Color(hex: 0x141210)
+        /// Hover dim, Liquid Glass tint parameter (`.glassEffect(.regular.tint(...))`).
+        /// Almost-bg with faintest blue cast. Design-R11 §2.1.
+        public static let lightAccentSubtle = SwiftUI.Color(
+            red: 0.937, green: 0.957, blue: 0.988
+        )
 
-        /// Slightly elevated dark surface. `#1E1B17`.
+        /// White foreground on accent fills. `#ffffff`. Universal (same in both modes).
         ///
-        /// Cards and sheets in dark mode. Design.md §3.1 Dark Mode.
-        public static let darkSurface = SwiftUI.Color(hex: 0x1E1B17)
+        /// Text / glyph on `accent.default` filled buttons. ≥17pt SF Pro Semibold required
+        /// in dark mode (3.29:1 AA Large). Light mode: 4.71:1 AA normal.
+        /// Design-R11 §2.1 + §2.3. `onAccent` is mode-invariant.
+        public static let onAccent = SwiftUI.Color(
+            red: 1.000, green: 1.000, blue: 1.000
+        )
 
-        /// Warm off-white primary text (dark). `#F0EBE1`.
+        /// Hairline separator. `#e2e8f0`.
         ///
-        /// Design.md §3.1 Dark Mode.
-        public static let darkTextPrimary = SwiftUI.Color(hex: 0xF0EBE1)
+        /// List dividers, card borders at 0.5pt. Decorative only — do not use for text.
+        /// Design-R11 §2.1. WCAG: decorative (1.07:1 on background — not a text pair).
+        public static let lightSeparator = SwiftUI.Color(
+            red: 0.886, green: 0.910, blue: 0.941
+        )
 
-        /// Muted warm light gray secondary text (dark). `#9A9285`.
-        ///
-        /// Inferred to maintain contrast ratio on `darkBackground`.
-        /// Design.md §3.1 Dark Mode.
-        public static let darkTextSecondary = SwiftUI.Color(hex: 0x9A9285)
+        // MARK: Dark Mode — 10 tokens (onAccent shared from above)
 
-        /// Burnt sienna accent at +30% lightness. `#D4734A`.
+        /// Deep cool navy root background. `#0b1220`.
         ///
-        /// Maintains contrast against dark background.
-        /// Design.md §3.1 Dark Mode.
-        public static let darkAccentDefault = SwiftUI.Color(hex: 0xD4734A)
+        /// Mirrors light `text.primary` — modes invert cleanly. Not pure black.
+        /// Design-R11 §2.2. WCAG: `text.primary` on background = AAA 16.97:1.
+        public static let darkBackground = SwiftUI.Color(
+            red: 0.043, green: 0.071, blue: 0.125
+        )
 
-        /// Warm sand dark variant. `#A88560`.
+        /// Dark card / sheet / list-row surface. `#121a2a`.
         ///
-        /// Inferred dark mode variant of `lightAccentMuted`.
-        /// Design.md §3.1 Dark Mode.
-        public static let darkAccentMuted = SwiftUI.Color(hex: 0xA88560)
+        /// One tonal step above `darkBackground`. Card boundary reads without a border.
+        /// Design-R11 §2.2. WCAG: `text.primary` on surface = AAA 15.77:1.
+        public static let darkSurface = SwiftUI.Color(
+            red: 0.071, green: 0.102, blue: 0.165
+        )
+
+        /// Hover / sheet-over-card elevated surface. `#1a2336`.
+        ///
+        /// Design-R11 §2.2. WCAG: `text.primary` on elevated = AAA 13.49:1.
+        public static let darkSurfaceElevated = SwiftUI.Color(
+            red: 0.102, green: 0.137, blue: 0.212
+        )
+
+        /// Cool off-white primary text. `#f0f4fa`.
+        ///
+        /// Not pure `#ffffff` — avoids glare on OLED. Same cool family as light mode.
+        /// Design-R11 §2.2. WCAG: on background = AAA 16.97:1; on surface = AAA 15.77:1.
+        public static let darkTextPrimary = SwiftUI.Color(
+            red: 0.941, green: 0.957, blue: 0.980
+        )
+
+        /// Cool blue-gray secondary text (dark). `#8a98ad`.
+        ///
+        /// Captions, metadata. AA-clean on both dark background and surface.primary.
+        /// Design-R11 §2.2. WCAG: on background = AA 6.40:1; on surface = AA 5.95:1.
+        public static let darkTextSecondary = SwiftUI.Color(
+            red: 0.541, green: 0.596, blue: 0.678
+        )
+
+        /// Third-tier text dark mode. `#5b6b80`. (R11 token #11, Q-D Option B.)
+        ///
+        /// Exact inverse of light `text.secondary` — clean inversion so modes read as same palette.
+        /// Design-R11 §9 Option B. WCAG: AA against dark background.
+        public static let darkTextTertiary = SwiftUI.Color(
+            red: 0.357, green: 0.420, blue: 0.502
+        )
+
+        /// Lifted cool blue accent. `#4d8df0`.
+        ///
+        /// Same hue family as light accent, lifted ~25% in L to stay visible on navy bg.
+        /// Design-R11 §2.2. WCAG: on background = AA 6.06:1; on surface = AA 5.62:1.
+        public static let darkAccentDefault = SwiftUI.Color(
+            red: 0.302, green: 0.553, blue: 0.941
+        )
+
+        /// Selected-row wash in dark mode. `#1a2940`.
+        ///
+        /// Dark-mode equivalent of light `accent.muted`.
+        /// Design-R11 §2.2. WCAG: `text.primary` on accent.muted = AAA 13.39:1.
+        public static let darkAccentMuted = SwiftUI.Color(
+            red: 0.102, green: 0.161, blue: 0.251
+        )
+
+        /// Liquid Glass tint / hover dim (dark). `#15233a`.
+        ///
+        /// Dark-mode equivalent of light `accent.subtle`.
+        /// Design-R11 §2.2.
+        public static let darkAccentSubtle = SwiftUI.Color(
+            red: 0.082, green: 0.137, blue: 0.227
+        )
+
+        /// Hairline separator (dark). `#1f2a3e`.
+        ///
+        /// Reads as a line, not a shadow. Decorative only.
+        /// Design-R11 §2.2. WCAG: decorative (1.45:1 on background — not a text pair).
+        public static let darkSeparator = SwiftUI.Color(
+            red: 0.122, green: 0.165, blue: 0.243
+        )
     }
 
     // MARK: Spacing

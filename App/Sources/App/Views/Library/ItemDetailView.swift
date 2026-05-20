@@ -2,6 +2,7 @@
 // Copyright 2026 sunghun.ahn — Still Hours
 // Sprint 1.5 — LibraryListView + ItemDetailView + MemoryTimelineView
 // Created: 2026-05-21
+// R11.4: Liquid Glass uniformly tinted via .shGlass() — Design-R11 §8.
 //
 // NavigationLink destination. Shows item hero + MemoryTimelineView.
 // Localisation keys: item.detail.metadata, item.detail.year, item.detail.publisher,
@@ -138,7 +139,7 @@ struct ItemDetailView: View {
         }
         .padding(FoundationTokens.Space.md)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 0))
+        .shGlass(in: RoundedRectangle(cornerRadius: 0))
     }
 
     // MARK: Content Section

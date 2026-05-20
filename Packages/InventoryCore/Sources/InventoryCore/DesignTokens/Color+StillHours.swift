@@ -1,6 +1,8 @@
 // Color+StillHours.swift
 // Still Hours — Semantic Color Extension v1.0
 //
+// R11 Cool Blue + text.tertiary (11th token). Source: Design-R11-ColdBlue.md §2, §9.
+//
 // SwiftUI Color extension exposing semantic aliases for all Design.md §3.1 tokens.
 // Adapts automatically to Light / Dark mode via `colorScheme` environment.
 //
@@ -16,10 +18,10 @@ public extension Color {
 
     // MARK: Surface
 
-    /// Warm parchment root background. `#F5F0E8` / `#141210` (dark).
+    /// Cool off-white root background. `#f4f7fb` / `#0b1220` (dark).
     ///
     /// Use for the outermost `ZStack`/`NavigationStack` background.
-    /// Design.md §3.1 `color.background` / §4.1 `surface.primary`.
+    /// Design-R11 §2.1 `background`.
     static var shBackground: Color {
         Color(
             light: FoundationTokens.Color.lightBackground,
@@ -27,10 +29,10 @@ public extension Color {
         )
     }
 
-    /// Elevated card and sheet surface. `#FAFAF5` / `#1E1B17` (dark).
+    /// White card and sheet surface. `#ffffff` / `#121a2a` (dark).
     ///
     /// Item cards, Memory rows, Collection covers, popovers.
-    /// Design.md §3.1 `color.surface` / §4.1 `surface.elevated`.
+    /// Design-R11 §2.1 `surface.primary`.
     static var shSurface: Color {
         Color(
             light: FoundationTokens.Color.lightSurface,
@@ -38,12 +40,23 @@ public extension Color {
         )
     }
 
+    /// Elevated hover / pressed / popover surface. `#eef3fa` / `#1a2336` (dark).
+    ///
+    /// Hover state, pressed card, popover-over-card. Hue lift instead of shadow.
+    /// Design-R11 §2.1 `surface.elevated`.
+    static var shSurfaceElevated: Color {
+        Color(
+            light: FoundationTokens.Color.lightSurfaceElevated,
+            dark: FoundationTokens.Color.darkSurfaceElevated
+        )
+    }
+
     // MARK: Text
 
-    /// Primary text color. `#1A1812` / `#F0EBE1` (dark).
+    /// Primary text color. `#0b1220` / `#f0f4fa` (dark).
     ///
     /// Item titles, body copy, Memory notes.
-    /// Design.md §3.1 `color.text.primary` / §4.2 `text.primary`.
+    /// Design-R11 §2.1 `text.primary`. WCAG: AAA 17.43:1 on background.
     static var shTextPrimary: Color {
         Color(
             light: FoundationTokens.Color.lightTextPrimary,
@@ -51,10 +64,10 @@ public extension Color {
         )
     }
 
-    /// Secondary / muted text. `#7A7060` / `#9A9285` (dark).
+    /// Secondary / muted text. `#5b6b80` / `#8a98ad` (dark).
     ///
     /// Subtitles, captions, date/place/tag metadata.
-    /// Design.md §3.1 `color.text.secondary` / §4.2 `text.secondary`.
+    /// Design-R11 §2.1 `text.secondary`. WCAG: AA 5.07:1 on background.
     static var shTextSecondary: Color {
         Color(
             light: FoundationTokens.Color.lightTextSecondary,
@@ -62,13 +75,26 @@ public extension Color {
         )
     }
 
+    /// Third-tier text. `#8a98ad` / `#5b6b80` (dark). R11 token #11 (Q-D Option B).
+    ///
+    /// ItemDetailView subtitle line, MemoryTimelineView year-not-current label,
+    /// SettingsView group footer. Deterministic contrast — eliminates per-view alpha (R10).
+    /// Design-R11 §9 Option B. WCAG: AA against background in both modes.
+    /// Avoid pairing with `surface.elevated` (below AA in that pairing).
+    static var shTextTertiary: Color {
+        Color(
+            light: FoundationTokens.Color.lightTextTertiary,
+            dark: FoundationTokens.Color.darkTextTertiary
+        )
+    }
+
     // MARK: Accent
 
-    /// Interactive accent — burnt sienna. `#B85C38` / `#D4734A` (dark).
+    /// Interactive cool blue accent. `#1d6fe5` / `#4d8df0` (dark).
     ///
-    /// Buttons, links, toggle-ON states, focused borders.
+    /// CTAs, tab.active, timeline.year.active, focused borders.
     /// **Do not use for non-interactive decoration.** Use `shAccentMuted` instead.
-    /// Design.md §3.1 `color.accent.default` / §4.3 `accent.default`.
+    /// Design-R11 §2.1 `accent.default`. WCAG: AA 4.59:1 on background.
     static var shAccent: Color {
         Color(
             light: FoundationTokens.Color.lightAccentDefault,
@@ -76,14 +102,10 @@ public extension Color {
         )
     }
 
-    /// Non-interactive warm sand accent. `#D4A574` / `#A88560` (dark).
+    /// Selected-row wash / secondary-CTA fill. `#dbe7fa` / `#1a2940` (dark).
     ///
-    /// Image fallback placeholders, skeleton loading states, disabled highlights.
-    /// Design.md §3.1 `color.accent.muted` / §4.3 `accent.muted`.
-    ///
-    /// - Warning: **Never use as a text foreground color.**
-    ///   Light contrast: 1.96:1 on background, 2.13:1 on surface — WCAG Fail.
-    ///   Permitted uses: skeleton fills, disabled backgrounds/borders, image placeholders.
+    /// Selected list row wash, secondary CTA background.
+    /// Design-R11 §2.1 `accent.muted`. WCAG: `text.primary` on muted = AAA 16.65:1.
     static var shAccentMuted: Color {
         Color(
             light: FoundationTokens.Color.lightAccentMuted,
@@ -91,19 +113,37 @@ public extension Color {
         )
     }
 
-    /// Text color for labels on accent-colored filled surfaces (e.g. primary CTA buttons). `#1A1812`.
+    /// Near-background accent tint. `#eff4fc` / `#15233a` (dark).
     ///
-    /// Use this token — not `shTextPrimary` — when text sits directly on `shAccent` (filled button).
+    /// Hover dim and Liquid Glass tint: `.glassEffect(.regular.tint(Color.shAccentSubtle))`.
+    /// Design-R11 §2.1 `accent.subtle` + §8 Liquid Glass treatment.
+    static var shAccentSubtle: Color {
+        Color(
+            light: FoundationTokens.Color.lightAccentSubtle,
+            dark: FoundationTokens.Color.darkAccentSubtle
+        )
+    }
+
+    /// White foreground on accent fills. `#ffffff` (universal — same in both modes).
     ///
-    /// WCAG 2.1:
-    /// - On light accent `#B85C38`: 3.91:1 (AA Large; ≥18pt or ≥14pt bold)
-    /// - On dark accent `#D4734A`: **5.37:1 AA ★**
-    ///
-    /// Design.md §3.1 `color.onAccent` / §4.3 `accent.onAccent`.
+    /// Use when text sits directly on `shAccent` filled button.
+    /// Light mode: AA 4.71:1. Dark mode: AA Large 3.29:1 (≥17pt SF Pro Semibold required).
+    /// Design-R11 §2.1 `onAccent`. Mode-invariant token.
     static var shOnAccent: Color {
         Color(
             light: FoundationTokens.Color.onAccent,
             dark: FoundationTokens.Color.onAccent
+        )
+    }
+
+    /// Hairline separator. `#e2e8f0` / `#1f2a3e` (dark).
+    ///
+    /// List dividers, card borders at 0.5pt. Decorative only — not a text pair.
+    /// Design-R11 §2.1 `separator`.
+    static var shSeparator: Color {
+        Color(
+            light: FoundationTokens.Color.lightSeparator,
+            dark: FoundationTokens.Color.darkSeparator
         )
     }
 
@@ -161,7 +201,7 @@ public extension UIColor {
 
     // MARK: Surface
 
-    /// See `Color.shBackground`. Design.md §3.1.
+    /// See `Color.shBackground`. Design-R11 §2.1.
     static var shBackground: UIColor {
         UIColor { $0.userInterfaceStyle == .dark
             ? UIColor(FoundationTokens.Color.darkBackground)
@@ -169,7 +209,7 @@ public extension UIColor {
         }
     }
 
-    /// See `Color.shSurface`. Design.md §3.1.
+    /// See `Color.shSurface`. Design-R11 §2.1.
     static var shSurface: UIColor {
         UIColor { $0.userInterfaceStyle == .dark
             ? UIColor(FoundationTokens.Color.darkSurface)
@@ -177,9 +217,17 @@ public extension UIColor {
         }
     }
 
+    /// See `Color.shSurfaceElevated`. Design-R11 §2.1.
+    static var shSurfaceElevated: UIColor {
+        UIColor { $0.userInterfaceStyle == .dark
+            ? UIColor(FoundationTokens.Color.darkSurfaceElevated)
+            : UIColor(FoundationTokens.Color.lightSurfaceElevated)
+        }
+    }
+
     // MARK: Text
 
-    /// See `Color.shTextPrimary`. Design.md §3.1.
+    /// See `Color.shTextPrimary`. Design-R11 §2.1.
     static var shTextPrimary: UIColor {
         UIColor { $0.userInterfaceStyle == .dark
             ? UIColor(FoundationTokens.Color.darkTextPrimary)
@@ -187,7 +235,7 @@ public extension UIColor {
         }
     }
 
-    /// See `Color.shTextSecondary`. Design.md §3.1.
+    /// See `Color.shTextSecondary`. Design-R11 §2.1.
     static var shTextSecondary: UIColor {
         UIColor { $0.userInterfaceStyle == .dark
             ? UIColor(FoundationTokens.Color.darkTextSecondary)
@@ -195,9 +243,19 @@ public extension UIColor {
         }
     }
 
+    /// See `Color.shTextTertiary`. Design-R11 §9 Option B (token #11).
+    ///
+    /// ItemDetailView subtitle, MemoryTimelineView year-not-current, SettingsView footer.
+    static var shTextTertiary: UIColor {
+        UIColor { $0.userInterfaceStyle == .dark
+            ? UIColor(FoundationTokens.Color.darkTextTertiary)
+            : UIColor(FoundationTokens.Color.lightTextTertiary)
+        }
+    }
+
     // MARK: Accent
 
-    /// See `Color.shAccent`. Design.md §3.1.
+    /// See `Color.shAccent`. Design-R11 §2.1.
     static var shAccent: UIColor {
         UIColor { $0.userInterfaceStyle == .dark
             ? UIColor(FoundationTokens.Color.darkAccentDefault)
@@ -205,9 +263,7 @@ public extension UIColor {
         }
     }
 
-    /// See `Color.shAccentMuted`. Design.md §3.1.
-    ///
-    /// - Warning: Never use as a text foreground color. WCAG Fail in Light mode (1.96:1 / 2.13:1).
+    /// See `Color.shAccentMuted`. Design-R11 §2.1.
     static var shAccentMuted: UIColor {
         UIColor { $0.userInterfaceStyle == .dark
             ? UIColor(FoundationTokens.Color.darkAccentMuted)
@@ -215,10 +271,20 @@ public extension UIColor {
         }
     }
 
-    /// See `Color.shOnAccent`. Design.md §3.1 `color.onAccent`.
+    /// See `Color.shAccentSubtle`. Design-R11 §2.1 + §8 Liquid Glass.
     ///
-    /// Use for label text on filled accent-colored surfaces (CTA buttons).
-    /// Dark mode: 5.37:1 AA ★ on `#D4734A`. Light mode: 3.91:1 AA Large on `#B85C38`.
+    /// Near-background accent tint. Liquid Glass tint parameter.
+    static var shAccentSubtle: UIColor {
+        UIColor { $0.userInterfaceStyle == .dark
+            ? UIColor(FoundationTokens.Color.darkAccentSubtle)
+            : UIColor(FoundationTokens.Color.lightAccentSubtle)
+        }
+    }
+
+    /// See `Color.shOnAccent`. Design-R11 §2.1 `onAccent`.
+    ///
+    /// White on accent fills. Light mode: AA 4.71:1. Dark mode: AA Large 3.29:1.
+    /// Mode-invariant — same white in both modes.
     static var shOnAccent: UIColor {
         UIColor(FoundationTokens.Color.onAccent)
     }

@@ -2,6 +2,7 @@
 // Copyright 2026 sunghun.ahn — Still Hours
 // R10.3: Screen 1 — Item-as-memory-anchor
 // Created: 2026-05-21
+// R11.4: Liquid Glass uniformly tinted via .shGlass() — Design-R11 §8.
 
 import SwiftUI
 import InventoryCore
@@ -78,7 +79,7 @@ struct OnboardingScreen1: View {
                     .aspectRatio(ComponentTokens.ItemCard.aspectRatio, contentMode: .fit)
                     .frame(width: cardWidth)
                     .shElevatedShadow()
-                    .glassEffect(.clear, in: RoundedRectangle(cornerRadius: ComponentTokens.ItemCard.radius))
+                    .shGlass(in: RoundedRectangle(cornerRadius: ComponentTokens.ItemCard.radius))
                     .overlay(alignment: .bottom) {
                         bookCardOverlay
                     }

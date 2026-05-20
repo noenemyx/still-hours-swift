@@ -1,5 +1,7 @@
 # Design.MD — Still Hours Design System
 
+**R11 Cool Blue pivot (2026-05-21):** Foundation §3 replaced wholesale. See `docs/Design-R11-ColdBlue.md` for the full Claude Design deliverable and rationale. Warm orange direction (R8-R10) retired.
+
 > Version 1.0 (Living Document) | 2026-05-20 | sunghun.ahn
 >
 > _This document is meant to be updated continuously throughout the project._
@@ -233,42 +235,149 @@
 
 ---
 
-## 3. Foundation Tokens
+## 3. Foundation Color
 
-### 3.1 Color (v1.0 Final)
+Still Hours uses a cool-blue palette in service of one rule: the
+chrome must recede so that content (book covers, memory notes,
+photographs) is the only thing in the room with weight. The accent
+sits a hair cyan of iOS systemBlue, giving a 청량 (cool, just-after-
+rain) quality without becoming aquamarine. Backgrounds are subtly
+cool — off-white in light mode, deep navy in dark mode — so pure
+white surfaces and pure-saturation imagery both have a tonal step of
+separation to read against.
 
-#### Light Mode (6색)
+Ten foundation values, two modes. No more values. If a view needs a
+tone that does not exist here, derive it in the semantic layer
+(§4) via opacity or HSL shift; do not add to this list.
 
-| Token | Hex | 용도 |
-|-------|-----|----|
-| `color.background` | `#F5F0E8` | Warm parchment (Still Hours 의 정체성 색) — _차가운 흰색 회피_, _도서관의 종이_ 톤 |
-| `color.surface` | `#FAFAF5` | Card / sheet / popover. _Near-white with warmth_ |
-| `color.text.primary` | `#1A1812` | Near-black with warmth. _Pure black 회피_, _묽은 잉크_ |
-| `color.text.secondary` | `#665D4F` | Muted warm gray. Subtitle / Caption. WCAG AA: 5.71:1 on bg / 6.18:1 on surface. (Adjusted from `#7A7060` which was AA Large only on background.) |
-| `color.accent.default` | `#B85C38` | Burnt sienna — _도서관 가죽 제본_, _Curio cabinet_ 색. interactive elements. WCAG AA Large only on bg/surface (4.00 / 4.34:1) — ≥18pt or ≥14pt bold only. |
-| `color.accent.muted` | `#D4A574` | Warm sand. _이미지 fallback / skeleton state / non-text accent_. **텍스트 foreground 사용 영구 금지** (WCAG Fail: 1.96 / 2.13:1). |
-| `color.onAccent` | `#1A1812` | CTA button label text on accent-colored backgrounds. **Always use on filled accent buttons.** WCAG: 3.91:1 on light accent (AA Large), 5.37:1 on dark accent (AA ★). |
+### 3.1 Foundation tokens
 
-#### Dark Mode (4색 + 2 fallback)
+#### Light mode
 
-| Token | Hex | 용도 |
-|-------|-----|----|
-| `color.dark.background` | `#141210` | Warm dark, _pure black 회피_ |
-| `color.dark.surface` | `#1E1B17` | Slightly elevated |
-| `color.dark.text.primary` | `#F0EBE1` | Warm off-white |
-| `color.dark.text.secondary` | `#9A9285` (inferred) | Muted warm light gray |
-| `color.dark.accent.default` | `#D4734A` | Burnt sienna +30% lightness (contrast) |
-| `color.dark.accent.muted` | `#A88560` (inferred) | Warm sand dark variant |
+| Token | Hex | RGB 0-1 | Use |
+|-------|-----|---------|-----|
+| `background` | `#f4f7fb` | `0.957, 0.969, 0.984` | App root behind every screen. |
+| `surface.primary` | `#ffffff` | `1.000, 1.000, 1.000` | Card / sheet / list-row base. |
+| `surface.elevated` | `#eef3fa` | `0.933, 0.953, 0.980` | Hover / pressed / popover-over-card. |
+| `text.primary` | `#0b1220` | `0.043, 0.071, 0.125` | Headings, body, primary glyphs. |
+| `text.secondary` | `#5b6b80` | `0.357, 0.420, 0.502` | Captions, metadata, inactive labels. |
+| `accent.default` | `#1d6fe5` | `0.114, 0.435, 0.898` | Primary interactive states. |
+| `accent.muted` | `#dbe7fa` | `0.859, 0.906, 0.980` | Selected-row wash, secondary CTA. |
+| `accent.subtle` | `#eff4fc` | `0.937, 0.957, 0.988` | Hover dim, Liquid Glass tint. |
+| `onAccent` | `#ffffff` | `1.000, 1.000, 1.000` | Foreground on accent fills. |
+| `separator` | `#e2e8f0` | `0.886, 0.910, 0.941` | Hairlines, dividers at 0.5pt. |
 
-#### Semantic 활용 가이드
+#### Dark mode
 
-- `color.background` 는 _전체 화면 root_
-- `color.surface` 는 _floated card / detail sheet_
-- `color.accent.default` 는 _interactive elements only_ (button / link / toggle ON)
-- `color.accent.muted` 는 _non-interactive accent_ (skeleton / disabled)
-- _Liquid Glass material_ 위에 _accent_ 사용 시 _자동 specular highlight_ 적용
+| Token | Hex | RGB 0-1 | Use |
+|-------|-----|---------|-----|
+| `background` | `#0b1220` | `0.043, 0.071, 0.125` | App root. |
+| `surface.primary` | `#121a2a` | `0.071, 0.102, 0.165` | Card / sheet / list-row base. |
+| `surface.elevated` | `#1a2336` | `0.102, 0.137, 0.212` | Hover / pressed / popover. |
+| `text.primary` | `#f0f4fa` | `0.941, 0.957, 0.980` | Headings, body, primary glyphs. |
+| `text.secondary` | `#8a98ad` | `0.541, 0.596, 0.678` | Captions, metadata. |
+| `accent.default` | `#4d8df0` | `0.302, 0.553, 0.941` | Primary interactive states. |
+| `accent.muted` | `#1a2940` | `0.102, 0.161, 0.251` | Selected-row wash. |
+| `accent.subtle` | `#15233a` | `0.082, 0.137, 0.227` | Hover dim, Liquid Glass tint. |
+| `onAccent` | `#ffffff` | `1.000, 1.000, 1.000` | Foreground on accent fills. |
+| `separator` | `#1f2a3e` | `0.122, 0.165, 0.243` | Hairlines. |
 
-### 3.2 Typography (v1.0 Final)
+### 3.2 Per-token rationale
+
+**`background`.** Slightly cool off-white in light mode (`#f4f7fb`),
+deep cool navy in dark mode (`#0b1220`). Off-white over pure white
+gives every white card a tonal step to sit on; deep navy over pure
+black gives the dark mode a sky-at-dusk quality without OLED glare.
+The two values are intentional inverses in luminance so the modes
+read as the same palette flipped, not two different palettes.
+
+**`surface.primary`.** Pure white in light mode is a deliberate
+choice — the cool background does the work of making the white feel
+like surface rather than ambient light, so the card itself can be
+unambiguous white. In dark mode the surface sits one step above the
+background (`#121a2a` vs `#0b1220`), enough that a card boundary
+reads without a border.
+
+**`surface.elevated`.** A faint cool tint in light mode and a one-
+step lift in dark mode. Used for hover, pressed, and popover layers.
+We intentionally do NOT use shadow for elevation in the chrome —
+shadow is reserved for sheets in `shadow.elevated` (§3.5). The
+foundation provides hue lift instead.
+
+**`text.primary`.** Near-black with a cool cast (`#0b1220`) in light
+mode, near-white with the same cool cast (`#f0f4fa`) in dark mode.
+Pure `#000000` and `#ffffff` both feel like bright lights on iOS 26
+OLED screens; the cool offset removes the buzz while staying AAA on
+every surface.
+
+**`text.secondary`.** Calibrated to AA against both `background` and
+`surface.primary` in both modes. The cool cast matches `text.primary`
+so secondary text reads as the same family at a different weight,
+not a different color.
+
+**`accent.default`.** `#1d6fe5` in light, `#4d8df0` in dark. Same hue
+family; the dark-mode value is lifted in L to maintain AA against the
+navy background. Reserved for interactive or active state: CTA fills,
+tab.active, current-month year header in MemoryTimelineView, the
+accent rail at 18% alpha. Never decorative.
+
+**`accent.muted`.** A wash form of the accent. Used as a selected-row
+fill, a secondary-CTA background, and as the accent-on-accent
+plate when an active glyph sits in a tinted region. Maintains AA
+contrast with `text.primary` (16:1+) and AA Large with `accent.default`
+(4.41:1).
+
+**`accent.subtle`.** A near-background form of the accent. Used as
+hover dim and as the tint parameter for `.glassEffect(.regular)` (see
+§8 Liquid Glass). At rest you should barely register this color; it
+exists so that the system surface has a faint blue undertone instead
+of a true grey.
+
+**`onAccent`.** Pure white on every accent fill. Light mode meets AA
+normal (4.71:1); dark mode meets AA Large (3.29:1) — every primary
+CTA uses ≥17pt SF Pro Semibold which qualifies, so the case holds.
+
+**`separator`.** A cool light grey in light mode and a cool dark grey
+in dark mode. Used at 0.5pt for hairlines, list dividers, and card
+borders in dense grids. Never used for the timeline rail — that is
+tinted accent at 18% alpha (semantic token `timeline.rail`).
+
+### 3.3 Accessibility notes
+
+All text/background pairs meet AA at minimum (see Design-R11 §2.3
+for the full audit). The one boundary case is `onAccent` on
+`accent.default` in dark mode (`3.29:1` — AA Large). This is
+acceptable because every primary CTA in the codebase uses ≥17pt
+SF Pro Semibold. If a future view needs small white text on an
+accent fill, route through a new semantic token (`cta.primary.text.small`)
+that maps to `text.primary` over `accent.muted` instead of white
+over `accent.default`.
+
+Reduce-transparency: when `UIAccessibility.isReduceTransparencyEnabled`
+is true, every Liquid Glass material falls back to a solid surface.
+The fallback uses `surface.primary` for plates that would otherwise
+be `.glassEffect(.regular)` neutral, and `accent.muted` for plates
+tinted with `liquidGlass.tint.subtle`.
+
+Reduce-motion: palette is unaffected. Motion tokens (§3.6) handle
+that channel.
+
+Increase-contrast: when `UIAccessibility.isDarkerSystemColorsEnabled`
+is true, swap `text.secondary` → `text.primary` and `separator`
+→ `text.secondary` at the view layer. This is handled inside
+`Color.shTextSecondary` in `Color+StillHours.swift`.
+
+### 3.4 What this palette is not
+
+Not warm. Not paper. Not the JOH ink-stamp direction explored in
+R8–R10 (`#b85c38`). Not Things 3's blue verbatim (Things sits at
+~`#1672ec`; we are a hair cyan of that). Not Day One's parchment.
+Not Apple Notes' yellow. Not an indigo or violet — we considered
+`#5856d6` for an introspective mood and rejected it (see Design-R11
+§9 Q-A) because violet reads as Apple-default-purple and competes
+for personality with content.
+
+### 3.5 Typography (v1.0 Final)
 
 **Pair**: SF Pro (system sans) + New York (system serif, iOS 17+)
 
@@ -312,7 +421,7 @@ enum StillHoursTypeface {
 - 권고 ceiling = `.accessibility3` (Dynamic Type 이 _UI 깨짐 없는_ 한계)
 - _Custom fonts 의 Dynamic Type_ 은 OYL `DesignTokens.swift` 의 _1.4× cap_ 패턴 참고 (단 코드는 독립 작성)
 
-### 3.3 Spacing (v1.0 Final)
+### 3.6 Spacing (v1.0 Final)
 
 **Base grid**: 4pt + 8pt grid (SwiftUI default 정합)
 
@@ -331,7 +440,7 @@ enum StillHoursTypeface {
 - Memory Row vertical: `space.sm` (8pt) — _slow + 공기_
 - Library Grid gap: `space.sm` ~ `space.md` (column count 따라)
 
-### 3.4 Radius (v1.0 Final)
+### 3.7 Radius (v1.0 Final)
 
 | Token | Value | 용도 |
 |-------|-------|----|
@@ -342,7 +451,7 @@ enum StillHoursTypeface {
 
 iOS 26 _Liquid Glass_ 는 _둥근 사각형_ 자체가 _refractive edge_ 형성 — radius 가 _시각 정체성_ 의 일부.
 
-### 3.5 Shadow (v1.0 Final)
+### 3.8 Shadow (v1.0 Final)
 
 _Light mode_:
 - `shadow.elevated` — Card 가 _surface 위_ 일 때: `y: 2, blur: 8, opacity: 0.06` warm gray
@@ -351,7 +460,7 @@ _Light mode_:
 _Dark mode_:
 - Shadow 대신 _border + lighter surface_ 활용 — Liquid Glass dark variant 자체가 _depth_ 형성
 
-### 3.6 Motion (v1.0 Final)
+### 3.9 Motion (v1.0 Final)
 
 **원칙**: _Calm motion_ — Sunsama 정신. 빠르지도, 느리지도 않음. _Slow + intentional_.
 

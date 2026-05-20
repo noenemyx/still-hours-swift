@@ -2,6 +2,7 @@
 // Copyright 2026 sunghun.ahn — Still Hours
 // R10.3: Screen 2 — Four media, one model
 // Created: 2026-05-21
+// R11.4: Liquid Glass uniformly tinted via .shGlass() — Design-R11 §8.
 
 import SwiftUI
 import InventoryCore
@@ -135,7 +136,7 @@ struct OnboardingScreen2: View {
                         .font(.system(size: 24, weight: .regular))
                         .foregroundStyle(Color.shAccent)
                 }
-                .glassEffect(.clear, in: RoundedRectangle(cornerRadius: FoundationTokens.Radius.sm))
+                .shGlass(in: RoundedRectangle(cornerRadius: FoundationTokens.Radius.sm))
                 .shElevatedShadow()
 
             // Badge label

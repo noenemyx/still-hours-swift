@@ -2,6 +2,7 @@
 // Copyright 2026 sunghun.ahn — Still Hours
 // R10.3: Screen 3 — 1-to-1 intimate share
 // Created: 2026-05-21
+// R11.4: Liquid Glass uniformly tinted via .shGlass() — Design-R11 §8.
 
 import SwiftUI
 import InventoryCore
@@ -99,10 +100,7 @@ struct OnboardingScreen3: View {
             }
             .background(Color.shSurface)
             .clipShape(RoundedRectangle(cornerRadius: FoundationTokens.Radius.xl))
-            .glassEffect(
-                .regular,
-                in: RoundedRectangle(cornerRadius: FoundationTokens.Radius.xl)
-            )
+            .shGlass(in: RoundedRectangle(cornerRadius: FoundationTokens.Radius.xl))
             .shFloatingShadow()
             .padding(.horizontal, FoundationTokens.Space.md)
             .opacity(recipientVisible ? 1 : 0)

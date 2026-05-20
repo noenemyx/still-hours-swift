@@ -446,3 +446,19 @@ DEVPLAN §5.2 Week 7 에 `Onboarding 3-step | 4h` 기재되어 있으나, 이는
 ---
 
 _End of Onboarding 3-step Design._
+
+---
+
+## Addendum — R11 Cool Blue color treatment (2026-05-21)
+
+Layout, motion, copy slots, and SF Symbol choices are unchanged from
+the spec above. Color treatment changes per `docs/Design-R11-ColdBlue.md`
+§7 (Onboarding visual notes):
+
+- **Screen 1**: rail = `accent.default` × 18% alpha (was warm terra at
+  30%); cover slot tint = `accent.subtle` (was warm cream).
+- **Screen 2**: 4 medium tints collapse to single `accent.default`
+  (was per-medium warm variants); selected card lifts to
+  `surface.elevated` with accent glyph.
+- **Screen 3**: connecting line = `accent.default` full opacity (was
+  `text.secondary` × 60% in R10); avatar rings = `accent.subtle`.

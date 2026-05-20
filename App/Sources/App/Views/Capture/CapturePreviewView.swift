@@ -2,6 +2,7 @@
 // Copyright 2026 sunghun.ahn — Still Hours
 // Sprint 1.1 — CaptureSheet shell + state machine + manual mode
 // Created: 2026-05-21
+// R11.4: Liquid Glass uniformly tinted via .shGlass() — Design-R11 §8.
 //
 // Localization keys used in this file:
 //   "capture.preview.ready"  — VoiceOver announcement "Ready to save: <title>, <medium>"
@@ -75,13 +76,13 @@ struct CapturePreviewView: View {
                     Text(mediumLabel)
                         .font(.caption)
                 }
-                .foregroundStyle(SemanticTokens.accent.default)
+                .foregroundStyle(Color.shAccent)
             }
             Spacer(minLength: 0)
         }
         .padding(ComponentTokens.ItemCard.padding)
         .background(.clear)
-        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: ComponentTokens.ItemCard.radius))
+        .shGlass(in: RoundedRectangle(cornerRadius: ComponentTokens.ItemCard.radius))
     }
 
     // MARK: Cover thumbnail
@@ -95,9 +96,9 @@ struct CapturePreviewView: View {
                     .scaledToFill()
             } else {
                 ZStack {
-                    SemanticTokens.accent.muted
+                    Color.shAccentMuted
                     Image(systemName: mediumSymbol)
-                        .foregroundStyle(SemanticTokens.accent.default)
+                        .foregroundStyle(Color.shAccent)
                 }
             }
         }
@@ -123,7 +124,7 @@ struct CapturePreviewView: View {
                         width: ComponentTokens.MemoryRow.iconSize,
                         height: ComponentTokens.MemoryRow.iconSize
                     )
-                    .foregroundStyle(SemanticTokens.accent.default)
+                    .foregroundStyle(Color.shAccent)
                 Text(
                     String(
                         localized: "capture.preview.acquired_note",

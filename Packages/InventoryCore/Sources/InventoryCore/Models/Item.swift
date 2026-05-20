@@ -43,7 +43,7 @@ public enum ItemState: String, Codable, CaseIterable, Sendable {
 /// ``Collection`` membership, and ``Attachment`` hangs off an `Item`.
 @available(iOS 26, macOS 26, *)
 @Model
-public final class Item: @unchecked Sendable {
+public final class Item {
 
     // MARK: Identity
 

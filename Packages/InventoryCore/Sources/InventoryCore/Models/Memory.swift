@@ -53,7 +53,7 @@ public struct HistoryEntry: Codable, Sendable {
 /// optional freeform note, photos, and voice notes.
 @available(iOS 26, macOS 26, *)
 @Model
-public final class Memory: @unchecked Sendable {
+public final class Memory {
 
     // MARK: Identity
 

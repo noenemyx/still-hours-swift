@@ -29,7 +29,7 @@ public enum AttachmentKind: String, Codable, CaseIterable, Sendable {
 /// responsible for cleaning up the file when the attachment is deleted.
 @available(iOS 26, macOS 26, *)
 @Model
-public final class Attachment: @unchecked Sendable {
+public final class Attachment {
 
     // MARK: Identity
 

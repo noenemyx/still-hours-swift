@@ -1,13 +1,17 @@
 // ComponentTokens.swift
-// Still Hours — Design System Component Tokens v1.0
+// Still Hours — Design System Component Tokens
 //
+// R11 ComponentTokens routes color through semantic layer (post-Cool-Blue pivot).
 // Component-scoped layout constants derived from Foundation tokens.
 // Maps directly to Design.md §5 (Component Library).
+//
+// Color references in components use SemanticTokens (e.g. SemanticTokens.card.background)
+// not raw FoundationTokens or hex values. Geometric / spacing values are unchanged from v1.0.
 //
 // Usage: reference via `ComponentTokens.ItemCard.aspectRatio` etc.
 // Do **not** hard-code these values in view files.
 //
-// - Note: Design.md §5.1–§5.4 (2026-05-20 final).
+// - Note: Design-R11-ColdBlue.md §3 + Design.md §5.1–§5.4.
 
 import SwiftUI
 

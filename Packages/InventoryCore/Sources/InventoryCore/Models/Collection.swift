@@ -42,7 +42,7 @@ public struct SmartFilterRule: Codable, Sendable {
 /// when set, ``items`` is populated at display time rather than stored.
 @available(iOS 26, macOS 26, *)
 @Model
-public final class Collection: @unchecked Sendable {
+public final class Collection {
 
     // MARK: Identity
 

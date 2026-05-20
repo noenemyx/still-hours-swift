@@ -25,7 +25,7 @@ let package = Package(
             name: "InventoryCore",
             path: "Sources/InventoryCore",
             swiftSettings: [
-                .swiftLanguageVersion(.v6),
+                .swiftLanguageMode(.v6),
                 .enableExperimentalFeature("StrictConcurrency"),
             ]
         ),
@@ -34,7 +34,7 @@ let package = Package(
             dependencies: ["InventoryCore"],
             path: "Tests/InventoryCoreTests",
             swiftSettings: [
-                .swiftLanguageVersion(.v6),
+                .swiftLanguageMode(.v6),
             ]
         ),
     ]

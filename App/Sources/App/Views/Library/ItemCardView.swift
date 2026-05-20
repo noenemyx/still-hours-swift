@@ -2,6 +2,7 @@
 // Copyright 2026 sunghun.ahn — Still Hours
 // Sprint 1.5 — LibraryListView + ItemDetailView + MemoryTimelineView
 // Created: 2026-05-21
+// R11.4: Liquid Glass uniformly tinted via .shGlass() — Design-R11 §8.
 //
 // Reusable 3:4 portrait card for a single Item.
 // Design.md §5.1 ItemCard spec.
@@ -103,7 +104,7 @@ struct ItemCardView: View {
             .padding(.vertical, FoundationTokens.Space.xs)
             .background {
                 Capsule()
-                    .glassEffect(.regular, in: Capsule())
+                    .shGlass(in: Capsule())
             }
     }
 

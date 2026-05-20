@@ -514,6 +514,101 @@ recognizer — but Swift 6 has no machine-readable way to learn this.
 
 ---
 
+## Axis N — SwiftData `@Model` classes must NOT declare `@unchecked Sendable`
+
+**Round 11 cleanup (2026-05-21)**
+
+### Symptom
+
+`swift build --package-path Packages/InventoryCore` produces a warning
+on every `@Model`-decorated class:
+
+> warning: redundant conformance of 'Memory' to protocol 'Sendable'
+> note: 'Memory' declares conformance to protocol 'Sendable' here
+
+The warning fires from inside the macro expansion of `@Model`, pointing
+at both the user's `public final class Memory: @unchecked Sendable`
+declaration AND the macro-generated:
+
+```swift
+@available(swift, deprecated: 5.9, message: "PersistentModels are not Sendable, consider utilizing a ModelActor or use Memory's persistentModelID instead")
+@available(*, unavailable, message: "PersistentModels are not Sendable, consider utilizing a ModelActor or use Memory's persistentModelID instead")
+extension Memory: Sendable {}
+```
+
+Initially hidden by build cache hits; only surfaces on a full rebuild.
+
+### Root cause
+
+The `@Model` macro intentionally synthesizes an `unavailable` Sendable
+conformance extension. The unavailable marker tells the compiler:
+"PersistentModel is explicitly non-Sendable; if you see a site trying
+to send a Memory across actor isolation, surface a diagnostic with the
+ModelActor / persistentModelID guidance."
+
+Declaring `@unchecked Sendable` on the class body overrides that
+contract — but produces a redundant-conformance warning AND silently
+suppresses the very strict-concurrency diagnostics SwiftData wants to
+emit at every cross-actor pass site. The class is now "Sendable" from
+the type-checker's view (so calls compile) but the underlying
+PersistentModel is still tied to its ModelContext's isolation domain
+(so the actual runtime invariant is unchanged) — a foot-gun.
+
+This is **not** Axis J's territory. Axis J covers Apple _legacy_
+framework classes (`AVCaptureSession`, `SFSpeechRecognitionTask`) that
+predate strict concurrency and have no Sendable annotation at all. For
+those, `@unchecked Sendable` is the documented escape hatch. SwiftData
+PersistentModel is the opposite case: Apple has explicitly annotated it
+as non-Sendable, and we must respect that.
+
+### Prevention
+
+1. **Never declare `@unchecked Sendable` on a `@Model` class.** The
+   macro already handles Sendable correctly (by marking it unavailable).
+   Bare class declaration is correct:
+   ```swift
+   @available(iOS 26, macOS 26, *)
+   @Model
+   public final class Memory {       // ← no `: @unchecked Sendable`
+       // ...
+   }
+   ```
+
+2. **For cross-actor passing of model identity, use `persistentModelID`**
+   (it IS Sendable) and re-fetch on the destination actor:
+   ```swift
+   // SAFE: pass the ID across actor boundary, re-fetch on the other side
+   let id = memory.persistentModelID
+   await someActor.process(id: id)
+   ```
+
+3. **For background work on models, use the documented ModelActor
+   pattern** — see Axis I for `@MainActor final class` services and
+   `ModelContainer`-based background actors.
+
+4. **Lint check** (add to `scripts/check-*.sh`):
+
+   ```bash
+   # Disallow @unchecked Sendable on @Model classes
+   set +o pipefail
+   violations=$(grep -B2 -rn "@unchecked Sendable" \
+                 Packages/*/Sources --include="*.swift" 2>/dev/null \
+                 | grep -B1 "@unchecked Sendable" \
+                 | grep "@Model" || true)
+   set -o pipefail
+   if [[ -n "$violations" ]]; then
+     fail "SwiftData @Model classes must not declare @unchecked Sendable:"
+     echo "$violations"
+     exit 1
+   fi
+   ```
+
+5. **Cross-reference**: Axis I (services use `@MainActor class`, not
+   `actor`), Axis J (legacy Apple framework classes are the only valid
+   `@unchecked Sendable` site).
+
+---
+
 ## Axis E — `set -o pipefail` + `grep -v` chains silently abort
 
 **Pre-flight Round 4 (2026-05-20, commit `f15da22`)**

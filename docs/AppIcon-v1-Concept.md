@@ -1,5 +1,7 @@
 # AppIcon v1.0 Concept — Still Hours
 
+**DEPRECATED 2026-05-21 (R11).** Warm-orange direction (Wunderkammer / Light-on-paper) retired in favor of cool-blue "Glass over a window" concept. See `docs/AppIcon-v2-Concept.md`. Content below preserved for historical reference + rationale archive — DO NOT implement.
+
 > 2026-05-20 | Senior visual + brand design pass
 > Prerequisite: Design.MD §7 (Wunderkammer + Liquid Glass) + LiquidGlass-Notes.md §5 (재검토 필요 명시)
 
