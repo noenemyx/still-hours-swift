@@ -1,12 +1,15 @@
 // Release.xcconfig
 // Still Hours — Release build settings
 //
-// Purpose: per-configuration build settings separated from project.yml so
-// signing identity and team ID never bake into source control.
-// DEVELOPMENT_TEAM is intentionally left empty; fill it locally after
-// Apple Developer Program enrollment (do NOT commit the value).
+// Purpose: per-configuration build settings separated from project.yml.
+//
+// Team ID 89J24XNYL3 is set here directly — Apple Team IDs are public
+// identifiers (visible in any signed binary), not secrets. Bundle ID
+// was registered 2026-05-21 via ASC API; same OYL Apple Developer Team.
+// For a different developer to build this repo locally, override via
+// Configs/Local.xcconfig (gitignored).
 
-DEVELOPMENT_TEAM =
+DEVELOPMENT_TEAM = 89J24XNYL3
 CODE_SIGN_STYLE = Automatic
 PROVISIONING_PROFILE_SPECIFIER =
 CODE_SIGN_IDENTITY = Apple Distribution

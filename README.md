@@ -103,11 +103,11 @@ Tracer Bullet sequence (`Book full → Music full → Movie basic → Object bas
 
 ### User-direct actions (no agent path)
 
-- [ ] Trademark search (KIPRIS + USPTO Class 9 + EUIPO + App Store dupes) for "Still Hours" — pre-check done; final formal opinion needs 변리사
-- [ ] Trademark attorney opinion letter (USPTO descriptive risk — 50/50, $300-500)
-- [ ] Apple Design Resources iOS 26 Figma download + study (Figma account required)
-- [ ] SF Symbols 7 macOS app install (Mac App Store download)
-- [ ] Bundle ID `com.ownlifelab.stillhours` — Apple Developer Console 등록
+- [x] Trademark search (KIPRIS + USPTO Class 9 + EUIPO + App Store dupes) for "Still Hours" — 7-axis pre-check done (no critical collision; descriptive-risk 50/50 mitigated by Liquid Glass app-icon + UI distinctiveness). Final formal 변리사 opinion: **사용자 결정으로 진행하지 않음 (2026-05-21)**. Risk accepted: USPTO refusal possible at registration; pivot to common-law / state TM if needed.
+- [ ] Apple Design Resources iOS 26 Figma download + study — see docs/Pre-flight-User-Actions.md
+- [ ] SF Symbols 7 macOS app install — see docs/Pre-flight-User-Actions.md
+- [x] Bundle ID `com.ownlifelab.stillhours` — **등록 완료 2026-05-21** via ASC API. Resource ID `GFG86L5VY4`, iCloud/CloudKit capability 활성화. Team ID `89J24XNYL3` (Configs/Debug.xcconfig + Release.xcconfig에 주입됨).
+- [ ] CloudKit Container `iCloud.com.ownlifelab.stillhours` — Apple Developer Console에서 수동 생성 (ASC API는 container 생성을 expose 하지 않음)
 
 ---
 
