@@ -1,15 +1,8 @@
+// StillHoursUITests.swift — App/Tests/AppUITests
+// Copyright 2026 sunghun.ahn — Still Hours
+// Sprint 1.8 — Placeholder. UI tests live in CaptureFlowUITests.swift.
+
 import XCTest
 
-final class StillHoursUITests: XCTestCase {
-    var app: XCUIApplication!
-
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-        app = XCUIApplication()
-        app.launch()
-    }
-
-    func testPlaceholder() throws {
-        // Replace with UI test scenarios
-    }
-}
+// Placeholder — Sprint 1.8 UI tests live in CaptureFlowUITests.swift.
+final class StillHoursUITests: XCTestCase {}

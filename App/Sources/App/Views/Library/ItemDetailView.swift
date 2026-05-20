@@ -35,6 +35,16 @@ struct ItemDetailView: View {
     @State private var showAddMemory: Bool = false
     @State private var showDeleteConfirmation: Bool = false
 
+    // MARK: Computed
+
+    /// LibraryService backed by the view's SwiftData ModelContext.
+    ///
+    /// Constructed lazily per-body pass — fine because `@MainActor final class`
+    /// is cheap to create (just stores the context reference).
+    private var library: LibraryService {
+        LibraryService(context: modelContext)
+    }
+
     // MARK: Body
 
     var body: some View {
@@ -56,6 +66,14 @@ struct ItemDetailView: View {
         }
         .onAppear {
             AccessibilityNotification.Announcement(item.title).post()
+        }
+        .sheet(isPresented: $showAddMemory) {
+            AddMemoryView(
+                item: item,
+                library: library,
+                onSaved: { showAddMemory = false },
+                onCancel: { showAddMemory = false }
+            )
         }
         .confirmationDialog(
             String(localized: "item.detail.delete", defaultValue: "Delete"),
