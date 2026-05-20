@@ -12,7 +12,12 @@ import InventoryCore
 // MARK: - Stub LibraryService
 
 /// In-memory ModelContext LibraryService for unit tests.
-@available(iOS 26, macOS 26, *)
+// Platform floor: see Package.swift / project.yml deploymentTarget=26.0
+//
+// `@MainActor` annotation needed because LibraryService is @MainActor
+// (Axis I lesson — SwiftData services are main-actor-bound). Calling its
+// init from a non-isolated helper raises a Swift 6 isolation error.
+@MainActor
 private func makeTestLibrary() throws -> LibraryService {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try ModelContainer(
@@ -24,7 +29,6 @@ private func makeTestLibrary() throws -> LibraryService {
 
 // MARK: - CaptureStateTests
 
-@available(iOS 26, macOS 26, *)
 @Suite("CaptureStateMachine")
 struct CaptureStateTests {
 

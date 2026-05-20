@@ -16,7 +16,7 @@ import InventoryCore
 
 // MARK: - Helpers
 
-@available(iOS 26, macOS 26, *)
+// Platform floor: see Package.swift / project.yml deploymentTarget=26.0
 private func makeTestContainer() throws -> ModelContainer {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     return try ModelContainer(
@@ -28,7 +28,6 @@ private func makeTestContainer() throws -> ModelContainer {
     )
 }
 
-@available(iOS 26, macOS 26, *)
 @MainActor
 private func makeTestLibrary(container: ModelContainer) -> LibraryService {
     LibraryService(context: ModelContext(container))
@@ -36,7 +35,6 @@ private func makeTestLibrary(container: ModelContainer) -> LibraryService {
 
 // MARK: - AddMemoryTests
 
-@available(iOS 26, macOS 26, *)
 @Suite("AddMemory")
 struct AddMemoryTests {
 

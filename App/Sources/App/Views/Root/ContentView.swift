@@ -2,6 +2,7 @@
 // Copyright 2026 sunghun.ahn — Still Hours
 // Round 7: Root NavigationStack + Tab shell
 // Updated: 2026-05-21 — Sprint 1.5 wires real LibraryListView
+// R9.2: DemoSeeder wired via .task on root TabView (#if DEBUG)
 // Created: 2026-05-21
 
 import SwiftUI
@@ -53,9 +54,21 @@ struct ContentView: View {
                 String(localized: "nav.settings", defaultValue: "Settings")
             )
         }
+        .tint(Color.shAccent)
         .sheet(isPresented: $isCapturing) {
             CaptureSheetWrapper()
         }
+        #if DEBUG
+        .task {
+            do {
+                try await DemoSeeder(context: modelContext).seedIfEmpty()
+            } catch {
+                // Silently ignore — DemoSeeder is a developer convenience,
+                // not a critical path. Log to console for visibility.
+                print("[DemoSeeder] seedIfEmpty failed: \(error)")
+            }
+        }
+        #endif
     }
 }
 
