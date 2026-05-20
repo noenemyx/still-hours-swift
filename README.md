@@ -74,34 +74,58 @@ ASO Quit signal (6개월 시점):
 
 ## Pre-flight Week 1-3 (36h checklist)
 
-Tracer Bullet sequence (`Book full → Music full → Movie basic → Object basic`) starts after Pre-flight gate clears all items:
+Tracer Bullet sequence (`Book full → Music full → Movie basic → Object basic`) starts after Pre-flight gate clears all items.
 
-- [ ] Trademark search (KIPRIS + USPTO Class 9 + EUIPO + App Store dupes) for "Still Hours"
+**Status as of 2026-05-20** — through Pre-flight Round 4 / commit `f15da22`:
+
+### Agent-doable (auto-completable) — all done ✓
+
+- [x] Liquid Glass material reference study (WWDC 2025) → `docs/LiquidGlass-Notes.md`
+- [x] Foundation tokens v1.0 (Color 10 + Type 8 + Space 6 + Radius 4 + Shadow 2 + Motion 4) → R1 `4ee9652`
+- [x] Semantic tokens v1.0 → R2 `04919f9`
+- [x] Component tokens v1.0 (ItemCard / MemoryRow / CollectionCover / MediumBadge) → R2 `04919f9`
+- [x] Memory Timeline visual signature design pass → `docs/MemoryTimeline-Design.md` (R1)
+- [x] WCAG AA contrast verification chart → `docs/WCAG-Contrast-Verification.md` (R3: Light 0 Fail / Dark 0 Fail)
+- [x] Settings → "Still Hours is" surface copy (ko/en draft) → `docs/Settings-Surface-Copy.md` (R1)
+- [x] App Store metadata 8-locale 1차 draft (Wave 1 ko/en/ja 우선) → `docs/ASO-Metadata-Wave1.md` (R4 — 665 lines, 15 deliverables verified)
+- [x] Promise lint scripts (Privacy + Data Sovereignty + No subscription IAP — 3 lint baseline) → `scripts/check-*.sh`, all 3 PASS (R3/R4)
+- [x] SwiftData v1 schema — Item / Memory / Collection / Attachment + VersionedSchema → R3 `8344a9c`
+- [x] InventoryCore services (Library / Export / Capture / Timeline / ServiceError) → R4 `f15da22`
+- [x] InventoryCore unit tests (Swift Testing, 71 @Test functions, all PASS) → R4 `f15da22`
+- [x] CaptureFlow UI design spec → `docs/CaptureFlow-Design.md` (R4 — 719 lines)
+- [x] Onboarding 3-step design spec → `docs/Onboarding-3step-Design.md` (R3)
+- [x] xcodegen project.yml + iOS 26.0 deployment target → R3 `8344a9c`
+- [x] `xcodebuild iOS 26.4 simulator` clean build verified → R4 `f15da22`
+
+### Deferred pending user input
+
+- [ ] App icon v1.0 draft (Wunderkammer cabinet + Liquid Glass layered) — _Deferred_ by user 2026-05-20 pending Apple Design Resources Figma study. Two concept directions drafted in `docs/AppIcon-v1-Concept.md` (Wunderkammer vs Light on Paper). Advisor recommendation: B (Light on Paper) — final decision after Figma.
+
+### User-direct actions (no agent path)
+
+- [ ] Trademark search (KIPRIS + USPTO Class 9 + EUIPO + App Store dupes) for "Still Hours" — pre-check done; final formal opinion needs 변리사
 - [ ] Trademark attorney opinion letter (USPTO descriptive risk — 50/50, $300-500)
-- [ ] Apple Design Resources iOS 26 Figma download + study
-- [ ] SF Symbols 7 macOS app install
-- [ ] Liquid Glass material reference study (WWDC 2025)
-- [ ] Foundation tokens v1.0 (Color 10 + Type 8 + Space 6 + Radius 4 + Shadow 2 + Motion 4)
-- [ ] Semantic tokens v1.0
-- [ ] Component tokens v1.0 (ItemCard / MemoryRow / CollectionCover / MediumBadge)
-- [ ] App icon v1.0 draft (Wunderkammer cabinet + Liquid Glass layered)
-- [ ] Memory Timeline visual signature design pass
-- [ ] WCAG AA contrast verification chart
-- [ ] Settings → "Still Hours is" surface copy (ko/en draft)
-- [ ] App Store metadata 8-locale 1차 draft (Wave 1 ko/en/ja 우선)
-- [ ] Promise lint scripts (Privacy + Data Sovereignty + No subscription IAP — 3 lint baseline)
-- [ ] Bundle ID `com.ownlifelab.stillhours` — Apple Developer Console 등록 (사용자 직접)
+- [ ] Apple Design Resources iOS 26 Figma download + study (Figma account required)
+- [ ] SF Symbols 7 macOS app install (Mac App Store download)
+- [ ] Bundle ID `com.ownlifelab.stillhours` — Apple Developer Console 등록
 
 ---
 
-## Build (TBD during Pre-flight)
+## Build
 
 ```bash
-# bash scripts/test.sh        # All lints + SPM tests + Xcode build
-# bash scripts/build.sh       # Xcode archive
-# bash scripts/check-i18n.sh  # i18n axis A-J + axis M ASO
-# bash scripts/check-promise.sh  # Promise lint (Privacy + Data Sovereignty + No subscription)
+xcodegen generate                    # Generate StillHours.xcodeproj from project.yml
+swift test --package-path Packages/InventoryCore  # SPM unit tests (71 PASS)
+bash scripts/test.sh                 # All 3 lints + SPM tests + xcodebuild (single entry)
+bash scripts/test.sh --lint-only     # 3 Promise lints only (~1s)
+bash scripts/test.sh --build-only    # SPM test + xcodebuild only
+
+xcodebuild -project StillHours.xcodeproj -scheme StillHours \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
+  -configuration Debug build         # Direct xcodebuild
 ```
+
+**Toolchain pinned** (verified 2026-05-20): Xcode 26.4 / Swift 6.3 / xcodegen 2.45.4 / iOS 26.4 simulator runtime.
 
 ---
 

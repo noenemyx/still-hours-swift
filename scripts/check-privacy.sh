@@ -96,6 +96,43 @@ has_ignore_comment() {
 }
 
 # ── Main ────────────────────────────────────────────────────────────────────
+
+# ── Step 0 — Verify PrivacyInfo.xcprivacy ──────────────────────────────────
+header "Privacy Manifest — PrivacyInfo.xcprivacy Verification"
+
+PRIVACY_MANIFEST="${SOURCE_ROOT}/App/Resources/PrivacyInfo.xcprivacy"
+
+if [[ ! -f "$PRIVACY_MANIFEST" ]]; then
+  fail "PrivacyInfo.xcprivacy not found at: $PRIVACY_MANIFEST"
+  echo "       Fix: Create App/Resources/PrivacyInfo.xcprivacy (required for iOS 17+ App Store submission)."
+  echo "            See Apple documentation: https://developer.apple.com/documentation/bundleresources/privacy_manifest_files"
+  exit 1
+fi
+info "PrivacyInfo.xcprivacy exists."
+
+# Verify NSPrivacyTracking is false (Promise §5.3: No advertising · No data sale)
+# We use grep for portability (plutil -p is macOS-only and may not be available in CI)
+if grep -q "<key>NSPrivacyTracking</key>" "$PRIVACY_MANIFEST"; then
+  # The line immediately after the key should contain <false/>
+  TRACKING_VALUE=$(grep -A1 "<key>NSPrivacyTracking</key>" "$PRIVACY_MANIFEST" | tail -1 | tr -d '[:space:]')
+  if [[ "$TRACKING_VALUE" == "<false/>" ]]; then
+    info "NSPrivacyTracking = false (Promise §5.3 compliant)."
+  else
+    fail "NSPrivacyTracking is NOT false in PrivacyInfo.xcprivacy."
+    echo "       Found: $TRACKING_VALUE"
+    echo "       Promise §5.3 (No advertising · No data sale) forbids tracking permanently."
+    echo "       Fix: Set <key>NSPrivacyTracking</key><false/> in PrivacyInfo.xcprivacy."
+    echo "            Any change to true requires an explicit Promise amendment decision — not a routine code change."
+    exit 1
+  fi
+else
+  fail "NSPrivacyTracking key is missing from PrivacyInfo.xcprivacy."
+  echo "       Fix: Add <key>NSPrivacyTracking</key><false/> to PrivacyInfo.xcprivacy."
+  exit 1
+fi
+
+echo ""
+
 header "Privacy Lint — External Host Whitelist"
 echo "Source root : $SOURCE_ROOT"
 echo "Allowed hosts: ${ALLOWED_HOSTS[*]}"

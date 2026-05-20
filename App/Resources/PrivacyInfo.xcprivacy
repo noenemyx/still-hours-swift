@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  PrivacyInfo.xcprivacy — Still Hours Privacy Manifest
+  =====================================================
+  Promise 3조항 (PRD §5): No advertising · No data sale · No undisclosed tracking.
+
+  This manifest declares:
+    - Zero advertising tracking (NSPrivacyTracking = false)
+    - Zero tracking domains
+    - Zero collected data types for v1.0 (all data stays local or in the
+      user's own CloudKit Private Database — iCloud infrastructure, not ours)
+    - Required-reason API declarations for: UserDefaults, FileTimestamp,
+      DiskSpace, SystemBootTime — all used solely for on-device feature
+      delivery, never for fingerprinting or cross-app tracking.
+
+  IMPORTANT: Future versions adding optional analytics MUST update both this
+  file AND the Promise documentation in PRD §5 / Design.MD §11 before
+  shipping. Any NSPrivacyTracking = true change requires explicit user
+  decision and a Promise amendment — it is not a routine code change.
+  See DEVPLAN §11 (Privacy Manifest) for update protocol.
+-->
+<plist version="1.0">
+<dict>
+  <!-- ── Tracking ──────────────────────────────────────────────────── -->
+  <!-- Promise §5.3: No advertising · No data sale. Tracking is permanently
+       disabled. If this key ever becomes true, the Promise is broken. -->
+  <key>NSPrivacyTracking</key>
+  <false/>
+
+  <!-- ── Tracking Domains ──────────────────────────────────────────── -->
+  <!-- No tracking SDKs, no analytics endpoints, no ad networks. -->
+  <key>NSPrivacyTrackingDomains</key>
+  <array/>
+
+  <!-- ── Collected Data Types ──────────────────────────────────────── -->
+  <!-- v1.0: All user data lives in CloudKit Private Database (user's own
+       iCloud, encrypted at rest, Apple-operated, no ownlifelab access)
+       or on-device Core Data. We collect nothing. -->
+  <key>NSPrivacyCollectedDataTypes</key>
+  <array/>
+
+  <!-- ── Required Reason APIs ──────────────────────────────────────── -->
+  <!-- Apple mandates declarations for any API in the "required reason"
+       categories. Still Hours uses four such API families. Each usage
+       is strictly on-device and user-facing — no fingerprinting. -->
+  <key>NSPrivacyAccessedAPITypes</key>
+  <array>
+
+    <!-- UserDefaults — reason CA92.1 (1C8F.1)
+         Used for: app preferences (sort order, display density, locale
+         override, onboarding completion flag). Reads and writes only
+         within Still Hours' own container. Never shared cross-app. -->
+    <dict>
+      <key>NSPrivacyAccessedAPIType</key>
+      <string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+      <key>NSPrivacyAccessedAPITypeReasons</key>
+      <array>
+        <string>CA92.1</string>
+      </array>
+    </dict>
+
+    <!-- File Timestamp — reason C617.1
+         Used for: Memory entry "date added" display; sort-by-date in
+         Library Grid; "On this day" Time Travel feature. File timestamps
+         are read only within the app's own sandbox container. -->
+    <dict>
+      <key>NSPrivacyAccessedAPIType</key>
+      <string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+      <key>NSPrivacyAccessedAPITypeReasons</key>
+      <array>
+        <string>C617.1</string>
+      </array>
+    </dict>
+
+    <!-- Disk Space — reason E174.1
+         Used for: displaying available iCloud/local storage to the user
+         in Settings → Data Sovereignty export screen, so users can plan
+         their JSON/PDF exports. Value shown on-device only. -->
+    <dict>
+      <key>NSPrivacyAccessedAPIType</key>
+      <string>NSPrivacyAccessedAPICategoryDiskSpace</string>
+      <key>NSPrivacyAccessedAPITypeReasons</key>
+      <array>
+        <string>E174.1</string>
+      </array>
+    </dict>
+
+    <!-- System Boot Time — reason 35F9.1
+         Used for: elapsed-time measurement in the 3-second capture flow
+         (barcode scan → metadata fetch → save) to enforce the UX timing
+         goal. Measurement is in-process only, never transmitted. -->
+    <dict>
+      <key>NSPrivacyAccessedAPIType</key>
+      <string>NSPrivacyAccessedAPICategorySystemBootTime</string>
+      <key>NSPrivacyAccessedAPITypeReasons</key>
+      <array>
+        <string>35F9.1</string>
+      </array>
+    </dict>
+
+  </array>
+</dict>
+</plist>
