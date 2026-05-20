@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  StillHours.entitlements
+  Still Hours — CloudKit entitlements
+
+  Promise §1 — Data Sovereignty: all user data lives exclusively in the
+  CloudKit Private Database (iCloud.com.ownlifelab.stillhours). The Public
+  Database is NEVER enabled. Adding "public" to com.apple.developer.icloud-services
+  requires a formal Promise amendment AND explicit user approval before commit.
+
+  CKShare (v1.5): intimate 1-to-1 sharing uses the Private DB scope exclusively.
+  No entitlement change is required at v1.5 — CKShare operates within the
+  existing Private DB container. No Public or Shared DB is opened at that time.
+-->
+<plist version="1.0">
+<dict>
+	<key>com.apple.developer.icloud-container-identifiers</key>
+	<array>
+		<string>iCloud.com.ownlifelab.stillhours</string>
+	</array>
+	<key>com.apple.developer.icloud-services</key>
+	<array>
+		<string>CloudDocuments</string>
+		<string>CloudKit</string>
+	</array>
+	<key>com.apple.developer.ubiquity-container-identifiers</key>
+	<array>
+		<string>iCloud.com.ownlifelab.stillhours</string>
+	</array>
+	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
+	<string>$(TeamIdentifierPrefix)com.ownlifelab.stillhours</string>
+</dict>
+</plist>

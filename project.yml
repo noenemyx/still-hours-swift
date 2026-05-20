@@ -41,12 +41,13 @@ targets:
         PRODUCT_NAME: StillHours
         MARKETING_VERSION: "1.0.0"
         CURRENT_PROJECT_VERSION: "1"
-        CODE_SIGN_STYLE: Automatic
-        DEVELOPMENT_TEAM: ""  # Set by user after enrollment
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
         TARGETED_DEVICE_FAMILY: "1,2"
+    configFiles:
+      Debug: Configs/Debug.xcconfig
+      Release: Configs/Release.xcconfig
     dependencies:
       - package: InventoryCore
     info:
@@ -63,6 +64,7 @@ targets:
         NSMicrophoneUsageDescription: 음성 메모 녹음에 사용합니다.
         NSLocationWhenInUseUsageDescription: 자산 등록 시 장소 자동 제안에 사용합니다.
         NSPhotoLibraryUsageDescription: 자산 사진 선택에 사용합니다.
+        NSSpeechRecognitionUsageDescription: 음성 메모를 텍스트로 변환할 때 사용합니다.
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: true
           UISceneConfigurations: {}

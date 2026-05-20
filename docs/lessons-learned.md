@@ -220,6 +220,158 @@ fine in `Sources/` files.
 
 ---
 
+## Axis F — Unescaped double-quotes inside format strings ship as parse errors
+
+**Pre-flight Rounds 4 + 6 (2026-05-20 / 2026-05-21, commits `f15da22`, `<r6>`)**
+
+### Symptom
+
+Swift compiler reports `error: consecutive statements on a line must be
+separated by ';'` on a return statement that looks superficially fine:
+
+```swift
+return "Invalid input for field "\(field)"."
+```
+
+The error column points at the inner `"` before the interpolation, not at
+the line itself. Same pattern hit `ServiceError.swift` in R4 and
+`CaptureSheet.swift` in R6 — two different agents made the same mistake.
+
+### Root cause
+
+Swift string literal terminates at the first un-escaped `"`. The intended
+string had inner double-quotes around the interpolated field name:
+`field "\(field)"`. Without backslash escapes, the lexer reads:
+- `"Invalid input for field "` (one string)
+- `\(field)` (interpolation outside string — parse error)
+- `"."` (another string)
+
+Three "consecutive statements" on one line, hence the error.
+
+Sub-agents reaching for `NSLocalizedString` or printf-style format
+strings have repeatedly produced this. The error message is misleading
+(points at expression parsing, not at the string terminator).
+
+### Prevention
+
+1. **Always escape inner quotes** when a format string contains
+   user-visible quoted text:
+   ```swift
+   return "Invalid input for field \"\(field)\"."
+   //                              ^^    ^^
+   return NSLocalizedString("field.x", value: "Invalid input for field \"%@\".", comment: "")
+   ```
+
+2. **Sub-agent prompts** that ask for `LocalizedError` / `NSLocalizedString`
+   / printf format strings should explicitly call out the escape rule —
+   include the phrase *"escape inner double-quotes with `\"`"* in the
+   prompt.
+
+3. **Lint hook** (future) — add to `scripts/check-quote-escape.sh` or
+   embed in an existing lint:
+
+   ```bash
+   # Heuristic: a Swift source line containing `return "..."..."` where
+   # the second `"` is not preceded by `\` is suspicious. False-positive
+   # rate is moderate; flag as WARN with file:line context.
+   grep -rn 'return ".*[^\\]".*"' Sources/ App/Sources/ --include="*.swift"
+   ```
+
+4. **In CI / pre-commit**: a single `xcodebuild -dry-run` pass catches
+   these immediately. The lessons-learned scan is a backstop for when CI
+   isn't yet wired up.
+
+---
+
+## Axis G — Swift Testing `nonisolated(unsafe) static var` races by default
+
+**Pre-flight Round 6 (2026-05-21, commit `<r6>`)**
+
+### Symptom
+
+`BookMetadataLookupTests` had 9 `@Test` functions sharing a
+`MockURLProtocol` with `nonisolated(unsafe) static var stubStatusCode`.
+Tests passed individually but 3 failed when the suite ran. Specifically,
+`lookup_rateLimited_throwsRateLimited` (which sets `stubStatusCode = 429`)
+leaked its value into happy-path tests, which then caught `.rateLimited`
+where they expected success.
+
+### Root cause
+
+Swift Testing runs tests inside a suite **in parallel by default** for
+speed. `nonisolated(unsafe) static var` is exactly the shape that
+race-condition tooling will not catch (it's an opt-out) but which still
+races. The `URLProtocol` subclass pattern is a near-universal mock
+strategy for `URLSession`, and Apple's own samples use static state.
+
+### Prevention
+
+1. **Annotate test suites that share static mock state with
+   `@Suite(.serialized)`**:
+   ```swift
+   @Suite(.serialized)
+   struct BookMetadataLookupTests {
+       @Test func ...
+   }
+   ```
+   Cost: tests run sequentially. For 9 fast unit tests (<10ms each)
+   this is a non-issue.
+
+2. **Alternative (deeper fix)**: replace static mock state with a
+   per-instance closure or `TaskLocal` value. Higher engineering cost
+   but keeps parallelism. Use when test suite grows beyond ~30 tests.
+
+3. **Audit rule**: any `@Test` suite touching `static var` (especially
+   `nonisolated(unsafe)`) must add `.serialized` OR migrate to instance
+   state. Future lint could pattern-match on these together.
+
+---
+
+## Axis H — JSON fixtures in Swift `"""..."""` literals must be valid JSON
+
+**Pre-flight Round 6 (2026-05-21, commit `<r6>`)**
+
+### Symptom
+
+A `// LINT-IGNORE: Privacy` comment was placed inside a multi-line
+string literal containing JSON to suppress a privacy host check on a
+mock URL. The Swift lexer accepted it (it's just string content), but
+the JSON decoder downstream rejected it (`//` is not legal JSON).
+Result: the lookup actor's parser saw malformed JSON and threw
+`notFound` — and the test that depended on a successful parse failed
+mysteriously.
+
+### Root cause
+
+Two passes over the same text disagree:
+1. **Swift lexer**: treats `"""..."""` as opaque string content.
+2. **JSON parser** (runtime): expects strict RFC 8259 JSON.
+
+Comments inside the fixture work syntactically (Swift compiles fine)
+but break the test at runtime.
+
+### Prevention
+
+1. **Lint-suppression comments must live OUTSIDE the JSON literal**
+   — typically above the `let foo = """` line in Swift source:
+
+   ```swift
+   // LINT-IGNORE: Privacy — mock fixture URL never resolved at runtime
+   private let googleBooksResponse = """
+   { ... "thumbnail": "http://books.google.com/..." ... }
+   """
+   ```
+
+2. **Even cleaner**: omit the problematic URL from the fixture
+   entirely if no test asserts against it. Less attack surface for
+   future regressions.
+
+3. **Validate fixtures on load** in test helper code — `JSONSerialization
+   .jsonObject(with:)` will throw on malformed JSON and surface the
+   issue at suite start rather than mid-test.
+
+---
+
 ## Axis E — `set -o pipefail` + `grep -v` chains silently abort
 
 **Pre-flight Round 4 (2026-05-20, commit `f15da22`)**

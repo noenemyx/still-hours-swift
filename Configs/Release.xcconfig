@@ -1,0 +1,19 @@
+// Release.xcconfig
+// Still Hours — Release build settings
+//
+// Purpose: per-configuration build settings separated from project.yml so
+// signing identity and team ID never bake into source control.
+// DEVELOPMENT_TEAM is intentionally left empty; fill it locally after
+// Apple Developer Program enrollment (do NOT commit the value).
+
+DEVELOPMENT_TEAM =
+CODE_SIGN_STYLE = Automatic
+PROVISIONING_PROFILE_SPECIFIER =
+CODE_SIGN_IDENTITY = Apple Distribution
+CODE_SIGN_ENTITLEMENTS = App/Resources/StillHours.entitlements
+
+SWIFT_OPTIMIZATION_LEVEL = -O
+SWIFT_COMPILATION_MODE = wholemodule
+GCC_OPTIMIZATION_LEVEL = s
+ENABLE_TESTABILITY = NO
+VALIDATE_PRODUCT = YES

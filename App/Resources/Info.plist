@@ -36,6 +36,8 @@
 	<string>음성 메모 녹음에 사용합니다.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>자산 사진 선택에 사용합니다.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>음성 메모를 텍스트로 변환할 때 사용합니다.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

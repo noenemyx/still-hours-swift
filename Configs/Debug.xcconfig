@@ -1,0 +1,19 @@
+// Debug.xcconfig
+// Still Hours — Debug build settings
+//
+// Purpose: per-configuration build settings separated from project.yml so
+// signing identity and team ID never bake into source control.
+// DEVELOPMENT_TEAM is intentionally left empty; fill it locally after
+// Apple Developer Program enrollment (do NOT commit the value).
+
+DEVELOPMENT_TEAM =
+CODE_SIGN_STYLE = Automatic
+PROVISIONING_PROFILE_SPECIFIER =
+CODE_SIGN_IDENTITY = Apple Development
+CODE_SIGN_ENTITLEMENTS = App/Resources/StillHours.entitlements
+
+SWIFT_OPTIMIZATION_LEVEL = -Onone
+SWIFT_COMPILATION_MODE = singlefile
+GCC_OPTIMIZATION_LEVEL = 0
+ENABLE_TESTABILITY = YES
+ENABLE_DEBUG_DYLIB_OVERRIDE = YES

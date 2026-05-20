@@ -6,6 +6,7 @@
 #           1. Promise lint: check-privacy
 #           2. Promise lint: check-data-sovereignty
 #           3. Promise lint: check-no-subscription
+#           4. i18n lint: check-i18n (Axis A/B/J/M)
 #           4. Swift Package Manager tests (swift test)
 #           5. Xcode build (xcodebuild)
 #
@@ -169,10 +170,14 @@ if [[ "$BUILD_ONLY" == false ]]; then
 
   run_step "no_sub"      "No-Subscription Lint (GOVERNANCE §5)" \
     bash "${SCRIPT_DIR}/check-no-subscription.sh" "$SOURCE_ROOT"
+
+  run_step "i18n"        "i18n Lint (Axis A/B/J/M)" \
+    bash "${SCRIPT_DIR}/check-i18n.sh" "$SOURCE_ROOT"
 else
   skip_step "privacy"
   skip_step "sovereignty"
   skip_step "no_sub"
+  skip_step "i18n"
 fi
 
 # ── SPM tests ────────────────────────────────────────────────────────────────
@@ -254,6 +259,7 @@ print_row() {
 print_row "privacy"     "Privacy Lint"
 print_row "sovereignty" "Data Sovereignty Lint"
 print_row "no_sub"      "No-Subscription Lint"
+print_row "i18n"        "i18n Lint (Axis A/B/J/M)"
 print_row "spm_test"    "SPM Tests (swift test)"
 print_row "xcode_build" "Xcode Build"
 

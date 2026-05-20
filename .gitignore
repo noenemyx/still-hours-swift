@@ -55,6 +55,12 @@ __pycache__/
 .env.production
 *.local
 
+# Per-developer xcconfig override (DEVELOPMENT_TEAM etc).
+# Configs/Debug.xcconfig and Configs/Release.xcconfig are committed templates
+# with empty team-id fields; Configs/Local.xcconfig holds the actual ID and
+# stays out of git. xcconfig include directive in Debug/Release picks it up.
+Configs/Local.xcconfig
+
 ## IDE
 .vscode/
 .idea/
