@@ -80,10 +80,30 @@ public extension Color {
     ///
     /// Image fallback placeholders, skeleton loading states, disabled highlights.
     /// Design.md §3.1 `color.accent.muted` / §4.3 `accent.muted`.
+    ///
+    /// - Warning: **Never use as a text foreground color.**
+    ///   Light contrast: 1.96:1 on background, 2.13:1 on surface — WCAG Fail.
+    ///   Permitted uses: skeleton fills, disabled backgrounds/borders, image placeholders.
     static var shAccentMuted: Color {
         Color(
             light: FoundationTokens.Color.lightAccentMuted,
             dark: FoundationTokens.Color.darkAccentMuted
+        )
+    }
+
+    /// Text color for labels on accent-colored filled surfaces (e.g. primary CTA buttons). `#1A1812`.
+    ///
+    /// Use this token — not `shTextPrimary` — when text sits directly on `shAccent` (filled button).
+    ///
+    /// WCAG 2.1:
+    /// - On light accent `#B85C38`: 3.91:1 (AA Large; ≥18pt or ≥14pt bold)
+    /// - On dark accent `#D4734A`: **5.37:1 AA ★**
+    ///
+    /// Design.md §3.1 `color.onAccent` / §4.3 `accent.onAccent`.
+    static var shOnAccent: Color {
+        Color(
+            light: FoundationTokens.Color.onAccent,
+            dark: FoundationTokens.Color.onAccent
         )
     }
 
@@ -171,10 +191,20 @@ public extension UIColor {
     }
 
     /// See `Color.shAccentMuted`. Design.md §3.1.
+    ///
+    /// - Warning: Never use as a text foreground color. WCAG Fail in Light mode (1.96:1 / 2.13:1).
     static var shAccentMuted: UIColor {
         UIColor { $0.userInterfaceStyle == .dark
             ? UIColor(FoundationTokens.Color.darkAccentMuted)
             : UIColor(FoundationTokens.Color.lightAccentMuted)
         }
+    }
+
+    /// See `Color.shOnAccent`. Design.md §3.1 `color.onAccent`.
+    ///
+    /// Use for label text on filled accent-colored surfaces (CTA buttons).
+    /// Dark mode: 5.37:1 AA ★ on `#D4734A`. Light mode: 3.91:1 AA Large on `#B85C38`.
+    static var shOnAccent: UIColor {
+        UIColor(FoundationTokens.Color.onAccent)
     }
 }

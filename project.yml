@@ -1,0 +1,163 @@
+name: StillHours
+# Still Hours — iOS 26 + iPadOS 26 only
+# Rationale: Liquid Glass (.glassEffect, GlassEffectContainer), SwiftUI 26
+#            APIs (@IncrementalState, ToolbarSpacer, native WebView, Chart3D),
+#            SF Symbols 7. No backport. See PRD.md §0.2 + DEVPLAN.md §1.
+options:
+  bundleIdPrefix: com.ownlifelab
+  deploymentTarget:
+    iOS: "26.0"
+  xcodeVersion: "26.0"
+  groupSortPosition: top
+  generateEmptyDirectories: true
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    ENABLE_MODULE_VERIFIER: YES
+    IPHONEOS_DEPLOYMENT_TARGET: "26.0"
+    SUPPORTS_MACCATALYST: NO
+    TARGETED_DEVICE_FAMILY: "1,2"  # iPhone + iPad
+
+packages:
+  InventoryCore:
+    path: Packages/InventoryCore
+
+targets:
+  StillHours:
+    type: application
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - App/Sources
+    resources:
+      - App/Resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ownlifelab.stillhours
+        PRODUCT_NAME: StillHours
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""  # Set by user after enrollment
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_VERSION: "6.0"
+        SWIFT_STRICT_CONCURRENCY: complete
+        TARGETED_DEVICE_FAMILY: "1,2"
+    dependencies:
+      - package: InventoryCore
+    info:
+      path: App/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: Still Hours
+        LSApplicationCategoryType: public.app-category.lifestyle
+        CFBundleLocalizations:
+          - ko
+          - en
+          - ja
+        CFBundleDevelopmentRegion: ko
+        NSCameraUsageDescription: 자산 등록 시 사진 촬영에 사용합니다.
+        NSMicrophoneUsageDescription: 음성 메모 녹음에 사용합니다.
+        NSLocationWhenInUseUsageDescription: 자산 등록 시 장소 자동 제안에 사용합니다.
+        NSPhotoLibraryUsageDescription: 자산 사진 선택에 사용합니다.
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: true
+          UISceneConfigurations: {}
+        UILaunchScreen: {}
+        UIRequiredDeviceCapabilities:
+          - arm64
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        "UISupportedInterfaceOrientations~ipad":
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+
+  StillHoursTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - App/Tests/AppTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ownlifelab.stillhours.tests
+        SWIFT_VERSION: "6.0"
+    dependencies:
+      - target: StillHours
+
+  StillHoursUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - App/Tests/AppUITests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ownlifelab.stillhours.uitests
+        SWIFT_VERSION: "6.0"
+        TEST_TARGET_NAME: StillHours
+    dependencies:
+      - target: StillHours
+
+schemes:
+  StillHours:
+    build:
+      targets:
+        StillHours: all
+        StillHoursTests: [test]
+        StillHoursUITests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - StillHoursTests
+        - StillHoursUITests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+
+  StillHours-Beta:
+    build:
+      targets:
+        StillHours: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - StillHoursTests
+    archive:
+      config: Release
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+
+  StillHours-Release:
+    build:
+      targets:
+        StillHours: all
+    run:
+      config: Release
+    test:
+      config: Release
+      targets:
+        - StillHoursTests
+        - StillHoursUITests
+    archive:
+      config: Release
+    profile:
+      config: Release
+    analyze:
+      config: Release

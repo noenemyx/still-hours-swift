@@ -51,10 +51,13 @@ public enum FoundationTokens {
         /// Design.md §3.1 Light Mode.
         public static let lightTextPrimary = SwiftUI.Color(hex: 0x1A1812)
 
-        /// Muted warm gray secondary text. `#7A7060`.
+        /// Muted warm gray secondary text. `#665D4F`.
         ///
         /// Subtitles, captions, metadata. Design.md §3.1 Light Mode.
-        public static let lightTextSecondary = SwiftUI.Color(hex: 0x7A7060)
+        ///
+        /// WCAG 2.1: 5.71:1 on `lightBackground`, 6.18:1 on `lightSurface` — AA normal.
+        /// (Adjusted from `#7A7060` at 4.29:1/4.65:1, which was AA Large only on background.)
+        public static let lightTextSecondary = SwiftUI.Color(hex: 0x665D4F)
 
         /// Burnt sienna accent. `#B85C38`.
         ///
@@ -67,7 +70,26 @@ public enum FoundationTokens {
         ///
         /// Image fallback, skeleton states, non-interactive accent highlights.
         /// Design.md §3.1 Light Mode.
+        ///
+        /// - Warning: **TEXT USE PERMANENTLY FORBIDDEN (WCAG fail).**
+        ///   Contrast on `lightBackground` = 1.96:1, on `lightSurface` = 2.13:1 — both Fail.
+        ///   Permitted uses only: skeleton fills, disabled-state borders, image placeholder backgrounds,
+        ///   non-text icon fills. For text, use `lightTextSecondary` (`#665D4F`).
         public static let lightAccentMuted = SwiftUI.Color(hex: 0xD4A574)
+
+        // MARK: Dark Mode — 4 primary + 2 inferred tokens
+
+        /// Text color for use on top of accent-colored surfaces (e.g. filled CTA buttons). `#1A1812`.
+        ///
+        /// Use this token — **not** `lightTextPrimary` or `darkTextPrimary` — whenever text sits
+        /// directly on `lightAccentDefault` or `darkAccentDefault`.
+        ///
+        /// WCAG 2.1 contrast ratios:
+        /// - On `lightAccentDefault` (`#B85C38`): 3.91:1 (AA Large — use 18pt+ or 14pt+ bold only)
+        /// - On `darkAccentDefault` (`#D4734A`): **5.37:1 AA ★**
+        ///
+        /// Design.md §3.1 `color.onAccent` / §4.3 `accent.onAccent`.
+        public static let onAccent = SwiftUI.Color(hex: 0x1A1812)
 
         // MARK: Dark Mode — 4 primary + 2 inferred tokens
 

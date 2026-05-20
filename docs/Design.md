@@ -244,9 +244,10 @@
 | `color.background` | `#F5F0E8` | Warm parchment (Still Hours 의 정체성 색) — _차가운 흰색 회피_, _도서관의 종이_ 톤 |
 | `color.surface` | `#FAFAF5` | Card / sheet / popover. _Near-white with warmth_ |
 | `color.text.primary` | `#1A1812` | Near-black with warmth. _Pure black 회피_, _묽은 잉크_ |
-| `color.text.secondary` | `#7A7060` | Muted warm gray. Subtitle / Caption |
-| `color.accent.default` | `#B85C38` | Burnt sienna — _도서관 가죽 제본_, _Curio cabinet_ 색. interactive elements |
-| `color.accent.muted` | `#D4A574` | Warm sand. _이미지 fallback / skeleton state / muted highlight_ |
+| `color.text.secondary` | `#665D4F` | Muted warm gray. Subtitle / Caption. WCAG AA: 5.71:1 on bg / 6.18:1 on surface. (Adjusted from `#7A7060` which was AA Large only on background.) |
+| `color.accent.default` | `#B85C38` | Burnt sienna — _도서관 가죽 제본_, _Curio cabinet_ 색. interactive elements. WCAG AA Large only on bg/surface (4.00 / 4.34:1) — ≥18pt or ≥14pt bold only. |
+| `color.accent.muted` | `#D4A574` | Warm sand. _이미지 fallback / skeleton state / non-text accent_. **텍스트 foreground 사용 영구 금지** (WCAG Fail: 1.96 / 2.13:1). |
+| `color.onAccent` | `#1A1812` | CTA button label text on accent-colored backgrounds. **Always use on filled accent buttons.** WCAG: 3.91:1 on light accent (AA Large), 5.37:1 on dark accent (AA ★). |
 
 #### Dark Mode (4색 + 2 fallback)
 
@@ -389,8 +390,13 @@ _Dark mode_:
 
 ### 4.3 Accent
 
-- `accent.default` = `color.accent.default` (button / link / focused)
-- `accent.muted` = `color.accent.muted` (skeleton / muted highlight)
+- `accent.default` = `color.accent.default` (button / link / focused)  
+  Light: 4.00:1 on bg / 4.34:1 on surface — **AA Large only** (≥18pt or ≥14pt bold). Normal body text 금지.
+- `accent.muted` = `color.accent.muted` (skeleton / muted highlight)  
+  **텍스트 foreground 사용 영구 금지 (WCAG Fail).** 허용 용도: skeleton fill, disabled border/background, image placeholder, non-text icon fill.
+- `accent.onAccent` = `color.onAccent` (`#1A1812`) — **CTA button text 전용 토큰.**  
+  Dark mode filled button: 5.37:1 AA ★. Light mode filled button: 3.91:1 AA Large (≥18pt or ≥14pt bold).  
+  `text.primary` 또는 `text.muted` 를 accent 배경 위 텍스트에 사용하는 것 금지.
 - `accent.medium.book` = `color.accent.default` (v1.0 single-accent baseline)
 - `accent.medium.music` = `color.accent.default` (v0.5 시점 medium-별 시안 비교 후 결정)
 - `accent.medium.movie` = `color.accent.default`

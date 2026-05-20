@@ -113,6 +113,23 @@ public enum SemanticTokens {
             Color(light: FoundationTokens.Color.lightTextSecondary,
                   dark:  FoundationTokens.Color.darkTextSecondary)
         }
+
+        /// Text color for labels on accent-colored filled surfaces (CTA buttons).
+        ///
+        /// Always use this token — never `text.primary` or `text.muted` — when text
+        /// sits directly on `accent.default` (e.g. a filled primary button).
+        ///
+        /// = `FoundationTokens.Color.onAccent` (`#1A1812`) for both light and dark.
+        ///
+        /// WCAG 2.1:
+        /// - Light: `#1A1812` on `#B85C38` = 3.91:1 (AA Large; use ≥18pt or ≥14pt bold)
+        /// - Dark:  `#1A1812` on `#D4734A` = **5.37:1 AA ★**
+        ///
+        /// Design.md §4.2 `text.onAccent` / §4.3 `accent.onAccent`.
+        public static var onAccent: Color {
+            Color(light: FoundationTokens.Color.onAccent,
+                  dark:  FoundationTokens.Color.onAccent)
+        }
     }
 
     // MARK: - Accent
@@ -138,15 +155,42 @@ public enum SemanticTokens {
         /// = `FoundationTokens.Color.lightAccentMuted` / `darkAccentMuted`.
         ///
         /// Design.md §4.3 `accent.muted`.
+        ///
+        /// - Warning: **Do not use as a text foreground color (WCAG fail in Light mode).**
+        ///   Light `#D4A574` on background = 1.96:1, on surface = 2.13:1.
+        ///   Permitted uses: skeleton loading fills, disabled-state backgrounds/borders,
+        ///   image placeholder backgrounds, decorative non-text icon fills.
+        ///   For text over a muted background, use `text.secondary` instead.
         public static var muted: Color {
             Color(light: FoundationTokens.Color.lightAccentMuted,
                   dark:  FoundationTokens.Color.darkAccentMuted)
+        }
+
+        /// Text/icon color for labels placed on top of accent-colored filled surfaces.
+        ///
+        /// Use on filled `accent.default` buttons — not `text.primary`.
+        ///
+        /// = `FoundationTokens.Color.onAccent` (`#1A1812`) — same value for Light and Dark.
+        ///
+        /// WCAG 2.1:
+        /// - On light `accent.default` `#B85C38`: 3.91:1 (AA Large — ≥18pt or ≥14pt bold)
+        /// - On dark `accent.default` `#D4734A`: **5.37:1 AA ★**
+        ///
+        /// Design.md §4.3 `accent.onAccent`.
+        public static var onAccent: Color {
+            Color(light: FoundationTokens.Color.onAccent,
+                  dark:  FoundationTokens.Color.onAccent)
         }
 
         /// Per-medium accent namespace. Design.md §4.3.
         ///
         /// **v1.0 baseline**: all four resolve to `accent.default` (single palette).
         /// **v0.5 roadmap**: each medium receives a distinct hue to reinforce content category.
+        ///
+        /// - Note: In **Light mode**, all `accent.medium.*` values resolve to `accent.default`
+        ///   (`#B85C38`), which achieves 4.00:1 on background and 4.34:1 on surface —
+        ///   **AA Large only**. Use only for ≥18pt text or ≥14pt bold. For normal-size text,
+        ///   prefer `text.primary` or `text.secondary`; use `text.accent` only as an indicator.
         public enum medium {
 
             /// Book medium accent.
