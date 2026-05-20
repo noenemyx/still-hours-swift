@@ -98,10 +98,96 @@ Critical 결정 (Tier 1) 발생 시:
 
 ## 9. 변경 history
 
-| Date | Change | Reason |
-|------|--------|--------|
-| 2026-05-20 | v1.0 initial | 사용자 _"자문단 = 권고, 결정은 사용자"_ 명시 → 명문화 |
+| Date | Version | Change | Reason |
+|------|---------|--------|--------|
+| 2026-05-20 | v1.0 | initial | 사용자 _"자문단 = 권고, 결정은 사용자"_ 명시 → 명문화 |
+| 2026-05-20 | v1.1 | §10 병렬 작업 원칙 추가 | 사용자 3번째 강조 영구 명문화 |
 
 ---
 
-_End of GOVERNANCE.md v1.0._
+## 10. 병렬 작업 원칙 (Parallel Execution Mandate)
+
+**모든 _independent_ sub-task 는 _병렬_로 동시 진행한다. 직렬 진행은 _명시적 dependency_ 가 있을 때만.**
+
+사용자 3번째 강조 (2026-05-20): _"가능한한 서브 에이전트들을 최대한 활용하고, 병렬 작업이 가능하면 병렬 작업을 하면서 효율을 높인다."_ _"서브 에이전트와 병렬 가능한 부분은 동시에 진행해야 한다."_
+
+### 10.1 Self-check (모든 multi-step task 시작 _전_ 의무)
+
+1. _"이 작업에서 병렬 가능한 sub-task 는 무엇인가?"_
+2. _"이 작업의 sub-agent 위임 후보는 무엇인가? 어떤 model tier (haiku/sonnet/opus) 가 적절한가?"_
+3. _"Long-running (≥30s) 작업은 무엇인가? `run_in_background: true` 로 전환?"_
+
+답이 _N/A (단일 trivial step)_ 가 아니라면 즉시 병렬 / agent 위임 패턴 전환.
+
+### 10.2 병렬 default — 강제 영역
+
+- **≥2 독립 sub-task** = 병렬 실행 default. 직렬은 _명시적 dependency_ 있을 때만.
+- **Multi-file Edit** (≥2 files, 다른 영역) = sub-agent 위임 OR 단일 message 안 multiple tool calls 병렬.
+- **Long-running (≥30s)** — build / install / test / fetch / WebSearch chain — _항상_ `run_in_background: true`. 그 사이 다른 작업 병렬.
+- **Pre-flight check + 실행** = 병렬 가능. status 확인 명령 여러 개는 single message multiple tool calls.
+
+### 10.3 Sub-agent 위임 default — 적용 카테고리
+
+다음 중 _하나라도 해당_하면 sub-agent 위임이 default:
+
+- Multi-file 변경 (≥2 files in different domains)
+- Independent task fanout (다른 영역 동시 작업)
+- Long-running specialized work (build/test/research)
+- Specialized expertise (executor / architect / code-reviewer / designer / writer / document-specialist)
+- Advisory protocol trigger (Critical 결정 자문)
+- Long Web research / 정보 수집 chain (≥3 sources)
+
+### 10.4 직접 작업 default — Sub-agent 위임 _안 함_
+
+- 단일 file edit
+- 단일 정보 lookup
+- Single command
+- ≤10 small files (agent overhead 가 손해)
+- 사용자 명시 결정 옵션 (AskUserQuestion 등 사용자 직접 interaction)
+
+### 10.5 Model Tier 명시 의무
+
+위임 시 _항상_ `model` 인자 명시:
+
+- `haiku` — lookup / trivial edits / simple verifications
+- `sonnet` — standard implementation / multi-file refactor / 분석
+- `opus` — architecture decisions / deep analysis / advisory panels / 복잡 debugging
+
+불명확 시 `sonnet`. opus 는 _전략·아키텍처_ 또는 _깊은 분석_ 에서만.
+
+### 10.6 Parallel fanout 제약
+
+`≤4 agents in parallel` (ceiling).
+
+- Round 1: 4 agents max
+- Round 2: 추가 2-4 agents (Round 1 완료 후)
+- 6+ agent advisory 는 _자동 2-batch_ 분리
+
+같은 자원 (file / DB / network endpoint) 동시 access = race condition 위험 = sequential 강제.
+
+### 10.7 위반 점검 ritual
+
+Task 종료 후 _retrospective_:
+- _"이 작업에서 병렬화 누락한 부분은?"_
+- _"Agent 위임 누락한 부분은?"_
+
+답이 있으면 _다음 cycle 적용_, _GOVERNANCE.md §5 위반 사례_ 또는 _lessons-learned_ 에 기록.
+
+### 10.8 위반 사례 (학습 보존)
+
+#### 사례 3 (2026-05-20) — GOVERNANCE 작성 cycle 의 병렬 누락
+
+- 상황: GOVERNANCE.md + PRD §0.0 + No ads 정정 + repo sync 작업
+- 나의 행동 (잘못): _단일 Agent 위임_, _다른 병렬 가능 작업_ (예: Trademark 사전 점검 자동) 동시 진행 안 함
+- 사용자 정정: 3번째 강조 _"서브 에이전트와 병렬 가능한 부분은 동시에 진행해야 한다."_
+- 학습: _Critical 결정_ 자체는 Tier 1 사용자, 단 _Tier 2 정보 수집 / 검증 / 자동화_ 는 _병렬 default_. _자연스러운 다음 작업_ 동시 launch.
+
+### 10.9 _Critical 결정 protocol_ 과 정합
+
+Tier 1 사용자 결정 부분 = 직렬 (사용자 dependency).
+Tier 2 자동 진행 부분 = 병렬 default.
+혼합 가능: 사용자 결정 _기다리는 동안_ 다른 _independent Tier 2 작업_ 병렬.
+
+---
+
+_End of GOVERNANCE.md v1.1._

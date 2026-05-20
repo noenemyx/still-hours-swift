@@ -13,7 +13,7 @@
 
 자문단 (advisory) 은 _권고_ 역할만. _자동 채택_, _권한 위임_ 영구 금지.
 
-세부: 별도 `docs/GOVERNANCE.md` 참조 (Tier 1 critical 9 카테고리 / Tier 2 자동 진행 8 카테고리 / Decision flow 4-step / Dismissal 해석 / Trigger words / 위반 학습 history).
+세부: 별도 `docs/GOVERNANCE.md` 참조 (Tier 1 critical 9 카테고리 / Tier 2 자동 진행 8 카테고리 / Decision flow 4-step / Dismissal 해석 / Trigger words / 위반 학습 history + **§10 병렬 작업 원칙 — sub-agent + parallel execution 강제 default**).
 
 본 PRD 의 모든 _§ 결정_ 은 본 원칙 안에서 작성됨.
 
@@ -1190,5 +1190,5 @@ ASO ritual (매월 1일 1시간) 과 advisory ritual 은 _분리_ 운영.
 
 _User Decision 2026-05-20: No advertisement (Apple Search Ads 포함). Ads는 절대 옵션 아님._
 
-_End of PRD v2.4._
+_End of PRD v2.5._
 
