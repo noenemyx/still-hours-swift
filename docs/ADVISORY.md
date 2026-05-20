@@ -1,4 +1,4 @@
-# 6-Panel Advisory — Curium (Synthesis)
+# 6-Panel Advisory — Still Hours (Synthesis)
 
 > 2026-05-20 | sunghun.ahn
 >
@@ -13,7 +13,7 @@
 ### Marketing
 - _Curium 이중 의미_ + _$14.99 진지한 사용자 신호_ + _Item-as-memory-anchor 한 줄 카피_ 강점
 - _Manifesto 없음 → App Store description 부담_, _이름 충돌_, _한국 vs 레포브 차별 메시지 약함_ 약점
-- Risk A: free tier 없는 $14.99 발견 funnel 차단 / B: Curium trademark 충돌 / C: 8 locale 번역 quality
+- Risk A: free tier 없는 $14.99 발견 funnel 차단 / B: Still Hours trademark 충돌 / C: 8 locale 번역 quality
 - **즉시 P1**: trademark 사전 점검 (KIPRIS + USPTO), App Store subtitle 8 locale _문화적 재작성_
 
 ### Strategy
@@ -64,7 +64,7 @@
 ### A2. _Memory timeline 시각 설계 부재 — 차별의 핵심이 generic 위험_ (UX + UI + Design)
 - UX: 7 Memory kind 시각 구분 부재 (R3)
 - UI: Memory kind = icon + accent line (not color) 권고
-- Design: Memory timeline _Curium 의 visual brand_, App Store screenshot 1번 슬롯이어야
+- Design: Memory timeline _Still Hours 의 visual brand_, App Store screenshot 1번 슬롯이어야
 
 → **수렴 권고**: 별도 _8-12h design pass_ 분리. SF Symbols icon 7개 + medium-shared accent line + timeline connector + photo thumbnail 처리.
 
@@ -83,7 +83,7 @@
 
 → **수렴 권고**: 
 - **Promise lint 최소 1개 추가** — _No subscription IAP_ 코드 lint (Strategy P0)
-- **Settings를 brand-loaded surface 의도 설계** — "Curium is" 섹션 (약속 3줄) + Data Sovereignty + "Made by"
+- **Settings를 brand-loaded surface 의도 설계** — "Still Hours is" 섹션 (약속 3줄) + Data Sovereignty + "Made by"
 - **App Store description = _동작 묘사_** 위주 (철학 선언 회피)
 
 ### A5. _Pre-flight 12h 결과물 명시 필요_ (UX + UI + Design)
@@ -133,7 +133,7 @@
 
 → **결정 필요**: Accessibility full audit + VoiceOver _Memory kind icon_ label 명시. Apple Design Award 후보가 되려면 critical.
 
-### B3. Migration path (기존 도구 → Curium)
+### B3. Migration path (기존 도구 → Still Hours)
 - PRD §7.1: Apple Music import / Goodreads/Letterboxd/Discogs CSV
 - 단 _가장 중요한 acquisition lever_ 일 수 있음 (Marketing R)
 - 누구도 _migration friction_ 평가 안 함
@@ -172,7 +172,7 @@
 3. **8 locale launch 단계화** — **3-stage soft launch** (Wave 1: ko/en/ja → Wave 2: zh/de → Wave 3: fr/es/pt)
 4. **Pre-flight 12h → 24h scope 확대** — Foundation/Semantic/Component design tokens 3 deliverable + design language exploration
 5. **Promise lint 최소 1개 추가** — **No subscription IAP** 코드 lint 강제
-6. **Trademark 사전 점검** — Curium in **KIPRIS + USPTO + App Store**
+6. **Trademark 사전 점검** — Still Hours in **KIPRIS + USPTO + App Store**
 7. **iPad 지원** — v1.0 default vs v1.x 이월
 
 ### Tier 2 — Pre-flight 안 결정 (24h scope 內)
@@ -197,7 +197,7 @@
 19. **CKShare 2 iCloud account 실 device 테스트 환경 확보** — 가능? 못 하면 **IntimateShare v1.0 이월** 결정
 20. **Onboarding 3-step 4축 시각화 순서** 설계 (Screen 1 = Item-as-memory anim, Screen 2 = 4 medium typed, Screen 3 = 1-to-1 share)
 21. **Empty Library state** 카피 + 시각 처리 (v0.1 scope에 _명시적_ 포함)
-22. **Settings → "Curium is" surface** 의도 설계 (Manifesto 대체)
+22. **Settings → "Still Hours is" surface** 의도 설계 (Manifesto 대체)
 
 ### Tier 5 — Open Question (founder 답변 필요)
 
@@ -228,3 +228,4 @@
 
 _End of Advisory Synthesis._
 _Note: Naming "Curio → Curium" on 2026-05-20 per 4-panel advisory + Web verification. See PRD §19._
+_Note: Naming "Curium → Still Hours" on 2026-05-20 after 25 candidate validation cycle._

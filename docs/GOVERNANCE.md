@@ -1,4 +1,4 @@
-# GOVERNANCE.md — Curium Decision Authority
+# GOVERNANCE.md — Still Hours Decision Authority
 
 > Version 1.0 | 2026-05-20 | sunghun.ahn
 >
@@ -54,10 +54,10 @@ Critical 결정 (Tier 1) 발생 시:
 
 ## 5. 위반 사례 + 학습
 
-### 사례 1 (2026-05-20) — Curium 채택 framing
+### 사례 1 (2026-05-20) — Still Hours 채택 framing
 
 - 상황: AskUserQuestion 으로 _Curium / Constella / 새 후보 brainstorm / 완전 재시작_ 옵션 제시 → 사용자 _dismissed_
-- 나의 행동 (잘못): _"전문가 그룹 결정 = Curium 자동 채택"_ 으로 framing
+- 나의 행동 (잘못): _"전문가 그룹 결정 = Still Hours 자동 채택"_ 으로 framing
 - 사용자 정정: _"전문가 그룹 최종 결정 못하는 건가?"_ → _"자문단으로서의 역할만 한다. 중요한 최종 결정은 내가 한다."_
 - 학습: dismissal = _결정 보류_, _자동 채택_ 표현 금지
 
@@ -189,5 +189,7 @@ Tier 2 자동 진행 부분 = 병렬 default.
 혼합 가능: 사용자 결정 _기다리는 동안_ 다른 _independent Tier 2 작업_ 병렬.
 
 ---
+
+_Note: Naming "Curium → Still Hours" on 2026-05-20 after 25 candidate validation cycle._
 
 _End of GOVERNANCE.md v1.1._

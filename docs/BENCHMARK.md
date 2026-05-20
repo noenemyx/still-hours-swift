@@ -436,3 +436,4 @@ OYL 가족 가정 _없이_, 사용자 발화 anchor + 시장 빈 자리만으로
 
 _End of Benchmark v2._
 _Note: Working title "Curio" was changed to "Curium" on 2026-05-20 due to App Store market collision. See PRD §19 / ADVISORY for details._
+_Note: Naming "Curium → Still Hours" on 2026-05-20 after 25 candidate validation cycle._

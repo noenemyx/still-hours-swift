@@ -1,4 +1,4 @@
-# Curium
+# Still Hours
 
 > iOS 26 + iPadOS 26 native collection app. _Item-as-memory-anchor × multi-medium typed (Book/Music/Movie/Object) × intimate 1-to-1 share × Slow curator_. Paid one-time **$14.99**.
 >
@@ -8,17 +8,19 @@
 
 ## What is this
 
-Curium is a collection management app where each item (book, album, film, object) becomes the entry point for the memories attached to it. Day One organizes by date entries; Curium organizes by items and lets memories accumulate underneath each one.
+Still Hours is a collection management app where each item (book, album, film, object) becomes the entry point for the memories attached to it. Day One organizes by date entries; Still Hours organizes by items and lets memories accumulate underneath each one.
 
-**Naming**: After Marie Curie + element 96 (Cm) + the Latin root *curiositas*. Adopted 2026-05-20 following 4-panel naming advisory (Marketing / Branding / Design / Critic) + Web verification (the earlier candidate _Curio_ was discarded due to App Store market collision; _Vaulta_ was discarded due to EOS Network rebrand). See `docs/PRD.md §19` for the full naming history.
+**Naming history**: 25 candidates were validated before adopting Still Hours (2026-05-20). Rejected (in order): Curio (App Store collision), Vaulta (EOS Network rebrand), Constella (AbbVie pharma), Curium (Curium Pharma SEO), Luminae, Aevum, Kuria, Reliqua, Own Collection, Own Your Collection, Ownbox, Otium, Own Gem, Your Magnet, Heartlink, Your Journey, Tidemark, Cairn, Reliquary, Sumi, Mura, Lumo, Slow Shelf, Still Yours, Still Times. See `docs/PRD.md §19 + §21` for the full naming history and 25-candidate validation table.
+
+**Still Hours** — dual meaning: _stillness (고요)_ + _still continuing (여전히)_, anchored to the smallest time unit that belongs to you.
 
 ---
 
 ## Status
 
 - **Pre-flight stage** (2026-05-20)
-- Repo: `noenemyx/curium-swift` (private)
-- Bundle ID: `com.ownlifelab.curium` (TBD by user)
+- Repo: `noenemyx/still-hours-swift` (private)
+- Bundle ID: `com.ownlifelab.stillhours` (TBD by user — Apple Developer Console)
 - Launch target: iOS 26 + iPadOS 26 only (Liquid Glass full, SwiftUI 26 APIs)
 - Mac native: v2.0 (post-launch month 7-12)
 
@@ -49,12 +51,12 @@ Plus Data Sovereignty: CloudKit Private DB only, plaintext JSON/CSV/PDF export a
 
 | File | Lines | Description |
 |------|-------|-------------|
-| `PRD.md` | ~1200 | Product Requirements — niche, persona, JTBD, hero moments, user stories, data model, modules, pricing, open questions, v2.1 naming history, v2.2 ASO Optimization |
-| `GOVERNANCE.md` | ~90 | Decision authority — advisory vs user role + Critical Tier 1/2 + Decision flow + violation history |
-| `DEVPLAN.md` | ~1300 | Development Plan — tech stack, architecture, MVP definition (Tracer Bullet), milestones, risk register, release strategy, burnout protection, ASO Implementation |
+| `PRD.md` | ~1280 | Product Requirements — niche, persona, JTBD, hero moments, user stories, data model, modules, pricing, naming history (§19 Curio→Curium, §21 Curium→Still Hours + 25-candidate table) |
+| `GOVERNANCE.md` | ~95 | Decision authority — advisory vs user role + Critical Tier 1/2 + Decision flow + violation history |
+| `DEVPLAN.md` | ~1360 | Development Plan — tech stack, architecture, MVP definition (Tracer Bullet), milestones, risk register, release strategy, burnout protection, ASO Implementation (§16), naming change history (§17) |
 | `BENCHMARK.md` | ~440 | Market benchmark — 22 apps × 9 categories, 5 product hypotheses, niche definition |
-| `ADVISORY.md` | ~230 | 6-panel advisory synthesis (Marketing / Strategy / UX / UI / Design / Engineer) |
-| `Design.md` | ~900 | Design system living document — Sunsama + Things 3 + benchmark + Claude Design collaboration + ASO Visual Strategy |
+| `ADVISORY.md` | ~235 | 6-panel advisory synthesis (Marketing / Strategy / UX / UI / Design / Engineer) |
+| `Design.md` | ~970 | Design system living document — Sunsama + Things 3 + benchmark + Claude Design collaboration + ASO Visual Strategy |
 
 ---
 
@@ -74,7 +76,8 @@ ASO Quit signal (6개월 시점):
 
 Tracer Bullet sequence (`Book full → Music full → Movie basic → Object basic`) starts after Pre-flight gate clears all items:
 
-- [ ] Trademark search (KIPRIS + USPTO Class 9 + EUIPO + App Store dupes) for "Curium"
+- [ ] Trademark search (KIPRIS + USPTO Class 9 + EUIPO + App Store dupes) for "Still Hours"
+- [ ] Trademark attorney opinion letter (USPTO descriptive risk — 50/50, $300-500)
 - [ ] Apple Design Resources iOS 26 Figma download + study
 - [ ] SF Symbols 7 macOS app install
 - [ ] Liquid Glass material reference study (WWDC 2025)
@@ -84,9 +87,10 @@ Tracer Bullet sequence (`Book full → Music full → Movie basic → Object bas
 - [ ] App icon v1.0 draft (Wunderkammer cabinet + Liquid Glass layered)
 - [ ] Memory Timeline visual signature design pass
 - [ ] WCAG AA contrast verification chart
-- [ ] Settings → "Curium is" surface copy (ko/en draft)
+- [ ] Settings → "Still Hours is" surface copy (ko/en draft)
 - [ ] App Store metadata 8-locale 1차 draft (Wave 1 ko/en/ja 우선)
 - [ ] Promise lint scripts (Privacy + Data Sovereignty + No subscription IAP — 3 lint baseline)
+- [ ] Bundle ID `com.ownlifelab.stillhours` — Apple Developer Console 등록 (사용자 직접)
 
 ---
 
