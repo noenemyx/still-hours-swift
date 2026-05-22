@@ -3603,6 +3603,167 @@
         }
       }
     },
+    "settings.section.sync": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "동기화"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同期"
+          }
+        }
+      }
+    },
+    "settings.sync.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iCloud 동기화"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iCloud Sync"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iCloud同期"
+          }
+        }
+      }
+    },
+    "settings.sync.subtitle.v11": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "v1.1에서 제공"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coming in v1.1"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "v1.1で提供"
+          }
+        }
+      }
+    },
+    "settings.sync.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "v1.0에서 데이터는 기기에만 저장됩니다. iCloud 동기화는 v1.1에서 제공됩니다 — 선택적 토글, Apple CloudKit Private DB를 통한 암호화 저장."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your data lives on your device only in v1.0. iCloud sync arrives in v1.1 — opt-in toggle, encrypted-at-rest via Apple CloudKit Private DB."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "v1.0ではデータはデバイスにのみ保存されます。iCloud同期はv1.1で提供されます — オプトイントグル、Apple CloudKit Private DBによる暗号化保存。"
+          }
+        }
+      }
+    },
+    "settings.section.legal": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "법적 정보"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legal"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "法的情報"
+          }
+        }
+      }
+    },
+    "settings.privacyPolicy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "개인정보 처리방침"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy Policy"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プライバシーポリシー"
+          }
+        }
+      }
+    },
+    "settings.termsOfService": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이용약관"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terms of Service"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "利用規約"
+          }
+        }
+      }
+    },
     "timeline.empty": {
       "extractionState": "manual",
       "localizations": {
@@ -3646,6 +3807,384 @@
             "state": "translated",
             "value": "%@年"
           }
+        }
+      }
+    },
+    "settings.help.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "도움말" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Help" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "ヘルプ" }
+        }
+      }
+    },
+    "help.section.gettingStarted.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "시작하기" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Getting Started" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "はじめに" }
+        }
+      }
+    },
+    "help.gs.firstAsset.q": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "첫 자산은 어떻게 등록하나요?" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "How do I add my first item?" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "最初のアイテムはどう登録しますか？" }
+        }
+      }
+    },
+    "help.gs.firstAsset.a": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "하단의 + 버튼을 탭 → 카메라로 바코드를 스캔하거나 이름을 직접 입력 → 저장. 사진, 태그, 메모를 추가해 기록을 풍성하게 만들 수 있습니다." }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Tap + → scan a barcode with your camera or enter a name manually → Save. Add photos, tags, and notes to enrich the record." }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "下部の＋ボタンをタップ → バーコードをスキャンするか名前を入力 → 保存。写真・タグ・メモを追加して記録を充実させましょう。" }
+        }
+      }
+    },
+    "help.gs.addMemory.q": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "기억은 어떻게 추가하나요?" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "How do I add a memory?" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "記憶はどうやって追加しますか？" }
+        }
+      }
+    },
+    "help.gs.addMemory.a": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "자산 상세 화면에서 '기억 추가' 버튼을 탭하세요. 날짜, 장소, 같이한 사람, 느낌을 기록할 수 있습니다." }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Open an item's detail view and tap 'Add Memory'. You can record the date, place, who you were with, and how it felt." }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "アイテムの詳細画面で「記憶を追加」をタップ。日付・場所・一緒にいた人・気持ちを記録できます。" }
+        }
+      }
+    },
+    "help.gs.dataStorage.q": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "데이터는 어디에 저장되나요?" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Where is my data stored?" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "データはどこに保存されますか？" }
+        }
+      }
+    },
+    "help.gs.dataStorage.a": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "모든 데이터는 사용자 본인의 iCloud Private Database에만 저장됩니다. Still Hours 서버는 존재하지 않으며, 개발자는 데이터에 접근할 수 없습니다." }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "All data is stored exclusively in your personal iCloud Private Database. There are no Still Hours servers — the developer cannot access your data." }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "すべてのデータはご自身のiCloud Private Databaseにのみ保存されます。Still Hoursのサーバーは存在せず、開発者はデータにアクセスできません。" }
+        }
+      }
+    },
+    "help.section.faq.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "자주 묻는 질문" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "FAQ" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "よくある質問" }
+        }
+      }
+    },
+    "help.faq.subscription.q": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "구독 모델이 있나요?" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Is there a subscription?" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "サブスクリプションはありますか？" }
+        }
+      }
+    },
+    "help.faq.subscription.a": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "없습니다. 한 번 구매하면 모든 기능을 영구적으로 사용할 수 있습니다. 구독이나 숨겨진 결제는 없습니다." }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "No. One purchase unlocks everything permanently. No subscription, no hidden payments." }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "ありません。一度購入すれば全機能を永続的に使えます。サブスクや隠れた課金はありません。" }
+        }
+      }
+    },
+    "help.faq.ads.q": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "광고는 있나요?" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Are there any ads?" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "広告はありますか？" }
+        }
+      }
+    },
+    "help.faq.ads.a": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "없습니다. 광고 네트워크나 분석 SDK를 사용하지 않습니다. PrivacyInfo.xcprivacy에 코드로 선언되어 있습니다." }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "No. No ad networks, no analytics SDKs. This is declared in PrivacyInfo.xcprivacy." }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "ありません。広告ネットワークも分析SDKも使用していません。PrivacyInfo.xcprivacyに宣言されています。" }
+        }
+      }
+    },
+    "help.faq.ai.q": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "AI가 자동으로 분류하나요?" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Does AI classify items automatically?" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "AIが自動分類しますか？" }
+        }
+      }
+    },
+    "help.faq.ai.a": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "AI는 사용자의 의도를 따릅니다. 자동 분류나 추천 알고리즘 없이, 사용자가 직접 기록하고 정리합니다." }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "AI follows your intent. No automatic classification or recommendation algorithms — you record and organize everything yourself." }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "AIはあなたの意図に従います。自動分類や推薦アルゴリズムなしで、ご自身で記録・整理します。" }
+        }
+      }
+    },
+    "help.faq.export.q": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "내 데이터를 가져갈 수 있나요?" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Can I export my data?" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "データをエクスポートできますか？" }
+        }
+      }
+    },
+    "help.faq.export.a": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "네. 설정 → 데이터 내보내기에서 언제든 JSON 또는 CSV로 전체 데이터를 내보낼 수 있습니다." }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Yes. Settings → Export Data lets you export everything as JSON or CSV at any time." }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "はい。設定 → データをエクスポートから、いつでもJSONまたはCSVで全データをエクスポートできます。" }
+        }
+      }
+    },
+    "help.faq.sharing.q": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "친구와 어떻게 공유하나요?" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "How do I share with a friend?" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "友人とどうやって共有しますか？" }
+        }
+      }
+    },
+    "help.faq.sharing.a": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "1:1 CKShare를 통해 특정 컬렉션을 친구와 공유할 수 있습니다. v1.5에서 지원 예정입니다." }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "1-to-1 CKShare lets you share a specific collection with a friend. Coming in v1.5." }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "1対1のCKShareで特定のコレクションを友人と共有できます。v1.5で対応予定です。" }
+        }
+      }
+    },
+    "help.section.contact.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "문의" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Contact" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "お問い合わせ" }
+        }
+      }
+    },
+    "help.contact.email.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "이메일" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Email" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "メール" }
+        }
+      }
+    },
+    "help.contact.sla.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "답장 기준" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Response time" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "返信の目安" }
+        }
+      }
+    },
+    "help.contact.sla.value": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "48시간 이내" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Within 48 hours" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "48時間以内" }
+        }
+      }
+    },
+    "help.section.legal.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "약속 + 법적" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Promise + Legal" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "お約束と法的事項" }
+        }
+      }
+    },
+    "help.legal.terms": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "이용약관" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Terms of Service" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "利用規約" }
+        }
+      }
+    },
+    "help.legal.privacy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "개인정보 처리방침" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Privacy Policy" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "プライバシーポリシー" }
+        }
+      }
+    },
+    "help.legal.comingSoon": {
+      "extractionState": "manual",
+      "localizations": {
+        "ko": {
+          "stringUnit": { "state": "translated", "value": "출시 후 공개" }
+        },
+        "en": {
+          "stringUnit": { "state": "translated", "value": "Available at launch" }
+        },
+        "ja": {
+          "stringUnit": { "state": "translated", "value": "リリース後に公開" }
         }
       }
     }

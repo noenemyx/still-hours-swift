@@ -17,6 +17,10 @@ public enum LookupSource: String, Codable, Sendable {
     case musicBrainz
     /// iTunes Search API — api.itunes.apple.com
     case itunes
+    /// The Movie Database — api.themoviedb.org
+    case tmdb
+    /// Open Movie Database — www.omdbapi.com
+    case omdb
 }
 
 // MARK: - BookMetadata

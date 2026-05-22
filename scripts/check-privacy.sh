@@ -15,6 +15,7 @@
 #   themoviedb.org        – TMDB movie/TV metadata
 #   wikipedia.org         – Wikipedia article summaries
 #   api.itunes.apple.com  – Apple Music search (Apple infra)
+#   www.omdbapi.com       – OMDb movie metadata (fallback to TMDB)
 #
 # Opt-out : Add `// LINT-IGNORE: Privacy` on the line or immediately above
 #           the URL literal to suppress this check for that occurrence.
@@ -45,6 +46,7 @@ ALLOWED_HOSTS=(
   "themoviedb.org"
   "wikipedia.org"
   "api.itunes.apple.com"
+  "www.omdbapi.com"
 )
 
 # Patterns that suggest an outbound URL is being constructed or used

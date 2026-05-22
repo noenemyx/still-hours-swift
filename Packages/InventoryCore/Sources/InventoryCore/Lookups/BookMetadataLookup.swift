@@ -96,8 +96,8 @@ public actor BookMetadataLookup {
         switch source {
         case .openLibrary:  return try await fetchOpenLibrary(isbn: isbn)
         case .googleBooks:  return try await fetchGoogleBooks(isbn: isbn)
-        case .musicBrainz, .itunes:
-            preconditionFailure("Music sources cannot be used with BookMetadataLookup")
+        case .musicBrainz, .itunes, .tmdb, .omdb:
+            preconditionFailure("Source \(source.rawValue) cannot be used with BookMetadataLookup")
         }
     }
 

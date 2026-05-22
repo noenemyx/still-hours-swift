@@ -61,17 +61,51 @@ private let malformedJSONResponse = """
 {"releases": [{"id": "abc", "artist-credit": []}]}
 """.data(using: .utf8)!
 
+// MARK: - Isolated mock
+
+// Each Lookup test file owns a private URLProtocol subclass so suites that run
+// concurrently (Swift Testing default) cannot corrupt each other's static stub
+// state (Axis G). Naming: <Medium>MockURLProtocol.
+private final class MusicMockURLProtocol: URLProtocol, @unchecked Sendable {
+    nonisolated(unsafe) static var stubData: Data?
+    nonisolated(unsafe) static var stubError: Error?
+    nonisolated(unsafe) static var stubStatusCode: Int = 200
+
+    override class func canInit(with request: URLRequest) -> Bool { true }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+
+    override func startLoading() {
+        if let error = MusicMockURLProtocol.stubError {
+            client?.urlProtocol(self, didFailWithError: error)
+            return
+        }
+        let response = HTTPURLResponse(
+            url: request.url!,
+            statusCode: MusicMockURLProtocol.stubStatusCode,
+            httpVersion: nil,
+            headerFields: nil
+        )!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        if let data = MusicMockURLProtocol.stubData {
+            client?.urlProtocol(self, didLoad: data)
+        }
+        client?.urlProtocolDidFinishLoading(self)
+    }
+
+    override func stopLoading() {}
+}
+
 // MARK: - Helpers
 
 private func mockMusicSession() -> URLSession {
     let config = URLSessionConfiguration.ephemeral
-    config.protocolClasses = [MockURLProtocol.self]
+    config.protocolClasses = [MusicMockURLProtocol.self]
     return URLSession(configuration: config)
 }
 
 // MARK: - Tests
 
-// `MockURLProtocol` uses `nonisolated(unsafe) static var` for its stubs.
+// `MusicMockURLProtocol` uses `nonisolated(unsafe) static var` for its stubs.
 // Swift Testing runs tests in parallel by default — that creates a race on
 // static state. `.serialized` runs tests one at a time (Axis G).
 @Suite(.serialized)
@@ -80,9 +114,9 @@ struct MusicMetadataLookupTests {
     // MARK: Happy path — MusicBrainz
 
     @Test func lookup_query_returnsMusicBrainzMetadata() async throws {
-        MockURLProtocol.stubData = musicBrainzQueryResponse
-        MockURLProtocol.stubError = nil
-        MockURLProtocol.stubStatusCode = 200
+        MusicMockURLProtocol.stubData = musicBrainzQueryResponse
+        MusicMockURLProtocol.stubError = nil
+        MusicMockURLProtocol.stubStatusCode = 200
         let sut = MusicMetadataLookup(urlSession: mockMusicSession(), primary: .musicBrainz)
         let result = try await sut.lookup(query: "Radiohead - OK Computer")
         #expect(result.title == "OK Computer")
@@ -95,9 +129,9 @@ struct MusicMetadataLookupTests {
     }
 
     @Test func lookup_barcode_returnsMusicBrainzMetadata() async throws {
-        MockURLProtocol.stubData = musicBrainzBarcodeResponse
-        MockURLProtocol.stubError = nil
-        MockURLProtocol.stubStatusCode = 200
+        MusicMockURLProtocol.stubData = musicBrainzBarcodeResponse
+        MusicMockURLProtocol.stubError = nil
+        MusicMockURLProtocol.stubStatusCode = 200
         let sut = MusicMetadataLookup(urlSession: mockMusicSession(), primary: .musicBrainz)
         let result = try await sut.lookup(barcode: "5013705250099")
         #expect(result.title == "The Bends")
@@ -111,9 +145,9 @@ struct MusicMetadataLookupTests {
     @Test func lookup_musicBrainzEmpty_fallsBackToItunes() async throws {
         // MusicBrainz returns empty → actor falls through to iTunes.
         // We simulate by using iTunes as primary so its stub is the winning result.
-        MockURLProtocol.stubData = itunesQueryResponse
-        MockURLProtocol.stubError = nil
-        MockURLProtocol.stubStatusCode = 200
+        MusicMockURLProtocol.stubData = itunesQueryResponse
+        MusicMockURLProtocol.stubError = nil
+        MusicMockURLProtocol.stubStatusCode = 200
         let sut = MusicMetadataLookup(urlSession: mockMusicSession(), primary: .itunes)
         let result = try await sut.lookup(query: "Radiohead - OK Computer")
         #expect(result.title == "OK Computer")
@@ -126,9 +160,9 @@ struct MusicMetadataLookupTests {
     // MARK: Both empty
 
     @Test func lookup_bothSourcesEmpty_throwsNotFound() async throws {
-        MockURLProtocol.stubData = musicBrainzEmptyResponse
-        MockURLProtocol.stubError = nil
-        MockURLProtocol.stubStatusCode = 200
+        MusicMockURLProtocol.stubData = musicBrainzEmptyResponse
+        MusicMockURLProtocol.stubError = nil
+        MusicMockURLProtocol.stubStatusCode = 200
         let sut = MusicMetadataLookup(urlSession: mockMusicSession(), primary: .musicBrainz)
         await #expect(throws: LookupError.self) {
             _ = try await sut.lookup(query: "Unknown Artist - Unknown Album")
@@ -138,9 +172,9 @@ struct MusicMetadataLookupTests {
     // MARK: Network error
 
     @Test func lookup_networkError_throwsNetworkUnavailable() async throws {
-        MockURLProtocol.stubData = nil
-        MockURLProtocol.stubError = URLError(.notConnectedToInternet)
-        MockURLProtocol.stubStatusCode = 200
+        MusicMockURLProtocol.stubData = nil
+        MusicMockURLProtocol.stubError = URLError(.notConnectedToInternet)
+        MusicMockURLProtocol.stubStatusCode = 200
         let sut = MusicMetadataLookup(urlSession: mockMusicSession(), primary: .musicBrainz)
         await #expect(throws: LookupError.self) {
             _ = try await sut.lookup(query: "Radiohead - OK Computer")
@@ -151,9 +185,9 @@ struct MusicMetadataLookupTests {
 
     @Test func lookup_malformedJSON_throwsMalformedResponse() async throws {
         // Valid JSON with a release entry that has no "title" field.
-        MockURLProtocol.stubData = malformedJSONResponse
-        MockURLProtocol.stubError = nil
-        MockURLProtocol.stubStatusCode = 200
+        MusicMockURLProtocol.stubData = malformedJSONResponse
+        MusicMockURLProtocol.stubError = nil
+        MusicMockURLProtocol.stubStatusCode = 200
         let sut = MusicMetadataLookup(urlSession: mockMusicSession(), primary: .musicBrainz)
         await #expect(throws: LookupError.self) {
             _ = try await sut.lookup(query: "Radiohead - OK Computer")
@@ -163,9 +197,9 @@ struct MusicMetadataLookupTests {
     // MARK: Rate limited
 
     @Test func lookup_rateLimited_throwsRateLimited() async throws {
-        MockURLProtocol.stubData = "{}".data(using: .utf8)
-        MockURLProtocol.stubError = nil
-        MockURLProtocol.stubStatusCode = 429
+        MusicMockURLProtocol.stubData = "{}".data(using: .utf8)
+        MusicMockURLProtocol.stubError = nil
+        MusicMockURLProtocol.stubStatusCode = 429
         let sut = MusicMetadataLookup(urlSession: mockMusicSession(), primary: .musicBrainz)
         await #expect(throws: LookupError.self) {
             _ = try await sut.lookup(query: "Radiohead - OK Computer")

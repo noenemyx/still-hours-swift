@@ -7,7 +7,8 @@ import Foundation
 
 // MARK: - LookupError
 
-/// Typed errors propagated from ``BookMetadataLookup``.
+/// Typed errors propagated from ``BookMetadataLookup``, ``MusicMetadataLookup``,
+/// and ``MovieMetadataLookup``.
 ///
 /// All cases are `Sendable` — safe to cross actor boundaries and capture
 /// in `async throws` call sites. Localised descriptions mirror the pattern
@@ -31,6 +32,10 @@ public enum LookupError: Error, LocalizedError, Sendable {
 
     /// A constructed URL pointed at a host outside the allowed whitelist.
     case unauthorizedHost(URL)
+
+    /// No API key was supplied for the requested movie source.
+    /// Movie lookup requires a user-supplied key — manual entry is the v1.0 default.
+    case apiKeyMissing(MovieSource)
 
     // MARK: LocalizedError
 
@@ -83,6 +88,15 @@ public enum LookupError: Error, LocalizedError, Sendable {
                     comment: "LookupError.unauthorizedHost — %@ is the disallowed URL"
                 ),
                 url.absoluteString
+            )
+        case .apiKeyMissing(let source):
+            return String(
+                format: NSLocalizedString(
+                    "lookup.error.apiKeyMissing",
+                    value: "No API key was provided for %@. Supply a key or enter movie details manually.",
+                    comment: "LookupError.apiKeyMissing — %@ is the movie source name"
+                ),
+                source.rawValue
             )
         }
     }

@@ -9,7 +9,8 @@ import Foundation
 // MARK: - MockURLProtocol
 
 /// URLProtocol subclass that returns pre-configured stubs without network I/O.
-final class MockURLProtocol: URLProtocol, @unchecked Sendable {
+/// Marked `private` so each test file owns its own isolated instance (Axis G).
+private final class MockURLProtocol: URLProtocol, @unchecked Sendable {
     nonisolated(unsafe) static var stubData: Data?
     nonisolated(unsafe) static var stubError: Error?
     nonisolated(unsafe) static var stubStatusCode: Int = 200
