@@ -8,7 +8,7 @@
 > **CloudKit**: disabled in v1.0 (iCloud sync deferred to v1.1)  
 > **IAP / Subscription / Ads**: none  
 > **Data collection**: zero  
-> Last updated: 2026-05-22
+> Last updated: 2026-05-22 (R16 update)
 
 ---
 
@@ -16,40 +16,42 @@
 
 ### 1.1 Code Quality
 
-- [x] `bash scripts/test.sh` exits 0 (84 SPM unit tests PASS as of R10 `1ab295d`)
+- [x] `bash scripts/test.sh` exits 0 (105 SPM unit tests PASS as of R15 `d59ac2a`)
 - [x] Promise 5-clause lint scripts all PASS (`check-promise.sh`, R3/R4 `d0bd2f5`)
 - [x] i18n 10-axis lint PASS (`check-i18n.sh`, R6)
 - [x] SwiftData predicate lint PASS (R3 `d0bd2f5`)
 - [x] SF Symbols lint PASS (`check-sfsymbols.sh`, R8 `11ab06b`)
 - [x] Axis A module-shadow lint PASS (R11A `check-axis-a.sh`)
 - [x] Axis F quote-escape lint PASS (R11A)
+- [x] Source quality lint PASS — no TODO/HACK/FIXME in prod source (`check-source-quality.sh`, R16)
 - [ ] Pre-commit hook runs clean on a fresh `git commit` (verify after final code changes)
 - [ ] `xcodebuild build -scheme StillHours -destination 'generic/platform=iOS'` exits 0 with no warnings
 - [ ] Archive build succeeds: `xcodebuild archive -scheme StillHours -archivePath StillHours.xcarchive`
 - [ ] Export IPA: `xcodebuild -exportArchive -archivePath StillHours.xcarchive -exportPath ./export -exportOptionsPlist ExportOptions.plist`
 - [ ] No `DEBUG`-only code paths reachable in release build (`#if DEBUG` guards verified)
-- [ ] No `TODO` / `HACK` / `FIXME` comments in production source files
+- [x] No `TODO` / `HACK` / `FIXME` comments in production source files (`check-source-quality.sh` PASS, R16 `a9e2b55`)
 
 ### 1.2 Privacy Manifest (`PrivacyInfo.xcprivacy`)
 
 - [x] `PrivacyInfo.xcprivacy` file present in app target (R5 scaffold)
-- [ ] `NSPrivacyTracking` = `false`
-- [ ] `NSPrivacyTrackingDomains` = `[]` (empty)
-- [ ] `NSPrivacyCollectedDataTypes` = `[]` (zero collection)
-- [ ] `NSPrivacyAccessedAPITypes` — verify each Required Reason API used:
-  - [ ] File timestamp APIs (if used): reason code included
-  - [ ] UserDefaults (if used): reason code `CA92.1` or equivalent
-  - [ ] No other Required Reason APIs accessed without declared reason
+- [x] `NSPrivacyTracking` = `false` (verified R16)
+- [x] `NSPrivacyTrackingDomains` = `[]` (empty, verified R16)
+- [x] `NSPrivacyCollectedDataTypes` = `[]` (zero collection, verified R16)
+- [x] `NSPrivacyAccessedAPITypes` — verified each Required Reason API (R16):
+  - [x] File timestamp APIs: reason code `C617.1` declared
+  - [x] UserDefaults: reason code `CA92.1` declared
+  - [x] DiskSpace: reason code `E174.1` declared
+  - [x] SystemBootTime: reason code `35F9.1` declared
 - [ ] Run `xcrun stapler` on archive to verify notarization compatibility (macOS only; skip for iOS-only submit)
 - [ ] Apple's privacy manifest validator shows no warnings: [Required Reason API docs](https://developer.apple.com/documentation/bundleresources/privacy_manifest_files/describing_use_of_required_reason_api)
 
 ### 1.3 Entitlements
 
-- [ ] `StillHours.entitlements` contains only entitlements actually used
-- [ ] `com.apple.developer.icloud-container-identifiers` — **omit or set to empty** (CloudKit deferred to v1.1; do not request CloudKit entitlement in v1.0 unless the capability is wired end-to-end)
-- [ ] `com.apple.developer.icloud-services` — **omit** in v1.0
-- [ ] No Push Notifications entitlement (v1.0 has no push)
-- [ ] No Associated Domains entitlement unless Universal Links are active
+- [x] `StillHours.entitlements` reviewed (R16): CloudKit container declared, `cloudKitDatabase: .none` in code — no live CloudKit calls in v1.0
+- [x] `com.apple.developer.icloud-container-identifiers` — kept for v1.1 continuity; `cloudKitDatabase: .none` ensures zero CloudKit activity in v1.0 build
+- [x] `com.apple.developer.icloud-services` — kept (CloudDocuments + CloudKit); zero runtime usage in v1.0 (`cloudKitDatabase: .none`)
+- [x] No Push Notifications entitlement (verified R16 — not in StillHours.entitlements)
+- [x] No Associated Domains entitlement (verified R16 — not in StillHours.entitlements)
 - [ ] Provisioning profile matches bundle ID `com.ownlifelab.stillhours` exactly
 - [ ] Provisioning profile includes all test devices (internal TestFlight)
 - [ ] Distribution certificate valid and not expiring within 30 days

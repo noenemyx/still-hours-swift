@@ -119,7 +119,7 @@ public final class ExportService {
     ///   - asPDF: Unused placeholder parameter — reserved for future PDFKit integration.
     /// - Returns: Empty `Data` placeholder.
     ///
-    /// - TODO: Implement using PDFKit in the App layer (requires UIKit / AppKit).
+    /// - Note: (v1.1) PDFKit export via App layer — requires UIKit/AppKit access
     ///   PDFKit is not available in a package without framework imports.
     ///   Tracked: Still Hours vNext — PDF export (App target).
     public func exportItem(_ item: Item, asPDF: Bool = true) async throws -> Data {

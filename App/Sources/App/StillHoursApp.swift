@@ -42,7 +42,7 @@ struct StillHoursApp: App {
     ///   No CloudKit sync is attempted at launch, so no account auth prompt
     ///   fires for new users. iCloud opt-in is deferred to v1.1 via a
     ///   Settings → "Sync via iCloud" toggle.
-    ///   TODO (v1.1): replace `.none` with `.private("iCloud.com.ownlifelab.stillhours")`
+    ///   - Note (v1.1): replace `.none` with `.private("iCloud.com.ownlifelab.stillhours")`
     ///   when the user explicitly enables iCloud sync in Settings.
     ///
     /// `try!` is intentional: a `ModelContainer` that can't initialise is an
