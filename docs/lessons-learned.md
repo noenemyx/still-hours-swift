@@ -283,9 +283,10 @@ strings have repeatedly produced this. The error message is misleading
 
 ---
 
-## Axis G — Swift Testing `nonisolated(unsafe) static var` races by default
+## Axis G — MockURLProtocol race conditions in Swift Testing
 
-**Pre-flight Round 6 (2026-05-21, commit `<r6>`)**
+**Pre-flight Round 6 (2026-05-21, commit `<r6>`) — intra-suite**
+**Round 15 (2026-05-22, commit `d59ac2a`) — inter-suite (재확인)**
 
 ### Symptom
 
@@ -324,6 +325,72 @@ strategy for `URLSession`, and Apple's own samples use static state.
 3. **Audit rule**: any `@Test` suite touching `static var` (especially
    `nonisolated(unsafe)`) must add `.serialized` OR migrate to instance
    state. Future lint could pattern-match on these together.
+
+### R15 follow-up — `.serialized` does not isolate across `@Suite`s
+
+After applying R6's `.serialized` rule to `BookMetadataLookupTests`, the
+test suite still failed randomly when new `MovieMetadataLookupTests` and
+`MusicMetadataLookupTests` were added (each also `.serialized`). Errors
+like `.notFound`, `.networkUnavailable`, `.rateLimited` surfaced
+unpredictably during full `swift test` runs even though every suite
+passed in isolation.
+
+**Root cause**: Swift Testing parallelizes _across_ `@Suite` structs by
+default. `.serialized` only serializes tests _within_ a suite — it
+provides zero protection against inter-suite races. `MockURLProtocol`
+was defined non-private in `BookMetadataLookupTests.swift`; the Movie
+and Music test files reached into the same class. Three suites running
+in parallel = three concurrent writers to the same `static var stubData
+/ stubError / stubStatusCode`. R6's intra-suite fix held, but the
+inter-suite axis was unconstrained.
+
+**Prevention**: each test file that mocks `URLProtocol` static state
+must define its **own `private` mock class** with a medium-specific
+name. Complete static-state isolation per file:
+
+```swift
+// BookMetadataLookupTests.swift
+private final class BookMockURLProtocol: URLProtocol { ... }
+
+// MovieMetadataLookupTests.swift
+private final class MovieMockURLProtocol: URLProtocol { ... }
+
+// MusicMetadataLookupTests.swift
+private final class MusicMockURLProtocol: URLProtocol { ... }
+```
+
+The `private` access modifier prevents accidental cross-file reuse;
+the medium prefix prevents future namespace collisions if two files
+ever share a scope. R15 fix: commit `d59ac2a` — **105 tests PASS**.
+
+**Lint candidate** (future addition to `scripts/check-*.sh`, follows
+Axis E's `set +o pipefail` pattern for `grep -v` chains):
+
+```bash
+# Tests/ should not declare URLProtocol subclasses without `private`
+set +o pipefail
+violations=$(grep -rn "class .*URLProtocol" \
+              Tests/ App/Tests/ Packages/*/Tests \
+              --include="*.swift" 2>/dev/null \
+             | grep -v "private" || true)
+set -o pipefail
+if [[ -n "$violations" ]]; then
+  fail "URLProtocol mocks in Tests/ must be 'private' to avoid inter-suite races:"
+  echo "$violations"
+  exit 1
+fi
+```
+
+**Verification heuristic**: a test that passes alone but fails in the
+full `swift test` run is the inter-suite race signature. Always run
+the full suite at least once before claiming a Lookup-style fix is
+complete.
+
+**Cross-reference**: Axis G part 1 (R6) addresses parallelism _within_
+a `@Suite`. This R15 addendum addresses parallelism _between_ `@Suite`s.
+Both must be applied for full URLProtocol-based mock isolation. See
+also Axis E (`set -o pipefail` + `grep -v` chain safety) for the lint
+shape.
 
 ---
 
