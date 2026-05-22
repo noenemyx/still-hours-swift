@@ -3,6 +3,7 @@
 // Sprint 1.5 — LibraryListView + ItemDetailView + MemoryTimelineView
 // Created: 2026-05-21
 // R12.3 verified for Cool Blue token cascade (2026-05-21).
+// R13.4: Sticky year header per MemoryTimeline-Design.md §F.
 //
 // THE brand visual signature view. Vertical timeline with left accent line,
 // grouped by year then month, reverse-chronological.
@@ -25,6 +26,12 @@ struct MemoryTimelineView: View {
 
     let item: Item
     var onAddMemory: (() -> Void)?
+
+    // MARK: State
+
+    /// Year currently pinned at the top of the scroll viewport.
+    /// Updated via onScrollGeometryChange as the user scrolls.
+    @State private var activeYear: Int?
 
     // MARK: Environment
 
@@ -60,6 +67,10 @@ struct MemoryTimelineView: View {
                 timelineContent
             }
         }
+        .onAppear {
+            // Seed activeYear to topmost group so the first header is active on load.
+            activeYear = groupedByYear.first?.year
+        }
     }
 
     // MARK: Empty State
@@ -92,53 +103,74 @@ struct MemoryTimelineView: View {
 
     // MARK: Timeline Content
 
+    /// Wraps all year sections in a ScrollView + LazyVStack with pinned section headers.
+    /// The accent rail is rendered as a leading-edge overlay on the LazyVStack so it
+    /// spans the full content height and passes through the sticky header zone unbroken.
     private var timelineContent: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            ForEach(Array(groupedByYear.enumerated()), id: \.element.year) { index, group in
-                yearSection(year: group.year, memories: group.memories, index: index)
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
+                ForEach(Array(groupedByYear.enumerated()), id: \.element.year) { index, group in
+                    Section {
+                        ForEach(Array(group.memories.enumerated()), id: \.element.id) { rowIndex, memory in
+                            rowWithStagger(memory: memory, globalIndex: index * 100 + rowIndex)
+                                .padding(.leading, ComponentTokens.MemoryRow.accentLineIndent + 16)
+                        }
+                    } header: {
+                        yearHeader(year: group.year, isActive: activeYear == group.year)
+                    }
+                }
             }
-        }
-        .padding(.top, FoundationTokens.Space.md)
-        .padding(.bottom, FoundationTokens.Space.xxl)
-    }
-
-    // MARK: Year Section
-
-    private func yearSection(year: Int, memories: [Memory], index: Int) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            yearHeader(year: year)
-
-            ZStack(alignment: .topLeading) {
-                // Accent rail — 1pt, SemanticTokens.timeline.rail (accent × 0.18 alpha).
-                // Design-R11 §3 token 21: faint Cool Blue spine, not paint stroke.
+            .padding(.top, FoundationTokens.Space.md)
+            .padding(.bottom, FoundationTokens.Space.xxl)
+            // Accent rail — 1pt, SemanticTokens.timeline.rail (accent × 0.18 alpha).
+            // Design-R11 §3 token 21: faint Cool Blue spine, not paint stroke.
+            // Overlay on the LazyVStack so it spans full content height through sticky headers.
+            .overlay(alignment: .topLeading) {
                 Rectangle()
                     .fill(SemanticTokens.timeline.rail)
                     .frame(width: ComponentTokens.MemoryRow.accentLineWidth)
                     .padding(.leading, ComponentTokens.MemoryRow.accentLineIndent)
-
-                // Memory rows
-                VStack(alignment: .leading, spacing: 0) {
-                    ForEach(Array(memories.enumerated()), id: \.element.id) { rowIndex, memory in
-                        rowWithStagger(memory: memory, globalIndex: index * 100 + rowIndex)
-                            .padding(.leading, ComponentTokens.MemoryRow.accentLineIndent + 16)
-                    }
-                }
             }
         }
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel("\(year)")
+        .onScrollGeometryChange(for: Int.self) { proxy in
+            // Derive the active year from scroll position.
+            // groupedByYear is descending (most recent first), so as the user scrolls down
+            // the index advances through older years.
+            let offsetY = proxy.contentOffset.y
+            let contentH = proxy.contentSize.height
+            let groups = groupedByYear
+            guard !groups.isEmpty, contentH > 0 else {
+                return groups.first?.year ?? 0
+            }
+            // Map scroll fraction to a group index; clamp to valid range.
+            let fraction = max(0, min(1, offsetY / contentH))
+            let clampedIndex = min(
+                Int((fraction * Double(groups.count)).rounded(.down)),
+                groups.count - 1
+            )
+            return groups[clampedIndex].year
+        } action: { _, newYear in
+            activeYear = newYear
+        }
     }
 
     // MARK: Year Header
 
-    private func yearHeader(year: Int) -> some View {
+    private func yearHeader(year: Int, isActive: Bool) -> some View {
         let label = yearHeaderLabel(for: year)
         return Text(label)
             .font(.subheadline)
             .fontWeight(.semibold)
-            .foregroundStyle(Color.shTextSecondary)
+            .foregroundStyle(
+                isActive
+                    ? SemanticTokens.timeline.year.active
+                    : SemanticTokens.timeline.year.inactive
+            )
             .padding(.horizontal, FoundationTokens.Space.md)
             .padding(.vertical, FoundationTokens.Space.sm)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.ultraThinMaterial)
+            .accessibilityAddTraits(.isHeader)
     }
 
     private func yearHeaderLabel(for year: Int) -> String {

@@ -98,7 +98,7 @@ struct AddMemoryView: View {
                         String(localized: "memory.add.cancel", defaultValue: "Cancel"),
                         action: onCancel
                     )
-                    .foregroundStyle(Color.shAccent)
+                    .foregroundStyle(SemanticTokens.cta.secondary.text)
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
@@ -269,7 +269,7 @@ struct AddMemoryView: View {
                         ),
                         systemImage: "photo.badge.plus"
                     )
-                    .foregroundStyle(Color.shAccent)
+                    .foregroundStyle(SemanticTokens.cta.secondary.text)
                 }
                 .accessibilityLabel(
                     String(localized: "memory.add.photo.add", defaultValue: "Add photo")

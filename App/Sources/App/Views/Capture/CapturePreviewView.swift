@@ -76,7 +76,7 @@ struct CapturePreviewView: View {
                     Text(mediumLabel)
                         .font(.caption)
                 }
-                .foregroundStyle(Color.shAccent)
+                .foregroundStyle(mediumTint)
             }
             Spacer(minLength: 0)
         }
@@ -96,9 +96,9 @@ struct CapturePreviewView: View {
                     .scaledToFill()
             } else {
                 ZStack {
-                    Color.shAccentMuted
+                    SemanticTokens.cta.secondary.fill
                     Image(systemName: mediumSymbol)
-                        .foregroundStyle(Color.shAccent)
+                        .foregroundStyle(mediumTint)
                 }
             }
         }
@@ -124,7 +124,7 @@ struct CapturePreviewView: View {
                         width: ComponentTokens.MemoryRow.iconSize,
                         height: ComponentTokens.MemoryRow.iconSize
                     )
-                    .foregroundStyle(Color.shAccent)
+                    .foregroundStyle(SemanticTokens.memory.kind.tint)
                 Text(
                     String(
                         localized: "capture.preview.acquired_note",
@@ -162,6 +162,15 @@ struct CapturePreviewView: View {
     }
 
     // MARK: Helpers
+
+    private var mediumTint: Color {
+        switch payload.medium {
+        case .book:   return SemanticTokens.medium.book.tint
+        case .music:  return SemanticTokens.medium.music.tint
+        case .movie:  return SemanticTokens.medium.movie.tint
+        case .object: return SemanticTokens.medium.object.tint
+        }
+    }
 
     private var mediumSymbol: String {
         switch payload.medium {

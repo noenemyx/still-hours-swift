@@ -13,8 +13,8 @@ import InventoryCore
 
 /// A 64×72 pt selection chip for a single ``MemoryKind``.
 ///
-/// Selected chip shows a 2pt `Color.shAccent` ring and `Color.shAccentMuted` background.
-/// Unselected chip shows a 1pt muted ring and `Color.shSurface` background.
+/// Selected chip shows a 2pt `SemanticTokens.memory.kind.tint` ring and `SemanticTokens.list.row.selected.fill` background.
+/// Unselected chip shows a 1pt muted ring and `SemanticTokens.card.background` background.
 @MainActor
 struct MemoryKindChipView: View {
 
@@ -35,22 +35,22 @@ struct MemoryKindChipView: View {
             VStack(spacing: FoundationTokens.Space.xs) {
                 Image(systemName: iconName)
                     .font(.system(size: 28))
-                    .foregroundStyle(isSelected ? Color.shAccent : Color.shTextSecondary)
+                    .foregroundStyle(isSelected ? SemanticTokens.memory.kind.tint : Color.shTextSecondary)
 
                 Text(kindLabel)
                     .font(.system(size: 10, weight: .medium))
-                    .foregroundStyle(isSelected ? Color.shAccent : Color.shTextSecondary)
+                    .foregroundStyle(isSelected ? SemanticTokens.memory.kind.tint : Color.shTextSecondary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
             }
             .frame(width: 64, height: 72)
-            .background(isSelected ? Color.shAccentMuted : Color.shSurface)
+            .background(isSelected ? SemanticTokens.list.row.selected.fill : SemanticTokens.card.background)
             .clipShape(RoundedRectangle(cornerRadius: FoundationTokens.Radius.sm))
             .overlay(
                 RoundedRectangle(cornerRadius: FoundationTokens.Radius.sm)
                     .strokeBorder(
                         isSelected
-                            ? Color.shAccent
+                            ? SemanticTokens.memory.kind.tint
                             : Color.shTextSecondary.opacity(0.3),
                         lineWidth: isSelected ? 2 : 1
                     )
