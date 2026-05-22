@@ -149,8 +149,7 @@ struct SettingsRootView: View {
                     )
                 }
 
-                // LEGAL-PENDING: replace with live GitHub Pages URLs before launch — see docs/legal/README.md
-                // LINT-IGNORE: Privacy — GitHub Pages user-site host (noenemyx.github.io); placeholder for hosted legal docs
+                // LINT-IGNORE: Privacy — GitHub Pages user-site host (noenemyx.github.io); live legal docs
                 Link(destination: URL(string: "https://noenemyx.github.io/still-hours-swift/legal/privacy-policy-en.html")!) { // safe: compile-time literal URL
                     Label(
                         String(
@@ -161,7 +160,6 @@ struct SettingsRootView: View {
                     )
                 }
 
-                // LEGAL-PENDING: replace with live GitHub Pages URLs before launch — see docs/legal/README.md
                 Link(destination: URL(string: "https://noenemyx.github.io/still-hours-swift/legal/terms-of-service-en.html")!) { // safe: compile-time literal URL
                     Label(
                         String(
