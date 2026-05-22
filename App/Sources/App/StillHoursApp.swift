@@ -17,6 +17,9 @@ struct StillHoursApp: App {
         if CommandLine.arguments.contains("--reset-onboarding") {
             UserDefaults.standard.removeObject(forKey: "hasCompletedOnboarding")
         }
+        if CommandLine.arguments.contains("--seed-stress-50") {
+            UserDefaults.standard.set(true, forKey: "seedStressDataset")
+        }
         #endif
     }
 

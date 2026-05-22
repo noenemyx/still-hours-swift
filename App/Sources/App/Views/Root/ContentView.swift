@@ -78,11 +78,14 @@ struct ContentView: View {
         #if DEBUG
         .task {
             do {
-                try await DemoSeeder(context: modelContext).seedIfEmpty()
+                if UserDefaults.standard.bool(forKey: "seedStressDataset") {
+                    try await DemoSeederStress(context: modelContext).seedStressDataset(count: 50)
+                } else {
+                    try await DemoSeeder(context: modelContext).seedIfEmpty()
+                }
             } catch {
-                // Silently ignore — DemoSeeder is a developer convenience,
-                // not a critical path. Log to console for visibility.
-                print("[DemoSeeder] seedIfEmpty failed: \(error)")
+                // Silently ignore — seeders are developer conveniences, not critical paths.
+                print("[DemoSeeder] seed failed: \(error)")
             }
         }
         #endif

@@ -94,8 +94,10 @@ public actor BookMetadataLookup {
 
     private func fetch(isbn: String, from source: LookupSource) async throws -> BookMetadata {
         switch source {
-        case .openLibrary: return try await fetchOpenLibrary(isbn: isbn)
+        case .openLibrary:  return try await fetchOpenLibrary(isbn: isbn)
         case .googleBooks:  return try await fetchGoogleBooks(isbn: isbn)
+        case .musicBrainz, .itunes:
+            preconditionFailure("Music sources cannot be used with BookMetadataLookup")
         }
     }
 

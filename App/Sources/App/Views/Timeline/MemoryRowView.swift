@@ -16,12 +16,17 @@ import InventoryCore
 ///
 /// Shows: kind icon · date · note preview · photo thumbnail if attached.
 /// Design.md §5.2. MemoryTimeline-Design.md §B.4.
+///
+/// R14.2: Tapping the row calls ``onTap``; swipe-left shows a Delete action
+/// that calls ``onDelete``.
 @MainActor
 struct MemoryRowView: View {
 
     // MARK: Input
 
     let memory: Memory
+    var onTap: (() -> Void)?
+    var onDelete: (() async -> Void)?
 
     // MARK: Scaled metric (accessibility ceiling per spec §H.2)
 
@@ -34,6 +39,30 @@ struct MemoryRowView: View {
     // MARK: Body
 
     var body: some View {
+        Button {
+            onTap?()
+        } label: {
+            rowContent
+        }
+        .buttonStyle(.plain)
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            Button(role: .destructive) {
+                Task { await onDelete?() }
+            } label: {
+                Label(
+                    String(localized: "memory.row.action.delete", defaultValue: "Delete"),
+                    systemImage: "trash"
+                )
+            }
+            .accessibilityLabel(
+                String(localized: "memory.row.action.delete", defaultValue: "Delete")
+            )
+        }
+    }
+
+    // MARK: Row Content
+
+    private var rowContent: some View {
         HStack(alignment: .top, spacing: ComponentTokens.MemoryRow.iconTextGap) {
             kindIcon
             textArea
@@ -44,7 +73,9 @@ struct MemoryRowView: View {
         .padding(.vertical, FoundationTokens.Space.sm)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(rowAccessibilityLabel)
-        .accessibilityHint("Double tap to expand.")
+        .accessibilityHint(
+            String(localized: "memory.row.action.edit", defaultValue: "Edit")
+        )
     }
 
     // MARK: Kind Icon

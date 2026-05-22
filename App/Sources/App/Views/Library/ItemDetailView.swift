@@ -196,7 +196,7 @@ struct ItemDetailView: View {
     // MARK: Timeline Section
 
     private var timelineSection: some View {
-        MemoryTimelineView(item: item, onAddMemory: { showAddMemory = true })
+        MemoryTimelineView(item: item, library: library, onAddMemory: { showAddMemory = true })
     }
 
     // MARK: Action Section

@@ -7,12 +7,16 @@ import Foundation
 
 // MARK: - LookupSource
 
-/// The external API that produced a ``BookMetadata`` result.
+/// The external API that produced a lookup result.
 public enum LookupSource: String, Codable, Sendable {
     /// Open Library — openlibrary.org
     case openLibrary
     /// Google Books — www.googleapis.com
     case googleBooks
+    /// MusicBrainz — musicbrainz.org
+    case musicBrainz
+    /// iTunes Search API — api.itunes.apple.com
+    case itunes
 }
 
 // MARK: - BookMetadata

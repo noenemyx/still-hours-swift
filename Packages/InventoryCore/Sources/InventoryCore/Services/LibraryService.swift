@@ -178,6 +178,34 @@ public final class LibraryService {
         }
     }
 
+    /// Applies an in-place mutation closure to an existing ``Memory`` then saves.
+    ///
+    /// - Parameters:
+    ///   - memory: The memory to mutate.
+    ///   - mutations: A closure that mutates the memory's properties.
+    /// - Throws: ``ServiceError/persistFailed(underlying:)`` on save failure.
+    public func updateMemory(_ memory: Memory, mutations: (Memory) -> Void) async throws {
+        mutations(memory)
+        do {
+            try context.save()
+        } catch {
+            throw ServiceError.persistFailed(underlying: error)
+        }
+    }
+
+    /// Deletes a ``Memory`` from its owning ``Item`` and the persistent store.
+    ///
+    /// - Parameter memory: The memory to delete.
+    /// - Throws: ``ServiceError/persistFailed(underlying:)`` on save failure.
+    public func deleteMemory(_ memory: Memory) async throws {
+        context.delete(memory)
+        do {
+            try context.save()
+        } catch {
+            throw ServiceError.persistFailed(underlying: error)
+        }
+    }
+
     /// Detaches a ``Memory`` from its owning ``Item`` without deleting it.
     ///
     /// - Parameter memory: The memory to detach.

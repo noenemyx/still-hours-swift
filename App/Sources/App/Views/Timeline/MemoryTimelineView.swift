@@ -19,12 +19,16 @@ import InventoryCore
 /// grouped by year and reverse-chronological.
 ///
 /// MemoryTimeline-Design.md §A-I.
+///
+/// R14.2: Accepts ``library`` for delete operations and drives ``EditMemoryView``
+/// via ``editingMemory`` sheet state.
 @MainActor
 struct MemoryTimelineView: View {
 
     // MARK: Input
 
     let item: Item
+    let library: LibraryService
     var onAddMemory: (() -> Void)?
 
     // MARK: State
@@ -32,6 +36,9 @@ struct MemoryTimelineView: View {
     /// Year currently pinned at the top of the scroll viewport.
     /// Updated via onScrollGeometryChange as the user scrolls.
     @State private var activeYear: Int?
+
+    /// Memory currently being edited. Non-nil → EditMemoryView sheet is shown.
+    @State private var editingMemory: Memory?
 
     // MARK: Environment
 
@@ -70,6 +77,14 @@ struct MemoryTimelineView: View {
         .onAppear {
             // Seed activeYear to topmost group so the first header is active on load.
             activeYear = groupedByYear.first?.year
+        }
+        .sheet(item: $editingMemory) { mem in
+            EditMemoryView(
+                memory: mem,
+                library: library,
+                onSaved: { editingMemory = nil },
+                onCancel: { editingMemory = nil }
+            )
         }
     }
 
@@ -186,18 +201,24 @@ struct MemoryTimelineView: View {
     // MARK: Row with stagger animation
 
     private func rowWithStagger(memory: Memory, globalIndex: Int) -> some View {
-        MemoryRowView(memory: memory)
-            .transition(
-                reduceMotion
-                    ? .identity
-                    : .opacity.combined(with: .move(edge: .top))
-            )
-            .animation(
-                reduceMotion
-                    ? .none
-                    : FoundationTokens.Motion.standard
-                        .delay(Double(globalIndex) * 0.04),
-                value: sortedMemories.count
-            )
+        MemoryRowView(
+            memory: memory,
+            onTap: { editingMemory = memory },
+            onDelete: {
+                try? await library.deleteMemory(memory)
+            }
+        )
+        .transition(
+            reduceMotion
+                ? .identity
+                : .opacity.combined(with: .move(edge: .top))
+        )
+        .animation(
+            reduceMotion
+                ? .none
+                : FoundationTokens.Motion.standard
+                    .delay(Double(globalIndex) * 0.04),
+            value: sortedMemories.count
+        )
     }
 }
