@@ -1,6 +1,6 @@
-# docs/legal — Still Hours Legal Documents
+# docs/legal — Own Your Curation Legal Documents
 
-Privacy Policy and Terms of Service for the App Store submission of Still Hours.
+Privacy Policy and Terms of Service for the App Store submission of Own Your Curation.
 
 ---
 
@@ -29,12 +29,12 @@ Privacy Policy and Terms of Service for the App Store submission of Still Hours.
 
 ### URL Convention
 
-Once GitHub Pages is active, published URLs follow this pattern:
+Once GitHub Pages is active, published URLs follow this pattern (note: the hosting repo is named `still-hours-swift` for historical reasons; only the brand display name has changed):
 
 ```
-https://<github-username>.github.io/<repo-name>/legal/privacy-policy-en.html
-https://<github-username>.github.io/<repo-name>/legal/privacy-policy-ko.html
-https://<github-username>.github.io/<repo-name>/legal/privacy-policy-ja.html
+https://noenemyx.github.io/still-hours-swift/legal/privacy-policy-en.html
+https://noenemyx.github.io/still-hours-swift/legal/privacy-policy-ko.html
+https://noenemyx.github.io/still-hours-swift/legal/privacy-policy-ja.html
 ```
 
 For App Store submission, you will need at least the English URL. Use the English Privacy Policy URL in App Store Connect → App Information → Privacy Policy URL.
@@ -47,32 +47,32 @@ Use `pandoc` to convert each `.md` file to a standalone `.html` file:
 pandoc PrivacyPolicy-en.md \
   -o privacy-policy-en.html \
   --standalone \
-  --metadata title="Still Hours Privacy Policy"
+  --metadata title="Own Your Curation Privacy Policy"
 
 pandoc PrivacyPolicy-ko.md \
   -o privacy-policy-ko.html \
   --standalone \
-  --metadata title="Still Hours 개인정보 처리방침"
+  --metadata title="Own Your Curation 개인정보 처리방침"
 
 pandoc PrivacyPolicy-ja.md \
   -o privacy-policy-ja.html \
   --standalone \
-  --metadata title="Still Hours プライバシーポリシー"
+  --metadata title="Own Your Curation プライバシーポリシー"
 
 pandoc TermsOfService-en.md \
   -o terms-of-service-en.html \
   --standalone \
-  --metadata title="Still Hours Terms of Service"
+  --metadata title="Own Your Curation Terms of Service"
 
 pandoc TermsOfService-ko.md \
   -o terms-of-service-ko.html \
   --standalone \
-  --metadata title="Still Hours 이용약관"
+  --metadata title="Own Your Curation 이용약관"
 
 pandoc TermsOfService-ja.md \
   -o terms-of-service-ja.html \
   --standalone \
-  --metadata title="Still Hours 利用規約"
+  --metadata title="Own Your Curation 利用規約"
 ```
 
 Install pandoc if not present: `brew install pandoc`
@@ -98,7 +98,7 @@ App Review checks that the URL resolves and that the page addresses the app's ac
 
 ## Update Protocol
 
-Any change to the Still Hours Promise (PRD §5) requires:
+Any change to the Own Your Curation Promise (PRD §5) requires:
 
 1. Update the relevant sections in all six locale files.
 2. Bump the "Last updated" date at the top of each file.

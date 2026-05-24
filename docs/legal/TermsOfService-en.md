@@ -1,16 +1,16 @@
-# Still Hours — Terms of Service
+# Own Your Curation — Terms of Service
 
-Last updated: May 22, 2026  
+Last updated: May 24, 2026  
 Effective date: May 22, 2026  
-Applies to: Still Hours v1.0 and later
+Applies to: Own Your Curation v1.0 and later
 
 ---
 
 ## §1 Acceptance and Scope
 
-These Terms govern your use of Still Hours (the "app"), an iOS application published by ownlifelab. By downloading or using the app, you agree to these Terms.
+These Terms govern your use of Own Your Curation (the "app"), an iOS application published by ownlifelab. By downloading or using the app, you agree to these Terms.
 
-Still Hours is a one-time paid purchase available through the App Store. These Terms apply alongside Apple's App Store Terms of Service. In the event of a conflict, Apple's App Store Terms take precedence.
+Own Your Curation is a one-time paid purchase available through the App Store. These Terms apply alongside Apple's App Store Terms of Service. In the event of a conflict, Apple's App Store Terms take precedence.
 
 ---
 
@@ -41,13 +41,13 @@ For details on how data is collected, stored, and handled, see the Privacy Polic
 ## §4 Pricing and Refunds
 
 **Price**  
-Still Hours is a one-time purchase at $14.99 (or local currency equivalent) through the App Store. There are no subscriptions, recurring charges, or in-app purchases.
+Own Your Curation is a one-time purchase at $14.99 (or local currency equivalent) through the App Store. There are no subscriptions, recurring charges, or in-app purchases.
 
 **Price changes**  
 The price for new purchases may change in future. Any price change applies to new purchases only and does not affect existing buyers.
 
 **Free upgrades for existing buyers**  
-Buyers of v1.0 receive free updates through v2.x and subsequent versions at no additional cost. This commitment is part of the Still Hours Promise.
+Buyers of v1.0 receive free updates through v2.x and subsequent versions at no additional cost. This commitment is part of the Own Your Curation Promise.
 
 **Refunds**  
 Refunds are handled under Apple's App Store refund policy. Submit refund requests directly to Apple. ownlifelab does not operate a separate refund channel.
@@ -76,7 +76,7 @@ The following are not permitted:
 ## §7 Disclaimer of Warranties and Limitation of Liability
 
 **Provided as-is**  
-Still Hours is provided "as is" without warranties of any kind. ownlifelab does not warrant that the app is free of errors, will operate without interruption, or is fit for any particular purpose.
+Own Your Curation is provided "as is" without warranties of any kind. ownlifelab does not warrant that the app is free of errors, will operate without interruption, or is fit for any particular purpose.
 
 **Limitation of liability**  
 To the extent permitted by applicable law, ownlifelab is not liable for indirect damages, data loss, or lost profits arising from your use of or inability to use the app.
@@ -92,7 +92,7 @@ We recommend exporting your data regularly using the app's export function (Sett
 You may stop using the app at any time by deleting it. We recommend exporting your data before deletion.
 
 **Discontinuation by ownlifelab**  
-If Still Hours is discontinued, we will provide at least 30 days' notice and keep the export function available during that period. Any copy of the app already installed on your device will continue to function; only new downloads from the App Store will stop.
+If Own Your Curation is discontinued, we will provide at least 30 days' notice and keep the export function available during that period. Any copy of the app already installed on your device will continue to function; only new downloads from the App Store will stop.
 
 ---
 
@@ -114,4 +114,4 @@ For questions about these Terms, contact:
 ---
 
 *These Terms are effective as of May 22, 2026.*  
-*If Still Hours' Promise commitments change, these Terms will be updated accordingly.*
+*If Own Your Curation's Promise commitments change, these Terms will be updated accordingly.*
