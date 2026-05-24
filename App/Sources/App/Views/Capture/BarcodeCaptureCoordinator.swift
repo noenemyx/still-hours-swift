@@ -32,6 +32,9 @@ struct BarcodeCaptureCoordinator: View {
 
     @State private var lookupInProgress: Bool = false
     @State private var bannerMessage: String? = nil
+    // Bumping this UUID rebuilds BarcodeScannerView (and its underlying
+    // AVCaptureSession), giving a fresh scanner after a failed lookup.
+    @State private var scannerSessionID: UUID = UUID()
 
     // MARK: Init
 
@@ -52,6 +55,7 @@ struct BarcodeCaptureCoordinator: View {
                     stateMachine.start(mode: .manual)
                 }
             )
+            .id(scannerSessionID)
 
             if lookupInProgress {
                 lookupProgressOverlay
@@ -121,33 +125,56 @@ struct BarcodeCaptureCoordinator: View {
             Spacer()
 
             GlassEffectContainer {
-                HStack(spacing: 12) {
-                    Image(systemName: "exclamationmark.triangle")
-                        .foregroundStyle(.orange)
+                VStack(spacing: 10) {
+                    HStack(spacing: 12) {
+                        Image(systemName: "exclamationmark.triangle")
+                            .foregroundStyle(.orange)
+                        Text(message)
+                            .font(.subheadline)
+                        Spacer()
+                    }
 
-                    Text(message)
-                        .font(.subheadline)
+                    HStack(spacing: 8) {
+                        Button {
+                            // Reset banner + rebuild scanner for retry
+                            bannerMessage = nil
+                            scannerSessionID = UUID()
+                        } label: {
+                            Text(
+                                String(
+                                    localized: "capture.barcode.retry",
+                                    defaultValue: "Try Again"
+                                )
+                            )
+                            .font(.caption.weight(.medium))
+                        }
+                        .buttonStyle(.glass)
+                        .accessibilityLabel(
+                            String(
+                                localized: "capture.barcode.retry",
+                                defaultValue: "Try Again"
+                            )
+                        )
 
-                    Spacer()
-
-                    Button {
-                        stateMachine.start(mode: .manual)
-                    } label: {
-                        Text(
+                        Button {
+                            stateMachine.start(mode: .manual)
+                        } label: {
+                            Text(
+                                String(
+                                    localized: "capture.barcode.switchToManual",
+                                    defaultValue: "Switch to manual"
+                                )
+                            )
+                            .font(.caption.weight(.medium))
+                        }
+                        .buttonStyle(.glass)
+                        .accessibilityLabel(
                             String(
                                 localized: "capture.barcode.switchToManual",
                                 defaultValue: "Switch to manual"
                             )
                         )
-                        .font(.caption.weight(.medium))
                     }
-                    .buttonStyle(.glass)
-                    .accessibilityLabel(
-                        String(
-                            localized: "capture.barcode.switchToManual",
-                            defaultValue: "Switch to manual"
-                        )
-                    )
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)

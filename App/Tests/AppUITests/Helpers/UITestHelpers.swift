@@ -19,17 +19,8 @@ enum UITestHelpers {
     ///
     /// - Parameters:
     ///   - app: The `XCUIApplication` to configure.
-    ///   - resetOnboarding: When `true`, passes `--reset-onboarding` so the
-    ///     main app clears `hasCompletedOnboarding` before first view render,
-    ///     ensuring onboarding is skipped and the Library tab is the initial screen.
-    static func launchAppForTesting(
-        _ app: XCUIApplication,
-        resetOnboarding: Bool = true
-    ) {
+    static func launchAppForTesting(_ app: XCUIApplication) {
         app.launchArguments.append("--ui-testing")
-        if resetOnboarding {
-            app.launchArguments.append("--reset-onboarding")
-        }
         app.launch()
     }
 

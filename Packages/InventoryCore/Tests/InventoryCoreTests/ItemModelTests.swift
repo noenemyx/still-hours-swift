@@ -59,7 +59,8 @@ struct ItemModelTests {
         #expect(cases.contains(.music))
         #expect(cases.contains(.movie))
         #expect(cases.contains(.object))
-        #expect(cases.count == 4)
+        #expect(cases.contains(.place))
+        #expect(cases.count == 5)
     }
 
     @Test func medium_rawValues() {

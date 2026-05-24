@@ -9,11 +9,13 @@ import InventoryCore
 
 // MARK: - CaptureMode
 
-/// The three capture entry modes. Only `.manual` is implemented in Sprint 1.1.
-/// `.barcode` and `.voice` arrive in Sprints 1.3 and 1.4 respectively.
+/// Capture entry modes. `.photo` (R18) uses on-device Vision framework
+/// (VNClassifyImage + VNRecognizeText) for object/product identification —
+/// privacy promise §1 preserved (100% local processing, zero server calls).
 public enum CaptureMode: String, CaseIterable, Sendable {
     case barcode
     case voice
+    case photo
     case manual
 }
 
@@ -113,7 +115,7 @@ public final class CaptureStateMachine: ObservableObject {
         switch mode {
         case .manual:
             state = .confirming(.empty)
-        case .barcode, .voice:
+        case .barcode, .voice, .photo:
             state = .scanning(mode)
         }
     }

@@ -49,6 +49,7 @@ struct MediumBadgeView: View {
         case .music:  return SemanticTokens.mediumIcon.music
         case .movie:  return SemanticTokens.mediumIcon.movie
         case .object: return SemanticTokens.mediumIcon.object
+        case .place:  return SemanticTokens.mediumIcon.place
         }
     }
 }
@@ -63,6 +64,7 @@ extension Medium {
         case .music:  return String(localized: "medium.music",  defaultValue: "Music")
         case .movie:  return String(localized: "medium.movie",  defaultValue: "Movie")
         case .object: return String(localized: "medium.object", defaultValue: "Object")
+        case .place:  return String(localized: "medium.place",  defaultValue: "Place")
         }
     }
 }

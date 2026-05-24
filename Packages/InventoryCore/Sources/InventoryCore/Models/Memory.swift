@@ -25,6 +25,8 @@ public enum MemoryKind: String, Codable, CaseIterable, Sendable {
     case gifted
     /// An annotation, highlight, or note was added.
     case annotated
+    /// A place was visited.
+    case visited
 }
 
 // MARK: - Supporting Types

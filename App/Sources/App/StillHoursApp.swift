@@ -14,9 +14,6 @@ struct StillHoursApp: App {
 
     init() {
         #if DEBUG
-        if CommandLine.arguments.contains("--reset-onboarding") {
-            UserDefaults.standard.removeObject(forKey: "hasCompletedOnboarding")
-        }
         if CommandLine.arguments.contains("--seed-stress-50") {
             UserDefaults.standard.set(true, forKey: "seedStressDataset")
         }
@@ -52,16 +49,17 @@ struct StillHoursApp: App {
     @MainActor
     private static func makeContainer() -> ModelContainer {
         #if DEBUG
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        // iOS 26: schema CloudKit-compat validation runs at container init
+        // when the entitlement declares iCloud, even with in-memory store.
+        // Explicit .none skips that validation in DEBUG capture/demo runs.
+        let config = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
         #else
         let config = ModelConfiguration(cloudKitDatabase: .none)
         #endif
         // swiftlint:disable:next force_try
         return try! ModelContainer(
-            for: Item.self,
-                 Memory.self,
-                 InventoryCore.Collection.self,
-                 InventoryCore.Attachment.self,
+            for: SchemaV2.schema,
+            migrationPlan: StillHoursMigrationPlan.self,
             configurations: config
         )
     }

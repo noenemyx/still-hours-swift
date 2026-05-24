@@ -1,6 +1,9 @@
 // LibraryListView.swift — App/Views/Library
 // Copyright 2026 sunghun.ahn — Still Hours
 // Sprint 1.5 — LibraryListView + ItemDetailView + MemoryTimelineView
+// Build #9c: Removed isCapturing binding + "+" toolbar button.
+//   Empty state now shows soft "직접 기록하기 →" hint only.
+//   Curation entry lives on Tab 1 (큐레이션 / SearchFirstView).
 // Created: 2026-05-21
 //
 // Root library list grouped by Medium. Embedded in a NavigationStack by parent.
@@ -9,6 +12,7 @@
 
 import SwiftUI
 import SwiftData
+import UIKit
 import InventoryCore
 
 // MARK: - Sort Order
@@ -32,14 +36,10 @@ enum LibrarySortOrder: CaseIterable, Identifiable {
 /// Root library list view.
 ///
 /// Groups all Items by Medium in a scrollable LazyVGrid (2-col iPhone,
-/// 3-col iPad). Provides search, sort, and a toolbar "+" button that
-/// sets `isCapturing` on the parent.
+/// 3-col iPad). Provides search and sort. Curation entry lives on the
+/// dedicated 큐레이션 tab (SearchFirstView).
 @MainActor
 struct LibraryListView: View {
-
-    // MARK: Input
-
-    @Binding var isCapturing: Bool
 
     // MARK: SwiftData
 
@@ -49,6 +49,7 @@ struct LibraryListView: View {
 
     @State private var searchQuery: String = ""
     @State private var sortOrder: LibrarySortOrder = .recent
+    @State private var showManualCapture = false
 
     // MARK: Adaptive grid
 
@@ -89,27 +90,19 @@ struct LibraryListView: View {
                 libraryGrid
             }
         }
-        .navigationTitle(String(localized: "nav.library", defaultValue: "Library"))
+        .navigationTitle(String(localized: "nav.collection", defaultValue: "내 컬렉션"))
         .navigationBarTitleDisplayMode(.large)
         .searchable(
             text: $searchQuery,
             prompt: String(localized: "library.search", defaultValue: "Search library")
         )
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    isCapturing = true
-                } label: {
-                    Image(systemName: "plus")
-                }
-                .accessibilityLabel(
-                    String(localized: "library.empty.cta", defaultValue: "Capture your first item")
-                )
-            }
-
             ToolbarItem(placement: .secondaryAction) {
                 sortMenu
             }
+        }
+        .sheet(isPresented: $showManualCapture) {
+            ManualCaptureSheet()
         }
     }
 
@@ -124,12 +117,13 @@ struct LibraryListView: View {
                 .multilineTextAlignment(.center)
 
             Button {
-                isCapturing = true
+                showManualCapture = true
             } label: {
-                Text(String(localized: "library.empty.cta", defaultValue: "Capture your first item"))
-                    .fontWeight(.semibold)
+                Text(String(localized: "library.empty.manual", defaultValue: "직접 기록하기 →"))
+                    .font(.subheadline)
             }
-            .buttonStyle(.glassProminent)
+            .buttonStyle(.plain)
+            .foregroundStyle(.tint)
             Spacer()
         }
         .padding(.horizontal, FoundationTokens.Space.xl)
@@ -145,6 +139,23 @@ struct LibraryListView: View {
                         ItemCardView(item: item)
                     }
                     .buttonStyle(.plain)
+                    .contextMenu {
+                        if let image = CardRenderView.makeShareableImage(for: item) {
+                            ShareLink(
+                                item: Image(uiImage: image),
+                                preview: SharePreview(
+                                    item.title,
+                                    image: Image(uiImage: image)
+                                )
+                            ) {
+                                Label(
+                                    String(localized: "curation.share.card",
+                                           defaultValue: "카드로 공유"),
+                                    systemImage: "square.and.arrow.up"
+                                )
+                            }
+                        }
+                    }
                 }
             }
             .padding(.horizontal, FoundationTokens.Space.md)
@@ -172,5 +183,16 @@ struct LibraryListView: View {
         } label: {
             Image(systemName: "arrow.up.arrow.down")
         }
+    }
+}
+
+// MARK: - ManualCaptureSheet (local)
+
+@MainActor
+private struct ManualCaptureSheet: View {
+    @Environment(\.modelContext) private var modelContext
+
+    var body: some View {
+        CaptureSheet(library: LibraryService(context: modelContext))
     }
 }

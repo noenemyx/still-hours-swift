@@ -1,9 +1,178 @@
 # PRD — H1+H5 Hybrid: Memory Archive × Slow Curator
 
-> Version 1.0 (zero-base, OYL-독립) | 2026-05-20 | sunghun.ahn
+> Version 1.0 (zero-base, OYL-독립) | 2026-05-20 / Build #9 amendment 2026-05-24 | sunghun.ahn
 >
 > _Ownlifelab / Own Your Life 가족과 무관._ 별도 brand · 별도 페르소나 · 별도 약속.
 > 출발점: 사용자 발화 ("구독 시대 가치 있는 컨텐츠 관리·공유") + BENCHMARK §4 의 H1+H5 hybrid.
+
+---
+
+## §0.-1 Build #8 / #9 Amendment (2026-05-24) — Korea-first, Curation paradigm, 5 medium
+
+본 PRD 의 _§1~§19_ 는 _Still Hours / 4 medium / 자산-입구_ 시대의 결정 history. 아래는 그 위에 _덮어 쓰는_ Build #8/#9 amendment. 충돌 시 본 §0.-1 이 우선.
+
+### Rename: Still Hours → Own Your Curation
+
+- 사용자 결정 2026-05-23. CFBundleDisplayName 변경 (Bundle ID `com.ownlifelab.stillhours` 유지 — 기술 키 변경 X).
+- ASO Subtitle: `책·음반·영화·오브제·장소 큐레이션` → 신규 `취향을 기록하는 개인 아카이브` (C-2 research, 16자).
+- 브랜드 패밀리: OYL / OYB / **OYC** (Own Your Curation).
+- 기존 _Still Hours = 호기심의 진열장_ 메타포는 영구 폐기. 새 메타포 = _큐레이션_ (개인이 _고른_ 것의 기록).
+
+### Market: Korea-first
+
+- 6-panel 자문 (Strategist + Marketing + Financial + Competitive + UX + Cross-cultural, opus, 2026-05-23) 결정.
+- v1.0 = ko 우선, en/ja sub-locale. JP fast-follow (3~6개월). US v1.x 이후 deferred.
+- Paid one-time _보류_, ko 시장은 가격 민감 + 신뢰 부족 — _free for now_ (OYL pattern 차용) → traction 후 paid 복귀 검토.
+
+### Medium 확장: 4 → 5 (장소 추가)
+
+`Medium { book, music, movie, object, place }` — `Item.swift` 적용 완료.
+`MemoryKind { …, visited }` — 방문 행위 추가.
+
+5 medium fixed display order: 책 → 음반 → 영화 → 오브제 → 장소.
+
+| Medium | Search source (Build #9b) | Mock (Build #9a) |
+|---|---|---|
+| book | 네이버 책 / 알라딘 / Open Library / Google Books | MockBookSearchProvider |
+| music | iTunes Search / MusicBrainz / Discogs | MockMusicSearchProvider |
+| movie | KOBIS (KR 전용) / TMDB / OMDb | MockFilmSearchProvider |
+| object | _없음_ — 수동 입력 only (Vision 분류 보조 v1.x) | MockObjectSearchProvider |
+| place | 네이버 지도 / Apple Maps (MapKit) | MockPlaceSearchProvider |
+
+### Paradigm: 자산-입구 → 검색-입구 (Curation)
+
+기존: 카메라/바코드/OCR로 _자산 등록_ → Memory 추가.
+신규: **단일 검색 입력** → 결과 미리보기 → _채택_ → 자동 Item 생성 + Memory 작성 진입.
+
+- "추가" 언어 _전면 폐기_. "**채택**" (adoption) 으로 통일.
+- 4-mode picker (book/music/movie/object) 폐기 — `SearchFirstView.swift` 가 단일 입구.
+- 매뉴얼 입력은 _empty state fallback_ 으로만 노출 (`onManualFallback`).
+- Curation = _내가 고른 것의 기록_. 소유 사실이 아닌 _선택_ 의 기록.
+
+### Build 진행 상황
+
+- **Build #8** (rename + 5 medium) — DONE 2026-05-23. xcstrings/SemanticTokens/switch cascade 모두 적용.
+- **Build #9a** (Mock search + SearchFirstView) — IN PROGRESS. UI + UnifiedSearchService 골격 완료, mock 5종 동작.
+- **Build #9b** (실제 API 연동) — PENDING. 사용자 API key 발급 대기 (네이버 Client ID+Secret, KOBIS cert_key, TMDB v3/v4).
+- **Build #10** (Korea ASO 적용) — PENDING. C-2 research 완료, ASC REST API 적용 대기.
+
+### One-liner 갱신
+
+기존 §0: _자산을 입구로, 기억을 본문으로._
+**신규**: **_검색을 입구로, 채택을 본문으로._** — 큐레이션은 _고른 것_ 의 기록.
+
+### 영구 무효화
+
+본 amendment 적용 시점부터 아래 §은 _historical reference_ 로만 유지:
+- §7.1 4 mode picker UI → SearchFirstView 단일 입구로 대체
+- §10/§12 Still Hours naming/branding → Own Your Curation
+- §18 4 medium accent (T2.3) → 5 medium typed (place 추가)
+- BENCHMARK §3.3 등 4 medium 가정 → 5 medium 재계산은 v1.x
+
+### 공유 카드 path — 1-to-1 의도된 공유 (사용자 결정 2026-05-24)
+
+PRD §1.2 BENCHMARK #4 _"1-to-1 의도된 공유"_ 가 우리 차별 자리 4축 중 하나. UI 실현 path = _카드 형태로 한 명에게 보내고, 받은 사람이 자신의 아카이브에 채택_. 이로써 큐레이션의 _사회적 의미_ 완성.
+
+#### Promise 정합 확인 (모두 통과)
+
+| Promise | 위반 여부 | 근거 |
+|---|---|---|
+| No public feed | ✓ 정합 | 공유 = AirDrop/iMessage 등 _사용자 의도된 1-to-1 send_. 누구도 _브라우징_ 안 함 |
+| No algorithm | ✓ 정합 | 카드 = 사용자가 _선택한_ Item, 알고리즘 추천 X |
+| No advertising | ✓ 정합 | brand mark = 작은 footer footnote, 광고 X |
+| No AI judgment | ✓ 정합 | 카드 내용 = 사용자 작성, AI 평가/요약 X |
+| Data sovereignty | ✓ 정합 | 카드 = device-side render, 서버 송신 0 |
+
+#### 4-phase 진화 path
+
+| Phase | 의미 | 구현 | 작업량 |
+|---|---|---|---|
+| **A. v1.0 카드 이미지 export** | 단일 Item 을 _이미지 카드_로 render → ShareLink (native AirDrop/iMessage/Files). 받는 쪽 _이미지만_, 앱 불요 | SwiftUI `ImageRenderer` + `ShareLink` (iOS 16+) | **2~3h** (Build #9e) |
+| **B. v1.x Universal Link 채택** | 카드에 숨겨진 deeplink → 받는 쪽 앱 있으면 _1탭으로 자신의 아카이브에 채택_. _함께 아카이빙_ 의미 실현 | Universal Link 설정 + receiver flow + externalID-기반 dedup | **6~8h** |
+| **C. v2.0 Collection 공유** | "이번 가을 읽은 책 10권" 같은 _묶음_ 공유. 카드 grid preview | 기존 Collection 모델 (SchemaV1) 활용 + grid render + multi-item universal link | **10~12h** |
+| **D. v3.0 CloudKit 협업 Collection** | 둘 이상이 _같은 Collection 편집_. 진정한 _함께_ 아카이빙 | CKShare API (OYL v3.0 OOL 합병 패턴 차용) | **20h+** |
+
+#### v1.0 (Phase A) 카드 디자인 spec
+
+**비율**: `3:4` (Instagram Story 친화, primary) — 세로형, 위 75% 이미지, 아래 25% 텍스트
+**선택**: `1:1` (square, 채팅 thumbnail 친화) — v1.x
+
+**Layout** (3:4):
+```
+┌─────────────────────────┐
+│                         │
+│      [Cover Image]      │  ← 75% — cover 또는 medium-typed SF Symbol placeholder
+│                         │
+├─────────────────────────┤
+│ Norwegian Wood          │  ← title (semibold body, 1-2 line)
+│ 무라카미 하루키          │  ← creator (regular secondary, 1 line)
+│ 도쿄 츠타야 · 2024.08    │  ← 1-line memory (tertiary, optional)
+│       큐레이션 by OYC   │  ← footer brand mark (caption2, tertiary)
+└─────────────────────────┘
+```
+
+- 모서리 radius 12pt
+- 내부 padding 16pt
+- 색상: SemanticTokens (background, text, accent)
+- brand mark _절대 prominent X_
+
+#### v1.0 (Phase A) UI 통합 (변경 최소)
+
+| 위치 | 변경 |
+|---|---|
+| ItemDetailView toolbar (top-right) | `ShareLink(item: cardImage)` 아이콘 |
+| LibraryListView item context menu (long-press) | "카드로 공유" |
+| AddMemoryView 저장 직후 success surface | 선택지 "친구에게 카드로 보내기" (low-key) |
+| Settings → 데이터 (v1.x) | "공유 받은 카드 → 내 아카이브" history |
+
+신규 view _0개_. 기존 3 view에 share entry 점 + 신규 `CardRenderView` 1개 (이미지 render 전용, 사용자 UI 노출 X).
+
+#### 5 medium 카드 변주 예시 (디자이너 외주용)
+
+| Medium | Title | Creator | 1-line memory |
+|---|---|---|---|
+| 책 | Norwegian Wood | 무라카미 하루키 | 도쿄 츠타야 · 2024.08 |
+| 음반 | In Rainbows | Radiohead | LP 한정판, 첫 곡 15 Step |
+| 영화 | Spirited Away | Hayao Miyazaki | 어머니와 마지막 본 영화 |
+| 오브제 | Leica M6 | Leica Camera AG | 30년 된 카메라, 부친 유품 |
+| 장소 | 도쿄 츠타야 | (없음) | 어머니와 함께, 2024-08 |
+
+각 medium × 2 비율 = **10 mockup** 디자이너 외주 (`docs/design-brief/01-SHARE-CARD.md`).
+
+#### 영구 결정
+
+본 path 의 _v1.0 Phase A_ 는 _Curation paradigm 정체성 완성_ 으로 간주. 출시 첫 날부터 사용자가 _큐레이션을 친구에게 보낼 수_ 있어야 _개인 아카이브_ 가 _큐레이션_으로 의미 전환됨.
+
+---
+
+### 글로벌 확대 path — 구글 API 활용 (사용자 결정 2026-05-24)
+
+KR source (네이버/KOBIS) 는 _한국 안에서만_ 가치. 글로벌 확대 시점에 _커버리지 0_. Google API 활용이 _필수_.
+
+| Phase | Locale | Book 1차 | Movie 1차 | Place 1차 | Music 1차 |
+|---|---|---|---|---|---|
+| **v1.0** | ko-KR | 네이버 책 | KOBIS | 네이버 지도 | iTunes |
+| **v1.x JP** | ja-JP | Rakuten Books (검토) | TMDB ja | Apple Maps ja | iTunes ja |
+| **v2.0 Global** | en/de/fr/es/pt/zh | **Google Books** | TMDB | **Google Places** | iTunes |
+
+#### Architecture 함의 (UnifiedSearchService)
+
+`UnifiedSearchService.search(query:)` 가 locale-aware provider priority 적용:
+- `Locale.current.region == .southKorea` → 네이버/KOBIS priority 100, Google priority 70
+- `region == .japan` → Rakuten/TMDB-ja priority 100
+- 그 외 → Google Books / Google Places priority 100, KR providers priority 0 (skip)
+
+구현 시점: v2.0 (글로벌 출시 직전). v1.0 ~ v1.x 까지는 hardcoded KR + JP fallback 만으로 충분.
+
+#### 비용 모델
+
+- **Google Books**: 무료 (1,000 req/day quota)
+- **Google Places**: $200/월 무료 credit + $0.017/req text search ≈ ~11,700 search/월 무료
+- 글로벌 v2.0 시점 paid 전환 가정 (현 free for now 모델 끝) → quota 비용은 $4.99~$9.99 가격에 흡수 가능
+
+#### v1.0 결정 = 변경 없음
+
+본 글로벌 path 는 _v2.0 strategic intent_ 만 명시. v1.0 ASC 제출 = ko 우선 + 네이버/KOBIS/iTunes/TMDB. 구글 API key 발급 / 코드 구현 모두 _v2.0_ 시점.
 
 ---
 

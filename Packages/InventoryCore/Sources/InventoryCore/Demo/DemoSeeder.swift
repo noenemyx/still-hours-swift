@@ -87,6 +87,7 @@ public final class DemoSeeder {
             + DemoSeederContent.music
             + DemoSeederContent.movies
             + DemoSeederContent.objects
+            + DemoSeederContent.places
 
         for demoItem in allDemoItems {
             let item = Item(

@@ -264,6 +264,16 @@ public enum SemanticTokens {
         public enum object {
             public static var tint: Color { Color.shAccent }
         }
+
+        /// Place medium icon tint (cafe, bookshop, gallery, travel).
+        ///
+        /// Single accent for all medium tints — shape (SF Symbol) is the
+        /// differentiator, not hue. Design-R11 §3.1.
+        ///
+        /// = `Color.shAccent` (`accent.default`).
+        public enum place {
+            public static var tint: Color { Color.shAccent }
+        }
     }
 
     // MARK: - Memory Kind Tint
@@ -317,6 +327,9 @@ public enum SemanticTokens {
 
                 /// Annotation or marginalia added. `"pencil.line"`.
                 public static let annotated = "pencil.line"
+
+                /// Place visited. `"figure.walk"`.
+                public static let visited = "figure.walk"
             }
         }
     }
@@ -409,6 +422,9 @@ public enum SemanticTokens {
 
         /// Physical object / collectible medium. `"cube.fill"`.
         public static let object = "cube.fill"
+
+        /// Place medium — cafe, bookshop, gallery, travel destination. `"mappin.and.ellipse"`.
+        public static let place = "mappin.and.ellipse"
     }
 
     // MARK: - Private Foundation Bridge

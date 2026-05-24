@@ -12,7 +12,7 @@ import Foundation
 /// A single demo item descriptor (data only, no logic).
 struct DemoItem {
     let title: String
-    let creator: String
+    let creator: String?
     let year: Int
     let medium: Medium
     let state: ItemState
@@ -197,6 +197,26 @@ enum DemoSeederContent {
                     kind: .watched,
                     note: "조카에게 보여주다가 내가 더 울었다. 부모님 생각.",
                     daysAgo: 12
+                ),
+            ]
+        ),
+    ]
+
+    // MARK: Places
+
+    static let places: [DemoItem] = [
+        DemoItem(
+            title: "도쿄 츠타야",
+            creator: nil,
+            year: 1983,
+            medium: .place,
+            state: .owned,
+            tags: ["서점", "도쿄", "일본"],
+            memories: [
+                DemoMemory(
+                    kind: .visited,
+                    note: "어머니와 함께. 시즈오카 다녀오는 길에.",
+                    daysAgo: 647
                 ),
             ]
         ),

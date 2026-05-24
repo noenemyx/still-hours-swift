@@ -35,6 +35,7 @@ struct ItemDetailView: View {
 
     @State private var showAddMemory: Bool = false
     @State private var showDeleteConfirmation: Bool = false
+    @State private var shareImage: UIImage? = nil
 
     // MARK: Computed
 
@@ -64,8 +65,22 @@ struct ItemDetailView: View {
                 Button(String(localized: "item.detail.edit", defaultValue: "Edit")) {}
                     .foregroundStyle(Color.shAccent)
             }
+            ToolbarItem(placement: .topBarTrailing) {
+                if let image = shareImage {
+                    ShareLink(
+                        item: Image(uiImage: image),
+                        preview: SharePreview(
+                            item.title,
+                            image: Image(uiImage: image)
+                        )
+                    ) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                }
+            }
         }
         .onAppear {
+            shareImage = CardRenderView.makeShareableImage(for: item)
             AccessibilityNotification.Announcement(item.title).post()
         }
         .sheet(isPresented: $showAddMemory) {
@@ -236,6 +251,7 @@ struct ItemDetailView: View {
         case .music:  return SemanticTokens.mediumIcon.music
         case .movie:  return SemanticTokens.mediumIcon.movie
         case .object: return SemanticTokens.mediumIcon.object
+        case .place:  return SemanticTokens.mediumIcon.place
         }
     }
 }

@@ -151,6 +151,7 @@ extension MemoryKind {
         case .received:  return SemanticTokens.memory.kind.icon.received
         case .gifted:    return SemanticTokens.memory.kind.icon.gifted
         case .annotated: return SemanticTokens.memory.kind.icon.annotated
+        case .visited:   return SemanticTokens.memory.kind.icon.visited
         }
     }
 
@@ -165,6 +166,7 @@ extension MemoryKind {
         case .received:  return "Received"
         case .gifted:    return "Gifted"
         case .annotated: return "Annotated"
+        case .visited:   return "Visited"
         }
     }
 }

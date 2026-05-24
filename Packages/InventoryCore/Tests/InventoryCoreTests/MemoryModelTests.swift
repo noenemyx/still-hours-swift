@@ -17,11 +17,11 @@ struct MemoryModelTests {
         )
     }
 
-    // MARK: - MemoryKind — all 8 cases
+    // MARK: - MemoryKind — all 9 cases
 
-    @Test func memoryKind_allEightCasesPresent() {
+    @Test func memoryKind_allNineCasesPresent() {
         let cases = MemoryKind.allCases
-        #expect(cases.count == 8)
+        #expect(cases.count == 9)
         #expect(cases.contains(.acquired))
         #expect(cases.contains(.read))
         #expect(cases.contains(.listened))
@@ -30,6 +30,7 @@ struct MemoryModelTests {
         #expect(cases.contains(.received))
         #expect(cases.contains(.gifted))
         #expect(cases.contains(.annotated))
+        #expect(cases.contains(.visited))
     }
 
     @Test func memoryKind_rawValues() {

@@ -35,8 +35,9 @@ struct DemoSeederTests {
         try await seeder.seedIfEmpty()
 
         let count = try context.fetchCount(FetchDescriptor<Item>())
-        #expect(count >= 6)
-        #expect(count <= 8)
+        // Build #9d added place demo item (도쿄 츠타야) — count range bumped.
+        #expect(count >= 7)
+        #expect(count <= 10)
     }
 
     /// Calling `seedIfEmpty` when items already exist must be a no-op.

@@ -22,9 +22,7 @@ final class CaptureFlowUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
         app = XCUIApplication()
-        // R11A.2: --reset-onboarding clears hasCompletedOnboarding so onboarding
-        // does not block these tests. StillHoursApp.init() handles this flag.
-        UITestHelpers.launchAppForTesting(app, resetOnboarding: true)
+        UITestHelpers.launchAppForTesting(app)
     }
 
     override func tearDownWithError() throws {

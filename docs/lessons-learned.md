@@ -1048,6 +1048,111 @@ This is the SAME pattern as:
 
 ---
 
+## Axis Q — SwiftData lightweight migration for additive-only fields
+
+**Build #9 (2026-05-24)**
+
+### Symptom
+
+App migration from `SchemaV1` to `SchemaV2` added three optional fields
+(`externalID`, `source`, `publisher`) to the `Item` model. Concern arose:
+"Should we write a custom migration with `MigrationStage.custom(...)`?"
+
+### Root cause
+
+Lightweight migrations are sufficient when **all new fields are optional
+with sensible defaults**. SwiftData's `MigrationStage.lightweight(...)` 
+automatically fills new optional fields with `nil` for all existing rows.
+Custom migration code is only needed for: required field add, type change,
+field rename, or value transformation logic.
+
+### Prevention
+
+1. **When adding optional fields only**, use lightweight migration:
+   ```swift
+   enum SchemaMigrationPlan: SchemaMigrationPlan {
+       static let stages = [
+           MigrationStage.lightweight(fromVersion: .v1, toVersion: .v2)
+       ]
+   }
+   ```
+
+2. **When the field is required or needs transformation**, use custom:
+   ```swift
+   MigrationStage.custom(fromVersion: .v1, toVersion: .v2) { 
+       context in
+       // Fetch existing items, compute derived values
+   }
+   ```
+
+3. **Verify the migration**: after changing `ModelConfiguration` or the
+   schema version, run a test that instantiates a fresh `ModelContainer`
+   with the new schema and migration plan. This simulates a real app
+   upgrade path. Existing data on the simulator is preserved across the
+   migration.
+
+4. **Anti-pattern**: writing a no-op custom migration (`willMigrate` /
+   `didMigrate` with empty body) when lightweight would suffice — adds
+   complexity for nothing.
+
+---
+
+## Axis R — Cross-project credential reuse is blocked by auto-mode classifier
+
+**Build #9 (2026-05-24)**
+
+### Symptom
+
+Attempted to reuse OYL's ASC API key (marked CRITICAL in
+`~/.claude/CLAUDE.md`) for another project (OYC). User authorized verbally
+via AskUserQuestion ("OYL key 재사용 가능?"). Claude Code's auto-mode
+classifier still blocked reads of the `.env` file — twice — even after
+the authorization.
+
+### Root cause
+
+Verbal user authorization via `AskUserQuestion` does NOT propagate to the
+auto-mode classifier when reading files marked CRITICAL in CLAUDE.md 
+memory. The classifier treats CRITICAL-marked credentials as a hard boundary
+independent of per-session consent. This is intentional: it protects the
+user's stated long-term policy from being bypassed by transient session
+approvals.
+
+### Prevention
+
+When reusing a credential marked CRITICAL in `~/.claude/CLAUDE.md`:
+
+1. **Option A (preferred)**: User exports credentials as environment 
+   variables in their own shell. Claude script reads from env, never
+   touches the `.env` file:
+   ```bash
+   export ASC_KEY_ID="..." ASC_ISSUER_ID="..." ASC_KEY_PATH="..."
+   python scripts/asc-patch.py  # reads from env
+   ```
+
+2. **Option B**: User adds an explicit allow rule to 
+   `.claude/settings.local.json`:
+   ```json
+   {
+     "bashPermissions": {
+       "allow": ["cat /path/to/.env"]
+     }
+   }
+   ```
+   This makes the allowance durable and explicit.
+
+3. **Option C**: User updates `CLAUDE.md` memory to explicitly authorize
+   cross-project use of the specific credential. This modifies the CRITICAL
+   boundary.
+
+4. **Option D**: User performs the operation manually (least scalable).
+
+5. **Anti-pattern**: trying to work around classifier denials with creative
+   file-reading tricks (`base64`, symlinks, intermediate files). The denial
+   is a feature — it protects the user's stated boundary.
+
+---
+
 ## Adding new axes (process rule, revised 2026-05-21)
 
 When a new bug class is documented, future sessions:

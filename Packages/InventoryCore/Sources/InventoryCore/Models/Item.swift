@@ -17,6 +17,8 @@ public enum Medium: String, Codable, CaseIterable, Sendable {
     case movie
     /// A physical object or collectible.
     case object
+    /// A place — cafe, bookshop, gallery, travel destination, etc.
+    case place
 }
 
 /// The current ownership / disposition state of an ``Item``.
@@ -98,6 +100,26 @@ public final class Item {
     @Relationship(deleteRule: .cascade, inverse: \Attachment.item)
     public var attachments: [Attachment]
 
+    // MARK: External Identity (SchemaV2)
+
+    /// Stable identifier from the originating source — ISBN, TMDB id,
+    /// Naver productId, etc. `nil` for manually-entered items.
+    ///
+    /// Used as the primary deduplication key in ``CurationAdoptionService``
+    /// when present; falls back to `(medium, title, creator)` otherwise.
+    public var externalID: String?
+
+    /// Raw value of the ``SearchSource`` enum that produced this item
+    /// (e.g. "naverBook", "iTunes", "kobis", "manualEntry").
+    /// `nil` for items entered before SchemaV2.
+    public var source: String?
+
+    /// Publisher, label, or studio associated with this item.
+    ///
+    /// First-class field as of SchemaV2; previously stored as a
+    /// "publisher:<value>" tag hack in ``CurationAdoptionService``.
+    public var publisher: String?
+
     // MARK: Timestamps
 
     /// When this item record was first created.
@@ -117,6 +139,9 @@ public final class Item {
         state: ItemState = .owned,
         tags: [String] = [],
         coverImageData: Data? = nil,
+        externalID: String? = nil,
+        source: String? = nil,
+        publisher: String? = nil,
         createdAt: Date = Date(),
         updatedAt: Date = Date()
     ) {
@@ -128,6 +153,9 @@ public final class Item {
         self.state = state
         self.tags = tags
         self.coverImageData = coverImageData
+        self.externalID = externalID
+        self.source = source
+        self.publisher = publisher
         self.memories = []
         self.collections = []
         self.attachments = []
@@ -142,6 +170,7 @@ public final class Item {
 extension Item: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, title, creator, year, medium, state, tags, createdAt, updatedAt
+        case externalID, source, publisher
     }
 
     public func encode(to encoder: any Encoder) throws {
@@ -153,6 +182,9 @@ extension Item: Encodable {
         try container.encode(medium, forKey: .medium)
         try container.encode(state, forKey: .state)
         try container.encode(tags, forKey: .tags)
+        try container.encodeIfPresent(externalID, forKey: .externalID)
+        try container.encodeIfPresent(source, forKey: .source)
+        try container.encodeIfPresent(publisher, forKey: .publisher)
         try container.encode(createdAt, forKey: .createdAt)
         try container.encode(updatedAt, forKey: .updatedAt)
     }

@@ -160,6 +160,7 @@ struct SettingsRootView: View {
                     )
                 }
 
+                // LINT-IGNORE: Privacy — GitHub Pages user-site host (noenemyx.github.io); live legal docs
                 Link(destination: URL(string: "https://noenemyx.github.io/still-hours-swift/legal/terms-of-service-en.html")!) { // safe: compile-time literal URL
                     Label(
                         String(

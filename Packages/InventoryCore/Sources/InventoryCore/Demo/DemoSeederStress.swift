@@ -58,7 +58,7 @@ public final class DemoSeederStress {
         try context.save()
 
         // Cycle through all four media types evenly.
-        let mediums: [Medium] = [.book, .music, .movie, .object]
+        let mediums: [Medium] = [.book, .music, .movie, .object, .place]
         let states: [ItemState] = [.owned, .owned, .owned, .lent, .digitalOnly]
         let calendar = Calendar(identifier: .gregorian)
         let now = Date()
@@ -114,6 +114,7 @@ public final class DemoSeederStress {
         case .music:  return "Album"
         case .movie:  return "Film"
         case .object: return "Object"
+        case .place:  return "Place"
         }
     }
 
@@ -134,6 +135,8 @@ public final class DemoSeederStress {
             return [.acquired, .watched, .lent, .received, .gifted]
         case .object:
             return [.acquired, .annotated, .lent, .received, .gifted]
+        case .place:
+            return [.visited, .annotated, .acquired]
         }
     }
 }

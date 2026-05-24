@@ -3,7 +3,9 @@
 // Round 7: Root NavigationStack + Tab shell
 // Updated: 2026-05-21 — Sprint 1.5 wires real LibraryListView
 // R9.2: DemoSeeder wired via .task on root TabView (#if DEBUG)
-// R10.3: Onboarding gate — shows OnboardingFlow on first launch
+// Build #9c: Onboarding removed. TabView Option X:
+//   Tab 1 = 큐레이션 (SearchFirstView) — search is root entry
+//   Tab 2 = 내 컬렉션 (LibraryListView) — browse collection
 // Created: 2026-05-21
 
 import SwiftUI
@@ -14,8 +16,7 @@ import InventoryCore
 
 /// Root content view embedded in the WindowGroup.
 ///
-/// Gates first-launch onboarding via `@AppStorage("hasCompletedOnboarding")`.
-/// After onboarding completes, renders the two-tab `TabView` (Library + Settings).
+/// Two-tab shell: 큐레이션 (search-first entry) + 내 컬렉션 (library browse).
 /// iOS 26 applies Liquid Glass to the tab bar automatically.
 @MainActor
 struct ContentView: View {
@@ -24,22 +25,10 @@ struct ContentView: View {
 
     @Environment(\.modelContext) private var modelContext
 
-    // MARK: AppStorage — onboarding gate
-
-    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
-
-    // MARK: Local state
-
-    @State private var isCapturing = false
-
     // MARK: Body
 
     var body: some View {
-        if !hasCompletedOnboarding {
-            OnboardingFlow(onComplete: { hasCompletedOnboarding = true })
-        } else {
-            mainTabView
-        }
+        mainTabView
     }
 
     // MARK: - Main Tab View
@@ -48,15 +37,27 @@ struct ContentView: View {
     private var mainTabView: some View {
         TabView {
             Tab(
-                String(localized: "nav.library", defaultValue: "Library"),
-                systemImage: "books.vertical"
+                String(localized: "nav.curation", defaultValue: "큐레이션"),
+                systemImage: "sparkle.magnifyingglass"
             ) {
                 NavigationStack {
-                    LibraryListView(isCapturing: $isCapturing)
+                    CurationRootView()
                 }
             }
             .accessibilityLabel(
-                String(localized: "nav.library", defaultValue: "Library")
+                String(localized: "nav.curation", defaultValue: "큐레이션")
+            )
+
+            Tab(
+                String(localized: "nav.collection", defaultValue: "내 컬렉션"),
+                systemImage: "books.vertical"
+            ) {
+                NavigationStack {
+                    LibraryListView()
+                }
+            }
+            .accessibilityLabel(
+                String(localized: "nav.collection", defaultValue: "내 컬렉션")
             )
 
             Tab(
@@ -72,9 +73,6 @@ struct ContentView: View {
             )
         }
         .tint(Color.shAccent)
-        .sheet(isPresented: $isCapturing) {
-            CaptureSheetWrapper()
-        }
         #if DEBUG
         .task {
             do {
@@ -92,15 +90,77 @@ struct ContentView: View {
     }
 }
 
-// MARK: - CaptureSheetWrapper
+// MARK: - CurationRootView
 
-/// Wrapper that vends a `CaptureSheet` with a `LibraryService`.
-///
-/// LibraryService is now `@MainActor` (not `actor`) so `ModelContext`
-/// flows in from the SwiftUI environment without crossing isolation —
-/// no `sending` diagnostic. See lessons-learned for the rationale.
+/// Tab 1 root: wraps ``SearchFirstView`` with adopt → AddMemoryView push flow.
 @MainActor
-private struct CaptureSheetWrapper: View {
+private struct CurationRootView: View {
+    @Environment(\.modelContext) private var modelContext
+    @State private var adoptedItem: Item?
+    @State private var showAddMemory = false
+    @State private var adoptError: Error?
+    @State private var showAdoptErrorAlert = false
+    @State private var showManualCapture = false
+    // H1: Lifted to parent so UnifiedSearchService (an actor) is not recreated on each view rebuild.
+    @State private var searchService = UnifiedSearchService()
+
+    var body: some View {
+        SearchFirstView(
+            service: searchService,
+            onAdopt: { result in
+                Task { await adopt(result) }
+            },
+            onManualFallback: {
+                showManualCapture = true
+            }
+        )
+        .navigationTitle(
+            String(localized: "nav.curation", defaultValue: "큐레이션")
+        )
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: $showAddMemory) {
+            if let item = adoptedItem {
+                AddMemoryView(
+                    item: item,
+                    library: LibraryService(context: modelContext),
+                    onSaved: { showAddMemory = false },
+                    onCancel: { showAddMemory = false }
+                )
+            }
+        }
+        .sheet(isPresented: $showManualCapture) {
+            ManualCaptureSheetWrapper()
+        }
+        .alert(
+            String(localized: "curation.adopt.error.title", defaultValue: "저장 실패"),
+            isPresented: $showAdoptErrorAlert,
+            presenting: adoptError
+        ) { _ in
+            Button(String(localized: "curation.adopt.error.dismiss", defaultValue: "확인")) {}
+        } message: { error in
+            Text(error.localizedDescription)
+        }
+    }
+
+    private func adopt(_ result: SearchResult) async {
+        let service = CurationAdoptionService()
+        do {
+            let item = try await service.adopt(result, into: modelContext)
+            adoptedItem = item
+            showAddMemory = true
+        } catch {
+            adoptError = error
+            showAdoptErrorAlert = true
+        }
+    }
+}
+
+// MARK: - ManualCaptureSheetWrapper
+
+/// Fallback: presents the legacy ``CaptureSheet`` (manual entry + barcode + voice)
+/// when the user taps "직접 기록하기" inside ``SearchFirstView``.
+@MainActor
+private struct ManualCaptureSheetWrapper: View {
     @Environment(\.modelContext) private var modelContext
 
     var body: some View {

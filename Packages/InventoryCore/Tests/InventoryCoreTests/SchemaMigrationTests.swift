@@ -57,9 +57,10 @@ struct SchemaMigrationTests {
         #expect(ObjectIdentifier(firstSchema) == ObjectIdentifier(SchemaV1.self))
     }
 
-    @Test func migrationPlan_stagesAreEmptyAtV1Baseline() {
-        // v0.1 baseline: no prior schema to migrate from.
-        #expect(StillHoursMigrationPlan.stages.isEmpty)
+    @Test func migrationPlan_hasV1ToV2LightweightStage() {
+        // Build #9 added SchemaV2 (externalID/source/publisher on Item).
+        // Migration plan now contains 1 lightweight V1→V2 stage.
+        #expect(StillHoursMigrationPlan.stages.count == 1)
     }
 
     // MARK: - V1 → V2 Placeholder (structural guard for future migration)
@@ -72,22 +73,22 @@ struct SchemaMigrationTests {
     // Today the assertions verify v1 baseline remains stable.
     // When SchemaV2 is introduced, extend this test to cover the new stage.
 
-    @Test func migrationPlanV1ToV2_placeholder_schemasCountIsOne() {
-        // Currently 1 schema. Increment to 2 when SchemaV2 is introduced.
-        #expect(StillHoursMigrationPlan.schemas.count == 1)
+    @Test func migrationPlanV1ToV2_schemasCountIsTwo() {
+        // SchemaV2 introduced in Build #9b: plan now has SchemaV1 + SchemaV2.
+        #expect(StillHoursMigrationPlan.schemas.count == 2)
     }
 
-    @Test func migrationPlanV1ToV2_placeholder_stagesCountIsZero() {
-        // Currently 0 stages. Increment to 1 when v1→v2 stage is added.
-        #expect(StillHoursMigrationPlan.stages.count == 0)
+    @Test func migrationPlanV1ToV2_stagesCountIsOne() {
+        // Build #9b: one lightweight stage (v1 → v2).
+        #expect(StillHoursMigrationPlan.stages.count == 1)
     }
 
     // MARK: - In-Memory Container Bootstraps with V1 Schema
 
     @MainActor
-    @Test func schemaV1_inMemoryContainerBootstraps() throws {
+    @Test func schemaV2_inMemoryContainerBootstraps() throws {
         let container = try ModelContainer(
-            for: SchemaV1.schema,
+            for: SchemaV2.schema,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
         // If we reach here, the schema is valid and the container launched.
@@ -98,10 +99,10 @@ struct SchemaMigrationTests {
     }
 
     @MainActor
-    @Test func schemaV1_containerWithMigrationPlanBootstraps() throws {
+    @Test func schemaV2_containerWithMigrationPlanBootstraps() throws {
         // Verify that wiring the migration plan into ModelContainer works.
         let container = try ModelContainer(
-            for: SchemaV1.schema,
+            for: SchemaV2.schema,
             migrationPlan: StillHoursMigrationPlan.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )

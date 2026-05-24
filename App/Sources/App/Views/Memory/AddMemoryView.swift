@@ -11,6 +11,7 @@
 
 import SwiftUI
 import PhotosUI
+import UIKit
 import InventoryCore
 
 // MARK: - AddMemoryView
@@ -48,6 +49,7 @@ struct AddMemoryView: View {
     @State private var isSaving: Bool = false
     @State private var showErrorAlert: Bool = false
     @State private var errorMessage: String = ""
+    @State private var savedShareImage: UIImage? = nil
 
     // MARK: Environment
 
@@ -73,6 +75,7 @@ struct AddMemoryView: View {
         case .music:  defaultKind = .listened
         case .movie:  defaultKind = .watched
         case .object: defaultKind = .acquired
+        case .place:  defaultKind = .visited
         }
         _selectedKind = State(initialValue: defaultKind)
     }
@@ -99,6 +102,21 @@ struct AddMemoryView: View {
                         action: onCancel
                     )
                     .foregroundStyle(SemanticTokens.cta.secondary.text)
+                }
+
+                ToolbarItem(placement: .topBarLeading) {
+                    if let image = savedShareImage {
+                        ShareLink(
+                            item: Image(uiImage: image),
+                            preview: SharePreview(
+                                item.title,
+                                image: Image(uiImage: image)
+                            )
+                        ) {
+                            Image(systemName: "square.and.arrow.up")
+                                .foregroundStyle(Color.shTextSecondary)
+                        }
+                    }
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
@@ -299,6 +317,7 @@ struct AddMemoryView: View {
 
         do {
             try await library.attachMemory(memory, to: item)
+            savedShareImage = CardRenderView.makeShareableImage(for: item)
             onSaved()
         } catch {
             errorMessage = error.localizedDescription
@@ -327,6 +346,7 @@ struct AddMemoryView: View {
         case .received:  return String(localized: "memory.kind.received",  defaultValue: "Received")
         case .gifted:    return String(localized: "memory.kind.gifted",    defaultValue: "Gifted")
         case .annotated: return String(localized: "memory.kind.annotated", defaultValue: "Annotated")
+        case .visited:   return String(localized: "memory.kind.visited",   defaultValue: "Visited")
         }
     }
 }

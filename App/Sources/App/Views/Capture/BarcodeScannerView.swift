@@ -291,7 +291,19 @@ final class BarcodeSessionCoordinator: NSObject, AVCaptureMetadataOutputObjectsD
         guard session.canAddOutput(metadataOutput) else { return }
         session.addOutput(metadataOutput)
         metadataOutput.setMetadataObjectsDelegate(self, queue: .main)
+        // EAN-13 = primary ISBN format. UPC-A is automatically reported by
+        // AVFoundation as EAN-13 with a leading 0 — already covered.
         metadataOutput.metadataObjectTypes = [.ean13, .ean8, .upce]
+    }
+
+    /// Re-arm the scanner after a failed lookup, allowing another attempt
+    /// without dismissing the sheet or switching modes.
+    func resumeScanning() {
+        hasRecognized = false
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self else { return }
+            if !self.session.isRunning { self.session.startRunning() }
+        }
     }
 
     // MARK: AVCaptureMetadataOutputObjectsDelegate

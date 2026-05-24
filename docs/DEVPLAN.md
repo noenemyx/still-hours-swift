@@ -1,9 +1,160 @@
 # Development Plan — H1+H5 Hybrid: Memory Archive × Slow Curator
 
-> Version 1.0 (zero-base, OYL-독립) | 2026-05-20 | sunghun.ahn
+> Version 1.0 (zero-base, OYL-독립) | 2026-05-20 / Build #9 amendment 2026-05-24 | sunghun.ahn
 >
 > _PRD.md 와 함께 읽을 것._ PRD 가 _무엇을 / 왜_, 본 문서가 _어떻게 / 언제 / 얼마나_.
 > _Ownlifelab / OYL 코드 자산 차용 X._ 본 프로젝트는 _독립_ codebase.
+
+---
+
+## §0.-1 Build #8 / #9 Amendment (2026-05-24) — Curation 전환 구현 로드맵
+
+PRD §0.-1 의 결정 (rename / Korea-first / 5 medium / search-first) 을 코드로 옮기는 구현 계획. 본 §은 §1~§13 의 _Still Hours / 4 medium_ 시대 일정을 _덮어 씀_. 충돌 시 본 §0.-1 이 우선.
+
+### Build #8 (DONE 2026-05-23) — Rename + 5 medium 스캐폴딩
+
+| 작업 | 파일 | 상태 |
+|---|---|---|
+| Medium enum 5번째 추가 | `Item.swift` | ✓ `case place` |
+| MemoryKind 9번째 추가 | `Memory.swift` | ✓ `case visited` |
+| SemanticTokens 5번째 medium tint + icon | `SemanticTokens.swift` | ✓ `medium.place.tint`, `mediumIcon.place = "mappin.and.ellipse"`, `memory.kind.icon.visited = "figure.walk"` |
+| Switch cascade 보강 (모든 medium 분기) | 12 view files | ✓ ManualCaptureView, MediumBadgeView, AddMemoryView, ItemCardView, CapturePreviewView, ItemDetailView, DemoSeederStress, MemoryKindChipView, MemoryRowView |
+| Localizable 키 추가 | `Localizable.xcstrings` | ✓ `medium.place` (ko/en/ja), `memory.kind.visited` (ko/en/ja) |
+| Bundle display name | `project.yml` | ✓ `CFBundleDisplayName: Own Your Curation`, version "8" |
+| ASO 문서 v1.0 | `docs/ASO-Metadata-OwnYourCuration.md` | ✓ 작성 완료 |
+
+### Build #9a (IN PROGRESS) — Search-first UI + Mock providers
+
+| 작업 | 파일 | 상태 |
+|---|---|---|
+| UnifiedSearch 골격 | `Packages/InventoryCore/Sources/InventoryCore/Search/UnifiedSearch.swift` | ✓ `SearchResult`, `SearchSource`, `SearchProvider`, `UnifiedSearchService` actor, 5 Mock providers |
+| SearchFirstView UI | `App/Sources/App/Views/Curation/SearchFirstView.swift` | ✓ 단일 입력 + 300ms debounce + sectioned results + empty state + manual fallback |
+| SearchResultCard | 동일 파일 | ✓ cover placeholder + onAdopt 콜백 |
+| 채택 → Item 자동 생성 어댑터 | `CurationAdoptionService.swift` (TBD) | PENDING |
+| `RootView` / Navigation 정합 — 신규 입구 배선 | `RootView.swift` 등 | PENDING |
+| iPhone/iPad 시뮬레이터 build & verify | xcodebuild | PENDING |
+
+### Build #9b (PENDING) — 실제 API 연동
+
+사용자 KR API key 발급 대기. 키 도착 시 Mock provider 교체:
+
+| Medium | 1차 provider | Fallback | API key 필요 |
+|---|---|---|---|
+| book | `NaverBookSearchProvider` (한국 도서 ISBN/제목/저자) | OpenLibrary, GoogleBooks | 네이버 Client ID + Secret |
+| music | `iTunesSearchProvider` (한국 K-pop 강함) | MusicBrainz, Discogs | _없음_ (open) |
+| movie | `KOBISSearchProvider` (한국 영화 박스오피스/메타) | TMDB, OMDb | KOBIS cert_key, TMDB v3/v4 |
+| object | _없음_ (수동) | Vision 분류 v1.x | _없음_ |
+| place | `NaverPlaceSearchProvider` (한국 지명) | MapKit appleMaps | 네이버 Client ID + Secret (book과 공유 가능) |
+
+작업: provider 5개 구현 (각 ~50줄, allowlist 적용), `UnifiedSearchService.init(providers:)` 주입, network 안정성 (retry, timeout, off-network fallback). 예상 8h.
+
+### Build #10 (PENDING) — Korea ASO 적용 (C-2 research 결과)
+
+ASO doc `§2` 의 ko locale 필드 ASC REST API 로 적용:
+
+- Subtitle (ko): `취향을 기록하는 개인 아카이브` (16자, 30자 한도)
+- Keywords (ko): `큐레이션,아카이브,취향,소장품,수집,오브제,장소,책방,음반,LP,영화,갤러리,다이어리,메모,저널,여행,노트,일회구매` (88자, 100자 한도) — 기존 `컬렉션`/`기록앱` 제거, 9개 신규 추가
+- Description (ko): Searcher-first hook 으로 첫 단락 교체
+
+작업: ASC API 키로 PATCH /v1/appStoreVersionLocalizations. 예상 30분 (사용자 승인 후 실행).
+
+### 일정 (Build #9 amendment 기준)
+
+| Phase | 범위 | 예상 | 의존 |
+|---|---|---|---|
+| Build #9a 완료 | adoption adapter + nav 배선 + verify | 4h | _없음_ |
+| Build #9b | 실제 5 provider 구현 + 통합 테스트 | 8h | KR API keys |
+| Build #10 | Korea ASO 적용 | 0.5h | 사용자 승인 |
+| ASC submit (Korea-first v1.0) | binary + metadata + screenshots | 6h | Build #9b + #10 |
+
+총 ~18h. 사용자 API key 발급 + ASC 승인 외 blocker 없음.
+
+### 영구 무효화 (DEVPLAN 기준)
+
+본 amendment 이후 아래는 _historical reference_ 로만 유지:
+- §3.1 4 medium MVP 작업 분해 → 5 medium 재계산은 §0.-1 표 참조
+- §13.4 4 medium scope 권고 → 5 medium 확정 (place 자산 카테고리 + place provider)
+- Naming/branding _Still Hours_ 관련 모든 entry → Own Your Curation
+
+### Build #9e — 공유 카드 v1.0 (Phase A) 구현 메모
+
+PRD §0.-1 _공유 카드 path_ 결정 (사용자 2026-05-24) Phase A 구현. v1.0 출시 전 ship.
+
+| 작업 | 파일 (예정) | 의존 |
+|---|---|---|
+| `CardRenderView` 신규 | `App/Sources/App/Views/Sharing/CardRenderView.swift` | _없음_ |
+| `makeShareableImage(for:)` 헬퍼 | 동일 파일 | iOS 16+ `ImageRenderer` |
+| ItemDetailView toolbar ShareLink | `App/Sources/App/Views/Library/ItemDetailView.swift` | CardRenderView |
+| LibraryListView context menu "카드로 공유" | `App/Sources/App/Views/Library/LibraryListView.swift` | CardRenderView |
+| AddMemoryView 저장 후 share CTA | `App/Sources/App/Views/Memory/AddMemoryView.swift` | CardRenderView |
+| Localization 3 키 | `App/Resources/Localizable.xcstrings` | _없음_ |
+
+작업 분량: **2~3h**. 신규 view 0개 (CardRenderView는 render-only, 화면 노출 X).
+
+#### Phase B/C/D 일정 (v1.x ~ v3.0)
+
+- **Phase B (v1.x)**: Universal Link 받기 흐름. associated domains 설정 + receiver flow + externalID-based dedup. 6~8h.
+- **Phase C (v2.0)**: Collection 공유 (묶음). 기존 Collection 모델 활용 + grid render. 10~12h.
+- **Phase D (v3.0)**: CloudKit 협업 Collection. CKShare API. OYL OOL 합병 패턴 차용. 20h+.
+
+#### 디자이너 외주 (`docs/design-brief/`)
+
+본 cycle 에서 동시 진행 = Claude Design 외주용 brief 5 파일 export:
+- `00-CONTEXT.md` (project context)
+- `01-SHARE-CARD.md` (5 medium × 2 ratio = 10 mockup)
+- `02-APP-ICON-FINAL.md` (v3 brief finalize)
+- `03-MEDIUM-ICONS.md` (SF Symbol final selection)
+- `04-BRAND-SUMMARY.md` (palette/typography/spacing reference)
+
+디자이너 결과물 (mockup) 도착 후 코드의 CardRenderView 가 mockup 비율/색상에 맞게 미세조정.
+
+---
+
+### Build #11+ — 글로벌 확대 (v2.0) 구현 메모
+
+PRD §0.-1 _글로벌 확대 path_ 결정 (사용자 2026-05-24) 의 코드 구현 노트. v2.0 시점 작업.
+
+| 작업 | 파일 (예정) | 의존 |
+|---|---|---|
+| `GoogleBooksSearchProvider` | `Packages/InventoryCore/Sources/InventoryCore/Search/Providers/GoogleBooksSearchProvider.swift` | Google Books API key (사용자 발급) |
+| `GooglePlacesSearchProvider` | 동일 dir | Google Places API key + billing (월 $200 credit) |
+| `RakutenBooksSearchProvider` (검토) | 동일 dir | Rakuten Application ID |
+| `UnifiedSearchService` locale-aware priority | 기존 actor | `Locale.current.region` 분기 |
+| Provider priority enum 확장 | `SearchSource.priority` | 현재 hardcoded → locale-aware computed property |
+| API key 관리 | `Packages/InventoryCore/Sources/InventoryCore/Search/SearchAPIKeys.swift` (신규) | Keychain 저장 (사용자 디바이스 only, server 송신 0) |
+
+#### Locale-aware priority 설계
+
+현재: `SearchSource.priority` = 정적 Int (`100`/`90`/`80`/...)
+v2.0: `func priority(for region: Locale.Region) -> Int` 으로 전환.
+
+```swift
+extension SearchSource {
+    func priority(for region: Locale.Region?) -> Int {
+        switch (self, region) {
+        case (.naverBook, .southKorea), (.kobis, .southKorea), (.naverPlace, .southKorea):
+            return 100
+        case (.googleBooks, _) where region != .southKorea && region != .japan:
+            return 100  // global default
+        case (.googlePlaces, _) where region != .southKorea && region != .japan:
+            return 100
+        // ... etc
+        }
+    }
+}
+```
+
+`UnifiedSearchService.search()` 가 dedup/rank 시점에 `Locale.current.region` 으로 priority 평가.
+
+#### v2.0 비용 가정
+
+- Google Books: 무료 (1k req/day quota)
+- Google Places: $200/월 credit 안 (≈11,700 search) → 사용자 평균 30 search/일 가정 시 ~900 search/월 → 무료 안 안전
+- 비용 발생 시점은 _글로벌 출시 + DAU 1k 이상_ → 그 시점 paid 가격 전환과 묶어 처리
+
+#### v1.0 ~ v1.x 범위
+
+본 §은 _strategic intent only_. v1.0 ASC 제출 = 네이버/KOBIS/iTunes/TMDB. Google API 구현은 _v2.0 별도 cycle_.
 
 ---
 

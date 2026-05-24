@@ -1,169 +1,141 @@
-# Still Hours
+# Own Your Curation
 
-> iOS 26 + iPadOS 26 native collection app. _Item-as-memory-anchor × multi-medium typed (Book/Music/Movie/Object) × intimate 1-to-1 share × Slow curator_. Paid one-time **$14.99**.
+> iOS 26 + iPadOS 26 native curation app. _Search-first × 5-medium typed (Book/Music/Movie/Object/**Place**) × 1-to-1 share-card × Slow curator_.
 >
-> 자산을 입구로, 기억을 본문으로.
+> Korea-first launch (v1.0 free-for-now, paid post-traction). JP fast-follow. Global v2.0.
+>
+> **검색을 입구로, 채택을 본문으로.**
 
 ---
 
 ## What is this
 
-Still Hours is a collection management app where each item (book, album, film, object) becomes the entry point for the memories attached to it. Day One organizes by date entries; Still Hours organizes by items and lets memories accumulate underneath each one.
+Own Your Curation is a 5-medium personal archive where you **search → adopt → curate**. Not _what you own_ — _what you've chosen to keep close_.
 
-**Naming history**: 25 candidates were validated before adopting Still Hours (2026-05-20). Rejected (in order): Curio (App Store collision), Vaulta (EOS Network rebrand), Constella (AbbVie pharma), Curium (Curium Pharma SEO), Luminae, Aevum, Kuria, Reliqua, Own Collection, Own Your Collection, Ownbox, Otium, Own Gem, Your Magnet, Heartlink, Your Journey, Tidemark, Cairn, Reliquary, Sumi, Mura, Lumo, Slow Shelf, Still Yours, Still Times. See `docs/PRD.md §19 + §21` for the full naming history and 25-candidate validation table.
+Search a book by title or ISBN, an album by artist, a film, a cafe; adopt the result; attach a memory (date, who you were with, a line worth remembering). Share a single item as a 3:4 card to one friend (no public feed, ever). Receive a card from a friend → adopt into your own archive.
 
-**Still Hours** — dual meaning: _stillness (고요)_ + _still continuing (여전히)_, anchored to the smallest time unit that belongs to you.
+Five mediums: **책 / 음반 / 영화 / 오브제 / 장소**.
 
----
-
-## Status
-
-- **Pre-flight stage** (2026-05-20)
-- Repo: `noenemyx/still-hours-swift` (private)
-- Bundle ID: `com.ownlifelab.stillhours` (TBD by user — Apple Developer Console)
-- Launch target: iOS 26 + iPadOS 26 only (Liquid Glass full, SwiftUI 26 APIs)
-- Mac native: v2.0 (post-launch month 7-12)
+**Naming history**: 25 candidates validated before Still Hours (2026-05-20). Renamed to **Own Your Curation** (2026-05-23) as the paradigm shifted from _asset entry_ to _curation_. Bundle ID `com.ownlifelab.stillhours` preserved (technical key unchanged; display name only). Trademark 4-panel verdict 2026-05-23: SAFE to use. See `docs/PRD.md §0.-1` for full Build #8/#9 amendment + naming history.
 
 ---
 
-## Identity (4 axes)
+## Status (2026-05-24)
 
-1. **Item-as-memory-anchor** — items are the entry, memories are the body (Day One inverse)
-2. **Multi-medium typed × work/manifestation** — books, music, films, physical objects in one data model (Discogs work/release pattern, multi-domain)
-3. **1-to-1 intimate share** — CloudKit CKShare, no public profile
-4. **Apple-native iOS 26 first** — Liquid Glass design language, SwiftUI 26 APIs
+- **Pre-launch** — Apple Developer 가입 승인 대기
+- Repo: `noenemyx/curium-swift` (private). Display name: Own Your Curation. Bundle ID: `com.ownlifelab.stillhours`. Team ID: `89J24XNYL3`
+- Launch target: iOS 26 + iPadOS 26 (Liquid Glass full, SwiftUI 26 APIs)
+- Market: Korea-first v1.0. JP fast-follow (3~6m). Global v2.0.
+- Build #9 cycle: paradigm shift complete. Search-first UI live. 5 medium model. SchemaV2 lightweight migration. Mock providers + iTunesSearchProvider live; Naver/KOBIS/TMDB providers pending user-provided API keys.
 
 ---
 
-## Promise (default reserve)
+## Identity (Curation paradigm)
 
-1. No algorithm — sort by explicit user choice only
-2. No feed — no public stream
-3. No advertising / no data sale — including no Apple Search Ads, no external ad channels
-4. No AI judgment — AI assist only for OCR/image recognition
-5. **No subscription IAP** — code-enforced via lint (the one Promise made non-negotiable in code)
+1. **Search-first single entry** — typing > tap chains. SearchFirstView is the root of tab 1
+2. **Adopt, not add** — "채택" replaces "추가". Source-attributed Items (externalID + source) dedup across re-curations
+3. **5 medium typed × work/manifestation** — books / music / films / objects / places in one data model
+4. **1-to-1 intimate share-card** — ShareLink + 3:4 rendered image. v1.x adds Universal Link receive → adopt into receiver archive
+5. **Apple-native iOS 26 first** — Liquid Glass, SwiftUI 26, SF Symbols 7, no fastlane
 
-Plus Data Sovereignty: CloudKit Private DB only, plaintext JSON/CSV/PDF export always available.
+---
+
+## Promise (5조항, 영구)
+
+1. **No algorithm** — sort by explicit user choice only
+2. **No public feed** — share is 1-to-1 (AirDrop/iMessage/Files), never browsable
+3. **No advertising / no data sale** — including no Apple Search Ads
+4. **No AI judgment** — AI only for OCR / image classification, never evaluation
+5. **No subscription IAP** — lint-enforced in code
+
+Data sovereignty: CloudKit Private DB only (opt-in v1.1); export anytime as JSON / CSV / PDF.
+
+---
+
+## Architecture
+
+```
+TabView root (3 tabs)
+├── Tab 1 — 큐레이션  → CurationRootView → SearchFirstView (search → adopt)
+├── Tab 2 — 내 컬렉션 → LibraryListView → ItemDetailView (curated items)
+└── Tab 3 — 설정      → SettingsRootView
+```
+
+**Search aggregation** (`InventoryCore/Search/`):
+- `UnifiedSearchService` actor — parallel TaskGroup over registered `SearchProvider`s, per-medium dedupe + rank
+- Build #9a: 5 mock providers + Build #9b: iTunesSearchProvider (live, no key)
+- Pending: NaverBookSearchProvider, NaverPlaceSearchProvider, KOBISSearchProvider, TMDBSearchProvider (Build #9b)
+
+**Adoption** (`InventoryCore/Curation/CurationAdoptionService.swift`):
+- `SearchResult` → `Item` with externalID-based dedup (predicate-scoped fetch, fetchLimit 1)
+- Fallback dedup on `(medium, title, creator)` for results without externalID
+
+**Share card** (`App/Views/Sharing/CardRenderView.swift`):
+- SwiftUI `ImageRenderer` → 3:4 PNG (300×400pt @ 3x)
+- ShareLink at 3 entry points: ItemDetailView toolbar, LibraryListView context menu, AddMemoryView post-save CTA
+
+**Data**:
+- SchemaV2 (`Models/SchemaV2.swift`) — added `externalID: String?`, `source: String?`, `publisher: String?` to Item
+- Lightweight migration from SchemaV1 (additive optional fields, lossless)
+- SwiftData + CloudKit Private DB (release) / in-memory (DEBUG)
 
 ---
 
 ## Documents (`docs/`)
 
-| File | Lines | Description |
-|------|-------|-------------|
-| `PRD.md` | ~1280 | Product Requirements — niche, persona, JTBD, hero moments, user stories, data model, modules, pricing, naming history (§19 Curio→Curium, §21 Curium→Still Hours + 25-candidate table) |
-| `GOVERNANCE.md` | ~95 | Decision authority — advisory vs user role + Critical Tier 1/2 + Decision flow + violation history |
-| `DEVPLAN.md` | ~1360 | Development Plan — tech stack, architecture, MVP definition (Tracer Bullet), milestones, risk register, release strategy, burnout protection, ASO Implementation (§16), naming change history (§17) |
-| `BENCHMARK.md` | ~440 | Market benchmark — 22 apps × 9 categories, 5 product hypotheses, niche definition |
-| `ADVISORY.md` | ~235 | 6-panel advisory synthesis (Marketing / Strategy / UX / UI / Design / Engineer) |
-| `Design.md` | ~970 | Design system living document — Sunsama + Things 3 + benchmark + Claude Design collaboration + ASO Visual Strategy |
-
----
-
-## ASO Optimization (continuous practice)
-
-ASO is treated as a _continuous practice from development stage_, not a launch-only activity. See `PRD.md §20` / `DEVPLAN.md §16` / `Design.md §16` for full strategy.
-
-Monthly ASO ritual = 매월 1일 1시간 (advisory ritual과 분리):
-- Keyword ranking 30분 + Competitor scan 20분 + Review analysis 10분
-
-ASO Quit signal (6개월 시점):
-- 3-month rolling rating < 4.0 _AND_ paid downloads < 100 _AND_ 30-day refund > 8% _AND_ DAU/MAU < 15% — 4개 중 3개 이상 동시 충족 시 제품 재검토
-
----
-
-## Pre-flight Week 1-3 (36h checklist)
-
-Tracer Bullet sequence (`Book full → Music full → Movie basic → Object basic`) starts after Pre-flight gate clears all items.
-
-**Status as of 2026-05-21** — through Tracer Bullet sprints 1.1-1.8 / commit `1ab295d`:
-
-### Agent-doable (auto-completable) — all done ✓
-
-- [x] Liquid Glass material reference study (WWDC 2025) → `docs/LiquidGlass-Notes.md`
-- [x] Foundation tokens v1.0 (Color 10 + Type 8 + Space 6 + Radius 4 + Shadow 2 + Motion 4) → R1 `4ee9652`
-- [x] Semantic tokens v1.0 → R2 `04919f9`
-- [x] Component tokens v1.0 (ItemCard / MemoryRow / CollectionCover / MediumBadge) → R2 `04919f9`
-- [x] Memory Timeline visual signature design pass → `docs/MemoryTimeline-Design.md` (R1)
-- [x] WCAG AA contrast verification chart → `docs/WCAG-Contrast-Verification.md` (R3: Light 0 Fail / Dark 0 Fail)
-- [x] Settings → "Still Hours is" surface copy (ko/en draft) → `docs/Settings-Surface-Copy.md` (R1)
-- [x] App Store metadata 8-locale 1차 draft (Wave 1 ko/en/ja 우선) → `docs/ASO-Metadata-Wave1.md` (R4 — 665 lines, 15 deliverables verified)
-- [x] Promise lint scripts (Privacy + Data Sovereignty + No subscription IAP — 3 lint baseline) → `scripts/check-*.sh`, all 3 PASS (R3/R4)
-- [x] SwiftData v1 schema — Item / Memory / Collection / Attachment + VersionedSchema → R3 `8344a9c`
-- [x] InventoryCore services (Library / Export / Capture / Timeline / ServiceError) → R4 `f15da22`
-- [x] InventoryCore unit tests (Swift Testing, 71 @Test functions, all PASS) → R4 `f15da22`
-- [x] CaptureFlow UI design spec → `docs/CaptureFlow-Design.md` (R4 — 719 lines)
-- [x] Onboarding 3-step design spec → `docs/Onboarding-3step-Design.md` (R3)
-- [x] xcodegen project.yml + iOS 26.0 deployment target → R3 `8344a9c`
-- [x] `xcodebuild iOS 26.4 simulator` clean build verified → R4 `f15da22`
-- [x] CaptureSheet + Manual mode + state machine (Sprint 1.1) → R6 `fb21a15`
-- [x] BookMetadataLookup actor + 9 serialized tests (Sprint 1.2) → R6 `fb21a15`
-- [x] BarcodeCaptureView + AVCaptureSession (Sprint 1.3) → R7 `8400374`
-- [x] VoiceMemoCaptureView + SFSpeechRecognizer (Sprint 1.4) → R7 `8400374`
-- [x] LibraryListView + ItemDetailView + MemoryTimelineView (Sprint 1.5) → R7 `8400374`
-- [x] AddMemoryView + 22 i18n keys (Sprint 1.6) → R8 `11ab06b`
-- [x] DemoSeeder + 8 curated demo items (Sprint 1.7) → R8 `11ab06b`
-- [x] UI smoke tests (Sprint 1.8) → R8 `11ab06b`
-- [x] SF Symbol audit + check-sfsymbols.sh → R8 `11ab06b`
-- [x] Brand tone fix (AccentColor wiring) + DemoSeeder wire + screenshot automation → R9 `eb9ee24`
-- [x] i18n locale resolution + iCloud auth gate + Onboarding 3-step → R10 `1ab295d`
-- [x] i18n audit report → `docs/i18n-audit-report.md` (R10) — 124+ keys × 3 locales (ko/en/ja)
-- [x] Lessons Learned 13 axes (A-M) → `docs/lessons-learned.md` (R5-R10)
-
-### Deferred pending user input
-
-- [ ] App icon v1.0 draft (Wunderkammer cabinet + Liquid Glass layered) — _Deferred_ by user 2026-05-20 pending Apple Design Resources Figma study. Two concept directions drafted in `docs/AppIcon-v1-Concept.md` (Wunderkammer vs Light on Paper). Advisor recommendation: B (Light on Paper) — final decision after Figma.
-
-### User-direct actions (no agent path)
-
-- [x] Trademark search (KIPRIS + USPTO Class 9 + EUIPO + App Store dupes) for "Still Hours" — 7-axis pre-check done (no critical collision; descriptive-risk 50/50 mitigated by Liquid Glass app-icon + UI distinctiveness). Final formal 변리사 opinion: **사용자 결정으로 진행하지 않음 (2026-05-21)**. Risk accepted: USPTO refusal possible at registration; pivot to common-law / state TM if needed.
-- [x] Apple Design Resources iOS 26 Figma — DONE (user confirmed 2026-05-21)
-- [x] SF Symbols 7 macOS app — DONE (user confirmed 2026-05-21)
-- [x] Bundle ID `com.ownlifelab.stillhours` — **등록 완료 2026-05-21** via ASC API. Resource ID `GFG86L5VY4`, iCloud/CloudKit capability 활성화. Team ID `89J24XNYL3` (Configs/Debug.xcconfig + Release.xcconfig에 주입됨).
-- [ ] CloudKit Container `iCloud.com.ownlifelab.stillhours` — Apple Developer Console에서 수동 생성 (ASC API는 container 생성을 expose 하지 않음)
+| File | Purpose |
+|------|---------|
+| `PRD.md` | Product Requirements. **§0.-1 Build #8/#9 amendment** = current source of truth (rename, 5 medium, search-first, share-card path, global Google API path). Original §1~§19 = historical Still Hours decisions |
+| `DEVPLAN.md` | Development Plan. **§0.-1** = Build #8 DONE / #9a-#9e DONE / #9f in progress / #9b pending KR keys / #10 ASO / #11+ Google API |
+| `ASO-Metadata-OwnYourCuration.md` | App Store metadata 3 locale. **§2.5** = C-2 Korea ASO research revision (paste-ready) |
+| `design-brief/` | Claude Design 외주 brief (5 파일: context / share-card / app-icon / medium-icons / brand-summary) |
+| `lessons-learned.md` | Project-local lessons (axis A-R). Axis Q (SwiftData lightweight migration) + R (cross-project credential boundary) added Build #9 |
+| `BENCHMARK.md` / `GOVERNANCE.md` / `Design.MD` | Original strategy + governance + design system |
 
 ---
 
 ## Build
 
 ```bash
-xcodegen generate                    # Generate StillHours.xcodeproj from project.yml
-swift test --package-path Packages/InventoryCore  # SPM unit tests (71 PASS)
-bash scripts/test.sh                 # All 3 lints + SPM tests + xcodebuild (single entry)
-bash scripts/test.sh --lint-only     # 3 Promise lints only (~1s)
-bash scripts/test.sh --build-only    # SPM test + xcodebuild only
+xcodegen generate
+swift test --package-path Packages/InventoryCore
+bash scripts/test.sh                 # lints + SPM + xcodebuild
 
 xcodebuild -project StillHours.xcodeproj -scheme StillHours \
-  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
-  -configuration Debug build         # Direct xcodebuild
+  -configuration Debug -sdk iphonesimulator \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build
 ```
 
-**Toolchain pinned** (verified 2026-05-21): Xcode 26.4 / Swift 6.3 / xcodegen 2.45.4 / iOS 26.4 simulator runtime.
+**Toolchain pinned** (2026-05-24): Xcode 26.4 / Swift 6.3 / xcodegen 2.45.4 / iOS 26.4 simulator.
 
 ---
 
-## Current Status (as of `1ab295d`)
+## Current Status (Build #9 cycle, 2026-05-24)
 
-**Tests / Lints**
+**Tests / Lints**: `swift test` all PASS · `xcodebuild` BUILD SUCCEEDED (iPhone 17 Pro + iPad Pro 11) · 5 lints + i18n check PASS · 127+ Localizable.xcstrings keys × 3 locales (ko/en/ja)
 
-- 84 SPM tests / 8 suites: PASS
-- xcodebuild iOS 26.4 simulator: BUILD SUCCEEDED
-- 5 lints (Privacy / Data Sovereignty / No-Subscription / i18n / SF Symbols): all PASS
-- Localizable.xcstrings: 124+ keys × 3 locales (ko/en/ja)
+**Build #9 milestones**:
+- ✓ Build #8 — display name → Own Your Curation, Medium.place 5번째 + switch cascade 12 view
+- ✓ Build #9a — UnifiedSearchService + 5 mock providers + SearchFirstView UI + CurationAdoptionService
+- ✓ Build #9b (partial) — iTunesSearchProvider live (no key). Naver/KOBIS/TMDB pending API keys
+- ✓ Build #9c — Onboarding 4파일 폐기, TabView 3 tabs, SearchFirstView at root
+- ✓ Build #9d — sub-label 제거, auto-focus off, place demo data (도쿄 츠타야)
+- ✓ Build #9e — Share Card v1.0 (3:4 ImageRenderer + 3 ShareLink entry points)
+- ⏳ Build #9f — HIGH/MED 8건 fix (actor lift / predicate fetch / i18n / UI test cleanup)
+- ⏳ SchemaV2 tests — CurationAdoptionService + UnifiedSearchService coverage
 
-**Modules implemented**
+**Pending user actions**:
+- Apple Developer 가입 승인 (Apple 처리)
+- KR API keys: 네이버 검색 + KOBIS + TMDB (Build #9b unblock)
+- Own Your Curation 전용 ASC API key 발급 (메타데이터 PATCH 자동화)
+- 도메인 등록 (`ownyourcuration.com` / `.app`)
+- SNS 핸들 잠금 (Instagram / X / Threads)
+- App icon v3 finalize (design-brief 외주 결과 대기)
 
-| Module | Status |
-|--------|--------|
-| Book — Tracer Bullet complete | ✓ Manual + Barcode + Voice capture; AddMemory; Library; Item Detail; Memory Timeline; DemoSeeder; Onboarding |
-| Music / Movie / Object | Ready — shared code path in place; content rollout starts R12+ |
-| IntimateShare (CKShare 1-to-1) | Deferred to v1.5 (post-launch) |
-
-**Source files**: 19 Swift view files + 5 services + 4 models + DemoSeeder + Onboarding
-
-**Infrastructure**: Bundle ID `com.ownlifelab.stillhours` registered (Team `89J24XNYL3`); xcconfig + entitlements + PrivacyInfo manifest in place
-
-**Next milestone**: R11 Cool Blue palette pivot — brief ready at `docs/Claude-Design-Brief-R11.md`, pending Claude Design deliverable
+**Privacy policy URLs (live, HTTP 200 verified 2026-05-24)**:
+- ko: https://noenemyx.github.io/still-hours-swift/legal/privacy-policy-ko.html
+- en: https://noenemyx.github.io/still-hours-swift/legal/privacy-policy-en.html
+- ja: https://noenemyx.github.io/still-hours-swift/legal/privacy-policy-ja.html
 
 ---
 

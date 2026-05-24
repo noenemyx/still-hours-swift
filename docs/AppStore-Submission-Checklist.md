@@ -25,8 +25,8 @@
 - [x] Axis F quote-escape lint PASS (R11A)
 - [x] Source quality lint PASS — no TODO/HACK/FIXME in prod source (`check-source-quality.sh`, R16)
 - [ ] Pre-commit hook runs clean on a fresh `git commit` (verify after final code changes)
-- [ ] `xcodebuild build -scheme StillHours -destination 'generic/platform=iOS'` exits 0 with no warnings
-- [ ] Archive build succeeds: `xcodebuild archive -scheme StillHours -archivePath StillHours.xcarchive`
+- [x] `xcodebuild build -scheme StillHours -destination 'generic/platform=iOS'` exits 0 — BUILD SUCCEEDED (R17.4, 2026-05-22, `CODE_SIGNING_ALLOWED=NO`)
+- [ ] Archive build succeeds: `xcodebuild archive -scheme StillHours -archivePath StillHours.xcarchive` — blocked: iCloud container `iCloud.com.ownlifelab.stillhours` not yet registered in Apple Developer portal
 - [ ] Export IPA: `xcodebuild -exportArchive -archivePath StillHours.xcarchive -exportPath ./export -exportOptionsPlist ExportOptions.plist`
 - [ ] No `DEBUG`-only code paths reachable in release build (`#if DEBUG` guards verified)
 - [x] No `TODO` / `HACK` / `FIXME` comments in production source files (`check-source-quality.sh` PASS, R16 `a9e2b55`)

@@ -169,6 +169,7 @@ struct CapturePreviewView: View {
         case .music:  return SemanticTokens.medium.music.tint
         case .movie:  return SemanticTokens.medium.movie.tint
         case .object: return SemanticTokens.medium.object.tint
+        case .place:  return SemanticTokens.medium.place.tint
         }
     }
 
@@ -178,6 +179,7 @@ struct CapturePreviewView: View {
         case .music:  return SemanticTokens.mediumIcon.music
         case .movie:  return SemanticTokens.mediumIcon.movie
         case .object: return SemanticTokens.mediumIcon.object
+        case .place:  return SemanticTokens.mediumIcon.place
         }
     }
 
@@ -187,6 +189,7 @@ struct CapturePreviewView: View {
         case .music:  return String(localized: "medium.music",  defaultValue: "Music")
         case .movie:  return String(localized: "medium.movie",  defaultValue: "Movie")
         case .object: return String(localized: "medium.object", defaultValue: "Object")
+        case .place:  return String(localized: "medium.place",  defaultValue: "Place")
         }
     }
 }

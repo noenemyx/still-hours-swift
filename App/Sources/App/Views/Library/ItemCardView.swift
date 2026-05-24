@@ -116,6 +116,7 @@ struct ItemCardView: View {
         case .music:  return SemanticTokens.mediumIcon.music
         case .movie:  return SemanticTokens.mediumIcon.movie
         case .object: return SemanticTokens.mediumIcon.object
+        case .place:  return SemanticTokens.mediumIcon.place
         }
     }
 

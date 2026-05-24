@@ -79,6 +79,7 @@ struct MemoryKindChipView: View {
         case .received:  return SemanticTokens.memory.kind.icon.received
         case .gifted:    return SemanticTokens.memory.kind.icon.gifted
         case .annotated: return SemanticTokens.memory.kind.icon.annotated
+        case .visited:   return SemanticTokens.memory.kind.icon.visited
         }
     }
 
@@ -92,6 +93,7 @@ struct MemoryKindChipView: View {
         case .received:  return String(localized: "memory.kind.received",  defaultValue: "Received")
         case .gifted:    return String(localized: "memory.kind.gifted",    defaultValue: "Gifted")
         case .annotated: return String(localized: "memory.kind.annotated", defaultValue: "Annotated")
+        case .visited:   return String(localized: "memory.kind.visited",   defaultValue: "Visited")
         }
     }
 }

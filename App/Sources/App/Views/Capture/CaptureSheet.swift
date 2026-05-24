@@ -147,6 +147,22 @@ struct CaptureSheet: View {
                 machine.start(mode: .manual)
             }
             .transition(reduceMotion ? .identity : .opacity)
+        case .photo:
+            PhotoCaptureView(
+                onUseTitle: { detected, photoData in
+                    let pl = CapturePayload(
+                        title: detected,
+                        medium: .object,
+                        coverImageData: photoData
+                    )
+                    machine.recognize(payload: pl)
+                },
+                onSwitchToManual: {
+                    machine.start(mode: .manual)
+                }
+            )
+            .onPhotoSelected()
+            .transition(reduceMotion ? .identity : .opacity)
         case .manual:
             // Manual mode shouldn't land in `.scanning(.manual)` — the
             // state machine fast-paths to `.confirming(.empty)` on start.
@@ -229,6 +245,7 @@ struct CaptureSheet: View {
         switch mode {
         case .barcode: return "barcode.viewfinder"
         case .voice:   return "mic.fill"
+        case .photo:   return "photo.badge.plus"
         case .manual:  return "keyboard"
         }
     }
@@ -237,6 +254,7 @@ struct CaptureSheet: View {
         switch mode {
         case .barcode: return String(localized: "capture.mode.barcode", defaultValue: "Barcode Scan")
         case .voice:   return String(localized: "capture.mode.voice",   defaultValue: "Voice Input")
+        case .photo:   return String(localized: "capture.mode.photo",   defaultValue: "Photo Recognition")
         case .manual:  return String(localized: "capture.mode.manual",  defaultValue: "Manual Input")
         }
     }
@@ -245,6 +263,7 @@ struct CaptureSheet: View {
         switch mode {
         case .barcode: return "Scans a barcode with the camera."
         case .voice:   return "Recognises item title by voice."
+        case .photo:   return "Identifies an object from a photo."
         case .manual:  return "Switches to manual entry form."
         }
     }
