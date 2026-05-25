@@ -100,4 +100,4 @@
 
 ---
 
-_참조 파일_: `00-CONTEXT.md` (앱 정의/브랜드), `04-BRAND-SUMMARY.md` (토큰)
+_참조 파일_: `00-CONTEXT.md` (앱 정의/브랜드), `04-BRAND-SUMMARY.md` (토큰), `08-CARD-RENDER-SPEC.md` (실제 코드 기준 상세 렌더 스펙 — 치수·padding·infoArea 구현 확인 시 우선 참조)

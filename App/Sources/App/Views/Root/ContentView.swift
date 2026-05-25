@@ -102,7 +102,7 @@ private struct CurationRootView: View {
     @State private var showAdoptErrorAlert = false
     @State private var showManualCapture = false
     // H1: Lifted to parent so UnifiedSearchService (an actor) is not recreated on each view rebuild.
-    @State private var searchService = UnifiedSearchService()
+    @State private var searchService = UnifiedSearchService.makeDefault()
 
     var body: some View {
         SearchFirstView(

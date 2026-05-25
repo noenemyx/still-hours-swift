@@ -67,4 +67,10 @@ cool-blue 팔레트 (R11, 2026-05-21 pivot). 이 톤에 맞춰 디자인.
 
 ---
 
+---
+
+## Build #9 반영 (2026-05-24)
+
+Build #8 (rename + 5 medium) 및 Build #9 (r18 SearchFirstView + r19 CardRenderView) 출시 완료. 이 디렉토리의 모든 디자인 브리프는 해당 시점의 현재 상태를 반영하며, Build #8 이전 "자산-입구" 패러다임 및 Still Hours 브랜딩 시대의 결정은 역사적 참조로만 유지됨. 신규 브리프: `06-SEARCH-FIRST-UI.md` (SearchFirstView UI), `07-TAB-NAVIGATION.md` (3-tab floating pill), `08-CARD-RENDER-SPEC.md` (CardRenderView 렌더 스펙).
+
 _상세 토큰: `04-BRAND-SUMMARY.md` 참조._

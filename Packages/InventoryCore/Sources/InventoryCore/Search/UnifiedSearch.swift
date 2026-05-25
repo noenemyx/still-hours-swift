@@ -140,6 +140,47 @@ public actor UnifiedSearchService {
         self.perMediumLimit = perMediumLimit
     }
 
+    // MARK: - Factory
+
+    /// Builds a service wired to real API providers based on environment variables.
+    /// Falls back to mock providers for any medium without credentials.
+    ///
+    /// - `NAVER_CLIENT_ID` + `NAVER_CLIENT_SECRET` → NaverBook + NaverPlace
+    /// - `KOBIS_API_KEY` → KOBIS
+    /// - `TMDB_V4_BEARER` → TMDB
+    public static func makeDefault(env: [String: String] = ProcessInfo.processInfo.environment) -> UnifiedSearchService {
+        var providers: [any SearchProvider] = [iTunesSearchProvider()]
+
+        let naverID = env["NAVER_CLIENT_ID"]
+        let naverSecret = env["NAVER_CLIENT_SECRET"]
+        if let id = naverID, let secret = naverSecret, !id.isEmpty, !secret.isEmpty {
+            providers.append(NaverBookSearchProvider(clientID: id, clientSecret: secret))
+            providers.append(NaverPlaceSearchProvider(clientID: id, clientSecret: secret))
+        } else {
+            providers.append(MockBookSearchProvider())
+            providers.append(MockPlaceSearchProvider())
+        }
+
+        let hasKobis: Bool
+        if let kobisKey = env["KOBIS_API_KEY"], !kobisKey.isEmpty {
+            providers.append(KOBISSearchProvider(certKey: kobisKey))
+            hasKobis = true
+        } else {
+            hasKobis = false
+        }
+
+        if let tmdbToken = env["TMDB_V4_BEARER"], !tmdbToken.isEmpty {
+            providers.append(TMDBSearchProvider(bearerToken: tmdbToken))
+        } else if !hasKobis {
+            providers.append(MockFilmSearchProvider())
+        }
+        // If KOBIS present but TMDB absent, KOBIS alone covers .movie; no mock needed.
+
+        providers.append(MockObjectSearchProvider())
+
+        return UnifiedSearchService(providers: providers)
+    }
+
     /// Search all providers in parallel, return merged + per-medium-ranked results.
     public func search(query: String) async -> [Medium: [SearchResult]] {
         let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
