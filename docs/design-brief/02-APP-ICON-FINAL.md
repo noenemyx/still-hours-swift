@@ -1,14 +1,22 @@
 # App Icon — Final Design Brief
 
-> 현재 상태: v1/v2 시안 있음, v3 brief 작성 완료, **최종 결정 미정**.  
+> 현재 상태: v1 concept (시안 없음) / v2 시안 + 1024 PNG + SVG (현재 production) / v3 brief 작성 완료, **최종 결정 미정**.  
 > 이 brief는 v3 brief 기반 final icon 제작 지시서.
 
 ---
 
-## 기존 brief 참조
+## 기존 자료 참조 (디자이너 input)
 
-**원본 v3 brief**: `/tmp/curium-swift/docs/AppIcon-v3-ClaudeDesignPrompt.md`  
-이 brief는 v3 brief의 핵심을 요약하고 OYC 브랜드로 업데이트한 버전.
+| 자료 | 경로 |
+|---|---|
+| **v3 brief 원본** | `docs/AppIcon-v3-ClaudeDesignPrompt.md` (이 brief의 source) |
+| **v1 concept** | `docs/AppIcon-v1-Concept.md` (Wunderkammer 컨셉 초안) |
+| **v2 concept** | `docs/AppIcon-v2-Concept.md` (Light on Paper 방향 — 채택 안 됨, R11 Cool Blue로 전환) |
+| **v2 SVG (vector)** | `Assets/AppIcon-v2.svg` |
+| **v2 PNG 1024×1024 (현재 production)** | `Assets/AppIcon-v2-1024.png` |
+| **xcassets에 install 된 v2** | `App/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png` |
+
+→ v2 SVG/PNG를 _현재 production reference_로 검토. v3 brief 기반 _next iteration_ 제작 지시.
 
 ---
 

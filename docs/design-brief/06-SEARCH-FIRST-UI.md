@@ -54,7 +54,7 @@
 
 ## 스크린샷 참조
 
-`screenshots/20-curation-root-baseline.png` (없을 경우 코드 기준으로 진행)
+`docs/design-brief/baseline/01-curation-root-light.png` (light) / `02-curation-root-dark.png` (dark)
 
 ---
 

@@ -34,6 +34,23 @@
 
 ---
 
+## 현재 UI 상태 — Baseline 스크린샷
+
+`docs/design-brief/baseline/` — launch-sim.sh + 실제 KOBIS/Naver API 키 + demo data로 캡처한 현재 앱 UI.
+
+| 파일 | 설명 |
+|------|------|
+| `01-curation-root-light.png` | Tab 1 큐레이션 (light) |
+| `02-curation-root-dark.png` | Tab 1 큐레이션 (dark) |
+| `03-library-light.png` | Tab 2 내 컬렉션 (light) |
+| `04-library-dark.png` | Tab 2 내 컬렉션 (dark) |
+| `05-settings-light.png` | Tab 3 설정 (light) |
+| `06-settings-dark.png` | Tab 3 설정 (dark) |
+
+상세 설명은 `docs/design-brief/baseline/README.md` 참조.
+
+---
+
 ## 납품 방법
 
 Figma 파일 링크 **또는** PNG mockup을 아래 경로에 제출:

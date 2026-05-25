@@ -62,7 +62,7 @@ Letterboxd/Are.na 사용자 감성. 도구를 10년 쓰는 관점.
 
 ## 현재 UI 톤 참조
 
-`/tmp/curium-swift/screenshots/20-curation-root-baseline.png` — 현재 SearchFirstView 프로덕션 화면.  
+`docs/design-brief/baseline/01-curation-root-light.png` — 현재 SearchFirstView 프로덕션 화면 (light). 전체 baseline 스크린샷은 `docs/design-brief/baseline/` 참조.  
 cool-blue 팔레트 (R11, 2026-05-21 pivot). 이 톤에 맞춰 디자인.
 
 ---
