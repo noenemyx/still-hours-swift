@@ -148,12 +148,19 @@ public actor UnifiedSearchService {
     /// - `NAVER_CLIENT_ID` + `NAVER_CLIENT_SECRET` → NaverBook + NaverPlace
     /// - `KOBIS_API_KEY` → KOBIS
     /// - `TMDB_V4_BEARER` → TMDB
+    /// Reads a key from env first; falls back to UserDefaults (set by `simctl launch -KEY VALUE`).
+    private static func readKey(_ name: String, env: [String: String]) -> String? {
+        if let v = env[name], !v.isEmpty { return v }
+        if let v = UserDefaults.standard.string(forKey: name), !v.isEmpty { return v }
+        return nil
+    }
+
     public static func makeDefault(env: [String: String] = ProcessInfo.processInfo.environment) -> UnifiedSearchService {
         var providers: [any SearchProvider] = [iTunesSearchProvider()]
 
-        let naverID = env["NAVER_CLIENT_ID"]
-        let naverSecret = env["NAVER_CLIENT_SECRET"]
-        if let id = naverID, let secret = naverSecret, !id.isEmpty, !secret.isEmpty {
+        let naverID = readKey("NAVER_CLIENT_ID", env: env)
+        let naverSecret = readKey("NAVER_CLIENT_SECRET", env: env)
+        if let id = naverID, let secret = naverSecret {
             providers.append(NaverBookSearchProvider(clientID: id, clientSecret: secret))
             providers.append(NaverPlaceSearchProvider(clientID: id, clientSecret: secret))
         } else {
@@ -162,14 +169,14 @@ public actor UnifiedSearchService {
         }
 
         let hasKobis: Bool
-        if let kobisKey = env["KOBIS_API_KEY"], !kobisKey.isEmpty {
+        if let kobisKey = readKey("KOBIS_API_KEY", env: env) {
             providers.append(KOBISSearchProvider(certKey: kobisKey))
             hasKobis = true
         } else {
             hasKobis = false
         }
 
-        if let tmdbToken = env["TMDB_V4_BEARER"], !tmdbToken.isEmpty {
+        if let tmdbToken = readKey("TMDB_V4_BEARER", env: env) {
             providers.append(TMDBSearchProvider(bearerToken: tmdbToken))
         } else if !hasKobis {
             providers.append(MockFilmSearchProvider())

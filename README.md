@@ -110,6 +110,22 @@ xcodebuild -project StillHours.xcodeproj -scheme StillHours \
 
 ---
 
+## Run on simulator
+
+`scripts/launch-sim.sh` is the dev-time launch helper that auto-wires real API providers from `.env`.
+
+```bash
+./scripts/launch-sim.sh
+# Override device:
+DEVICE_NAME="iPad Pro 11-inch" ./scripts/launch-sim.sh
+```
+
+What it does: sources `.env` → resolves `StillHours.app` in DerivedData → uninstalls/installs (clean state) → launches via `xcrun simctl launch` with `-NAVER_CLIENT_ID`, `-NAVER_CLIENT_SECRET`, `-KOBIS_API_KEY` injected into `NSUserDefaults` (the `simctl launch -KEY VALUE` path). `UnifiedSearchService.makeDefault` reads UserDefaults as fallback so real providers activate on launch.
+
+Keys must exist in `.env` (gitignored, user-managed). Korean locale (`ko`/`ko_KR`) is always injected. NAVER requires both ID + Secret; KOBIS is standalone. TMDB is not wired (user decision).
+
+---
+
 ## Current Status (Build #9 cycle, 2026-05-24)
 
 **Tests / Lints**: `swift test` all PASS · `xcodebuild` BUILD SUCCEEDED (iPhone 17 Pro + iPad Pro 11) · 5 lints + i18n check PASS · 127+ Localizable.xcstrings keys × 3 locales (ko/en/ja)
